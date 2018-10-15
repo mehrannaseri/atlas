@@ -16,8 +16,10 @@ class CreateNewsCommentTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('post_id');
-            $table->string('comment');
-            $table->integer('user_id');
+            $table->text('comment');
+            $table->integer('user_id')->nullable();
+            $table->string('commentator_name',50)->nullable();
+            $table->string('commentator_email' , 60)->nullable();
             $table->timestamps();
         });
     }
