@@ -12,5 +12,5 @@
 */
 
 Route::prefix('panel/post')->group(function() {
-    Route::get('/add', 'PostController@index');
+    Route::get('/add', 'PostController@create');
 });

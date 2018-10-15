@@ -5,16 +5,24 @@ namespace Modules\Post\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Post\Entities\Category;
+use Modules\Post\Entities\Language;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      * @return Response
      */
     public function index()
     {
-        return view('post::add');
+
+        return view('post::index');
     }
 
     /**
@@ -23,7 +31,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post::create');
+        $languages = Language::all();
+
+        $categories = Category::all();
+
+        return view('post::create' , compact('languages' , 'categories'));
     }
 
     /**
