@@ -30,17 +30,20 @@ class AppServiceProvider extends ServiceProvider
             foreach ($arr_result as $module){
 
                 $menu = config(strtolower($module));
+                if(isset($menu['show']) && $menu['show'] === true) {
+                    $item = [
+                        'text' => $menu['name'],
+                        'url' => $menu['url'],
+                        'icon' => $menu['icon'],
+                        'label' => $menu['label'],
+                        'label_color' => $menu['label_color'],
+                        'submenu' => (isset($menu['submenu']) ? $menu['submenu'] : [])
+                    ];
 
-                $item = [
-                    'text'        => $menu['name'],
-                    'url'         => $menu['url'],
-                    'icon'        => $menu['icon'],
-                    'label'       => $menu['label'],
-                    'label_color' => $menu['label_color'],
-                    'submenu'     => (isset($menu['submenu']) ? $menu['submenu'] : [])
-                ];
+                    $event->menu->add($item);
+                }
 
-                $event->menu->add($item);
+
             }
         });
 

@@ -1,18 +1,19 @@
 <?php
 
 return [
+    'show'        => true,
     'name'        => 'News',
     'url'         => '#',
     'icon'        => 'newspaper-o',
     'label'       => '',
     'label_color' => '',
-    'active'      => ['news' , 'news/add'],
+    'active'      => ['panel/post' , 'panel/post/add'],
     'submenu'     => [
         [
             'text'   => 'Add News',
             'icon'   => 'plus',
-            'url'    => 'admin/news/add',
-            'active' => ['news/add'],
+            'url'    => 'panel/post/add',
+            'active' => ['panel/post/add'],
 
         ]
     ]

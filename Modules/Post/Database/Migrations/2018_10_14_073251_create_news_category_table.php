@@ -34,7 +34,7 @@ class CreateNewsCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category');
-        Schema::dropIfExists('post_category');
+        Schema::dropIfExists('categories');
+        Schema::dropIfExists('category_post');
     }
 }
