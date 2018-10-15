@@ -16,7 +16,7 @@ class CreateNewsCategoryTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('lang');
+            $table->integer('lang_id')->unsigned()->index();
             $table->integer('parent_id')->nullable();
             $table->timestamps();
         });

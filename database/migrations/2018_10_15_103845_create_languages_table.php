@@ -1,10 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNewsTagTable extends Migration
+class CreateLanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +14,21 @@ class CreateNewsTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('languages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('lang_id')->unsigned()->index();
+            $table->char('flag' , 2);
             $table->timestamps();
         });
-        Schema::create('post_tag',function (Blueprint $table){
-            $table->integer('post_id');
-            $table->integer('tag_id');
-        });
+
+        DB::table('languages')->insert(
+            array(
+                'title' => 'english',
+                'flag'  => 'en',
+                'created_at' => now(),
+                'updated_at' => now(),
+            )
+        );
     }
 
     /**
@@ -32,7 +38,6 @@ class CreateNewsTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
-        Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('languages');
     }
 }
