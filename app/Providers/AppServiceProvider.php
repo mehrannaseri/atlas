@@ -22,6 +22,14 @@ class AppServiceProvider extends ServiceProvider
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
             $event->menu->add('Atlas Panel');
 
+            $event->menu->add([
+                'text'  => 'Dashboard',
+                'url'   => 'panel',
+                'icon'  => 'dashboard',
+                'active'=> ['panel'],
+                
+            ]);
+
             $list = Module::all();
 
             $result = implode(",",$list);

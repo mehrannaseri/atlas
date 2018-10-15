@@ -21,6 +21,17 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        // Insert default Admin
+        DB::table('users')->insert(
+            array(
+                'name' => 'admin',
+                'email' => 'admin@atlas.co',
+                'password' => bcrypt('123456'),
+                'created_at'=>now(),
+                'updated_at'=>now(),
+            )
+        );
     }
 
     /**
