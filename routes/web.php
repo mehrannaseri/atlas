@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/panel', function(){
-    return view('dashboard');
-});
 
 Route::get('/', function(){
     return view('welcome');
@@ -22,4 +19,4 @@ Route::get('/', function(){
 
 Auth::routes();
 
-Route::get('/panel', 'DashboardController@index')->name('home');
+Route::get('/panel', 'DashboardController@index')->name('dashboard');
