@@ -20,3 +20,5 @@ Route::get('/', function(){
 Auth::routes();
 
 Route::get('/panel', 'DashboardController@index')->name('dashboard');
+
+Route::post('panel/language','DashboardController@addLanguage');

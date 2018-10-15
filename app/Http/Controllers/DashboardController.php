@@ -28,4 +28,20 @@ class DashboardController extends Controller
 
         return view('dashboard' , compact('languages'));
     }
+
+    public function addLanguage(Request $request)
+    {
+        $this->validate($request , [
+            'language' => 'required',
+            'flag'     => 'required|unique:languages'
+        ],[
+            'language.required' => 'The Title field is required.'
+        ]);
+
+        $language = new Language();
+
+        $language->title = $request->language;
+        $language->flag = $request->flag;
+        $language->save();
+    }
 }

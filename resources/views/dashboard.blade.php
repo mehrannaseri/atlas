@@ -20,8 +20,13 @@
                     <h3 class="box-title">Languages management</h3>
                 </div>
                 <!-- /.box-header -->
+                @if(!empty($errors->first()))
+                    <div id="message_alert" class="alert alert-danger" role="alert">
+                        <span>{{ $errors->first() }}</span>
+                    </div>
+                @endif
                 <div class="box-body">
-                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                     <ul class="todo-list ui-sortable">
                         @foreach($languages as $language)
                             <li>
@@ -53,7 +58,7 @@
                                 <h4 class="modal-title">Add new language</h4>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="post">
+                                <form action="{{asset('panel/language')}}" method="post">
                                     {{csrf_field()}}
                                     <div class="form-group">
                                         <input class="form-control" name="language" placeholder="Language Title: English , kurdish" type="text">
@@ -80,4 +85,14 @@
         </section>
         <!-- left col -->
     </div>
+
+@stop
+@section('js')
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                $("#message_alert").slideUp()
+            },3500);
+        });
+    </script>
 @stop
