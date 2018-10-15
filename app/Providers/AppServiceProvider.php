@@ -6,6 +6,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
+use Nwidart\Modules\Facades\Module;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,84 +20,28 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
+            $event->menu->add('Atlas Panel');
 
-            $event->menu->add('Atlas panel',
-                [
-                    'text' => 'Blog',
-                    'url'  => 'admin/blog',
-                    'can'  => 'manage-blog',
-                ],
-                [
-                    'text'        => 'Dashboard',
-                    'url'         => 'admin/dashboard',
-                    'icon'        => 'file',
-                    'label'       => 4,
-                    'label_color' => 'success',
-                ],
-                'ACCOUNT SETTINGS',
-                [
-                    'text' => 'setting',
-                    'url'  => 'admin/settings',
-                    'icon' => 'user',
-                ],
-                [
-                    'text' => 'Change Password',
-                    'url'  => 'admin/settings',
-                    'icon' => 'lock',
-                ],
-                [
-                    'text'    => 'Multilevel',
-                    'icon'    => 'share',
-                    'submenu' => [
-                        [
-                            'text' => 'Level One',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'Level One',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'Level Two',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text'    => 'Level Two',
-                                    'url'     => '#',
-                                    'submenu' => [
-                                        [
-                                            'text' => 'Level Three',
-                                            'url'  => '#',
-                                        ],
-                                        [
-                                            'text' => 'Level Three',
-                                            'url'  => '#',
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                        [
-                            'text' => 'Level One',
-                            'url'  => '#',
-                        ],
-                    ],
-                ],
-                'LABELS',
-                [
-                    'text'       => 'Important',
-                    'icon_color' => 'red',
-                ],
-                [
-                    'text'       => 'Warning',
-                    'icon_color' => 'yellow',
-                ],
-                [
-                    'text'       => 'Information',
-                    'icon_color' => 'aqua',
-                ]
-            );
+            $list = Module::all();
 
+            $result = implode(",",$list);
+            $arr_result = explode("," , $result);
+
+            foreach ($arr_result as $module){
+
+                $menu = config(strtolower($module));
+
+                $item = [
+                    'text'        => $menu['name'],
+                    'url'         => $menu['url'],
+                    'icon'        => $menu['icon'],
+                    'label'       => $menu['label'],
+                    'label_color' => $menu['label_color'],
+                    'submenu'     => (isset($menu['submenu']) ? $menu['submenu'] : [])
+                ];
+
+                $event->menu->add($item);
+            }
         });
 
     }
