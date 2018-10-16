@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+
     <button data-toggle="modal" onclick="show_modal()" data-target="#modal-category" class="btn btn-success">Add New Category</button>
 
     @if(!empty($errors->first()))
@@ -46,7 +47,7 @@
                             <td>{{$cat->lang->title}}</td>
                             <td>
                                 <a href="javascript:void(0)" onclick="editCategory({{$cat}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
-                                <a href="" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/category/remove/'.$cat->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                         <?php
@@ -103,6 +104,7 @@
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="{{asset('/css/panel/alertify.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
 @stop
 
@@ -130,6 +132,7 @@
         var reqUrl = '{{asset('panel/post/')}}';
         var token = '{{csrf_token()}}';
     </script>
+    <script src="{{asset('/js/panel/alertify.min.js')}}"></script>
     <script src="{{asset('/js/panel/custom.js')}}"></script>
 @stop
 

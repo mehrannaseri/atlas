@@ -8,9 +8,9 @@ class Category extends Model
 {
     protected $fillable = ['title' , 'lang_id' , 'parent_id'];
 
-    public function Post()
+    public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(Post::class);
     }
 
     public function lang()
@@ -20,6 +20,11 @@ class Category extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Category::class , 'parent_id');
+        return $this->belongsTo(self::class , 'parent_id');
+    }
+
+    public function childs()
+    {
+        return $this->hasMany(self::class , 'parent_id');
     }
 }

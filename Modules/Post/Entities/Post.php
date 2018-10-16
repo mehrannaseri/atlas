@@ -10,7 +10,7 @@ class Post extends Model
 
     public function categories()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasmany(Category::class);
     }
 
     public function tags()

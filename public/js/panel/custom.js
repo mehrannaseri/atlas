@@ -47,3 +47,14 @@ function editCategory(cat) {
     });
 
 }
+
+function remove(url) {
+
+    alertify.confirm(" By deleting this item its posts will also be deleted, do you want to continue?",
+        function(){
+            window.location.assign(url);
+        },
+        function(){
+        }
+    );
+}

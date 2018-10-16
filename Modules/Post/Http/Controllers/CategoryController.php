@@ -82,7 +82,14 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      * @return Response
      */
-    public function destroy()
+    public function destroy($id)
     {
+        $category = Category::find($id);
+        $category->posts()->sync([]);
+        $category->childs()->update(['parent_id' => null]);
+        $category->delete();
+
+        Session::flash('delete' , 'Category was deleted successfuly');
+        return back();
     }
 }
