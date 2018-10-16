@@ -8,8 +8,7 @@ function editLanguage(id,language,flag){
 }
 
 function show_modal(){
-    document.getElementById('language').value = "";
-    document.getElementById('flag').value = "";
+    document.getElementById('modal_form').reset();
 }
 
 function parentByLang(lang,cat) {

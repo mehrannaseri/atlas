@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <button data-toggle="modal" data-target="#modal-category" class="btn btn-success">Add New Category</button>
+    <button data-toggle="modal" onclick="show_modal()" data-target="#modal-category" class="btn btn-success">Add New Category</button>
 
     @if(!empty($errors->first()))
         <div id="message_alert" class="alert alert-danger" role="alert">
