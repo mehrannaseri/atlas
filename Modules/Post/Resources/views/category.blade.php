@@ -31,17 +31,28 @@
                         <th>Title</th>
                         <th>Parent</th>
                         <th>Language</th>
+                        <th width="200">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 4.0
-                        </td>
-                        <td>Win 95+</td>
-                        <td> 4</td>
-                    </tr>
+                    <?php
+                        $counter = 1;
+                    ?>
+                    @foreach($categories as $cat)
+                        <tr>
+                            <td>{{$counter}}</td>
+                            <td>{{$cat->title}}</td>
+                            <td>{{($cat->parent_id != null ? $cat->parent->title : '-' )}}</td>
+                            <td>{{$cat->lang->title}}</td>
+                            <td>
+                                <a href="" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
+                                <a href="" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                            </td>
+                        </tr>
+                        <?php
+                        $counter++;
+                        ?>
+                    @endforeach
                     </tbody>
 
                 </table>

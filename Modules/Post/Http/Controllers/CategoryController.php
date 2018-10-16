@@ -20,7 +20,9 @@ class CategoryController extends Controller
     public function index()
     {
         $languages = Language::all();
-        return view('post::category' , compact('languages'));
+        $categories = Category::with('lang')->with('parent')->get();
+
+        return view('post::category' , compact('languages','categories'));
     }
 
 

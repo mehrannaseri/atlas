@@ -13,8 +13,13 @@ class Category extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function language()
+    public function lang()
     {
         return $this->belongsTo(Language::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class , 'parent_id');
     }
 }
