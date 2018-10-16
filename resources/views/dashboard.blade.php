@@ -25,6 +25,12 @@
                         <span>{{ $errors->first() }}</span>
                     </div>
                 @endif
+                @if (Session::has('success'))
+                    <div id="message_alert" class="alert alert-success">{{ Session::get('success') }}</div>
+                @endif
+                @if (Session::has('delete'))
+                    <div id="message_alert" class="alert alert-warning">{{ Session::get('delete') }}</div>
+                @endif
                 <div class="box-body">
                 <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                     <ul class="todo-list ui-sortable">
@@ -36,8 +42,9 @@
 
                                 <!-- General tools such as edit or delete-->
                                 <div class="tools">
-                                    <a href="http://localhost/kubak.co/panel/language/remove/1"><i class="fa fa-trash-o kubak-color"></i></a>
-                                    <a href="http://localhost/kubak.co/panel/language/remove/1"><i class="fa fa-edit kubak-color"></i></a>
+                                    <a href="javascript:void(0)" onclick="editLanguage({{$language->id}},'{{$language->title}}' , '{{$language->flag}}')"><i class="fa fa-edit"></i></a>
+                                    &nbsp;
+                                    <a href="{{asset('panel/language/remove/'.$language->id)}}"><i class="fa fa-trash-o"></i></a>
 
                                 </div>
                             </li>
@@ -46,7 +53,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix no-border">
-                    <button type="button" data-toggle="modal" data-target="#modal-language" class="btn btn-default pull-left"><i class="fa fa-plus"></i> New</button>
+                    <button type="button" data-toggle="modal" onclick="show_modal()" data-target="#modal-language" class="btn btn-default pull-left"><i class="fa fa-plus"></i> New</button>
                 </div>
                 <!------------------  language modal ------------------->
                 <div class="modal fade" id="modal-language" style="display: none;">
@@ -58,13 +65,13 @@
                                 <h4 class="modal-title">Add new language</h4>
                             </div>
                             <div class="modal-body">
-                                <form action="{{asset('panel/language')}}" method="post">
+                                <form id="modal_form" action="{{asset('panel/language')}}" method="post">
                                     {{csrf_field()}}
                                     <div class="form-group">
-                                        <input class="form-control" name="language" placeholder="Language Title: English , kurdish" type="text">
+                                        <input class="form-control" name="language" id="language" placeholder="Language Title: English , kurdish" type="text">
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" name="flag" placeholder="Language flag : en , ku" type="text">
+                                        <input class="form-control" maxlength="2" name="flag" id="flag" placeholder="Language flag : en , ku" type="text">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
@@ -95,4 +102,5 @@
             },3500);
         });
     </script>
+    <script src="{{asset('/js/panel/custom.js')}}"></script>
 @stop

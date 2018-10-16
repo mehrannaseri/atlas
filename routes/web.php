@@ -20,5 +20,6 @@ Route::get('/', function(){
 Auth::routes();
 
 Route::get('/panel', 'DashboardController@index')->name('dashboard');
-
-Route::post('panel/language','DashboardController@addLanguage');
+Route::post('panel/language/','DashboardController@addLanguage');
+Route::post('panel/language/edit/{id}' , 'DashboardController@update');
+Route::get('panel/language/remove/{id}' , 'DashboardController@delete');
