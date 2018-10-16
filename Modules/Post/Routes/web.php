@@ -22,4 +22,5 @@ Route::prefix('panel/post')->group(function() {
     Route::get('tags' , 'TagsController@index');
     Route::post('tag/add' , 'TagsController@store');
     Route::post('tag/update/{id}' , 'TagsController@update');
+    Route::get('tag/remove/{id}' , 'TagsController@destroy');
 });

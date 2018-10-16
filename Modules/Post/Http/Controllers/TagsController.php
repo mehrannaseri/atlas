@@ -57,7 +57,13 @@ class TagsController extends Controller
         return back();
     }
 
-    public function destroy()
+    public function destroy($id)
     {
+        $tag = Tag::find($id);
+        $tag->posts()->sync([]);
+        $tag->delete();
+
+        Session::flash('delete' , 'Tag was deleted successfuly');
+        return back();
     }
 }
