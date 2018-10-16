@@ -2,7 +2,11 @@ function editLanguage(id,language,flag){
     document.getElementById('language').value = language;
     document.getElementById('flag').value = flag;
     document.getElementById("modal_form").setAttribute('action' , reqUrl+'/language/edit/'+id);
-    $('#modal-language').modal({
+    open_modal();
+}
+
+function open_modal() {
+    $('#modal').modal({
         show: 'true'
     });
 }
@@ -42,9 +46,7 @@ function editCategory(cat) {
     document.getElementById("language").value = cat.lang_id;
 
     document.getElementById('modal_form').setAttribute('action' , reqUrl+'/category/update/'+cat.id);
-    $('#modal-category').modal({
-        show: 'true'
-    });
+    open_modal();
 
 }
 

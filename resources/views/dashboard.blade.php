@@ -53,10 +53,10 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix no-border">
-                    <button type="button" data-toggle="modal" onclick="show_modal()" data-target="#modal-language" class="btn btn-default pull-left"><i class="fa fa-plus"></i> New</button>
+                    <button type="button" data-toggle="modal" onclick="show_modal()" data-target="#modal" class="btn btn-default pull-left"><i class="fa fa-plus"></i> New</button>
                 </div>
                 <!------------------  language modal ------------------->
-                <div class="modal fade" id="modal-language" style="display: none;">
+                <div class="modal fade" id="modal" style="display: none;">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">

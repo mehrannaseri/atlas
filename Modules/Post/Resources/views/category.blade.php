@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <button data-toggle="modal" onclick="show_modal()" data-target="#modal-category" class="btn btn-success">Add New Category</button>
+    <button data-toggle="modal" onclick="show_modal()" data-target="#modal" class="btn btn-success">Add New Category</button>
 
     @if(!empty($errors->first()))
         <div id="message_alert" class="alert alert-danger" role="alert">
@@ -60,7 +60,7 @@
             </div>
         </div>
         <!------------------  categorymodal ------------------->
-        <div class="modal fade" id="modal-category" style="display: none;">
+        <div class="modal fade" id="modal" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
