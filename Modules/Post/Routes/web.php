@@ -20,4 +20,5 @@ Route::prefix('panel/post')->group(function() {
     Route::get('category/remove/{id}' , 'CategoryController@destroy');
 
     Route::get('tags' , 'TagsController@index');
+    Route::post('tag/add' , 'TagsController@store');
 });

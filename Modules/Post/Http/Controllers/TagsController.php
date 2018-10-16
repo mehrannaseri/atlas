@@ -5,8 +5,10 @@ namespace Modules\Post\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Session;
 use Modules\Post\Entities\Category;
 use Modules\Post\Entities\Language;
+use Modules\Post\Entities\Tag;
 
 class TagsController extends Controller
 {
@@ -21,22 +23,21 @@ class TagsController extends Controller
         return view('post::tags' , compact('languages' , 'categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('post::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
     public function store(Request $request)
     {
+        $request->validate([
+            'title'    => 'required|unique:tags',
+            'language' => 'required'
+        ]);
+
+        $tag = new Tag();
+        $tag->title = $request->title;
+        $tag->lang_id = $request->language;
+        $tag->save();
+
+        Session::flash('success' , 'New Tag was added successfuly');
+        return back();
+
     }
 
     /**

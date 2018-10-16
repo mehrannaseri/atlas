@@ -69,7 +69,7 @@
                         <h4 class="modal-title">Add new Tag</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="modal_form" action="{{asset('panel/post/category/add')}}" method="post">
+                        <form id="modal_form" action="{{asset('panel/post/tag/add')}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group">
                                 <select name="language" id="language" class="form-control">
