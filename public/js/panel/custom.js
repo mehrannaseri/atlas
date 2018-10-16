@@ -1,7 +1,7 @@
 function editLanguage(id,language,flag){
     document.getElementById('language').value = language;
     document.getElementById('flag').value = flag;
-    document.getElementById("modal_form").setAttribute('action' , reqUrl+'/language/edit/'+id);
+    document.getElementById("modal").setAttribute('action' , reqUrl+'/language/edit/'+id);
     open_modal();
 }
 
@@ -45,7 +45,7 @@ function editCategory(cat) {
     document.getElementById("title").value = cat.title;
     document.getElementById("language").value = cat.lang_id;
 
-    document.getElementById('modal_form').setAttribute('action' , reqUrl+'/category/update/'+cat.id);
+    document.getElementById('modal').setAttribute('action' , reqUrl+'/category/update/'+cat.id);
     open_modal();
 
 }
