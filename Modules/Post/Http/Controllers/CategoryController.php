@@ -5,34 +5,51 @@ namespace Modules\Post\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Validator;
+use Modules\Post\Entities\Category;
+use Modules\Post\Entities\Language;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        return view('post::category');
+        $languages = Language::all();
+        return view('post::category' , compact('languages'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
+
+    public function catsBylang(Request $request)
     {
-        return view('post::create');
+        return Category::where('parent_id' , null)
+                        ->where('lang_id' , $request->lang)
+                        ->get();
     }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
     public function store(Request $request)
     {
+        $request->validate([
+            'title'    => 'required',
+            'language' => 'required',
+        ]);
+
+        $parent = $request->parent;
+        if($request->parent == ""){
+            $parent = null;
+        }
+        $category = new Category();
+        $category->title = $request->title;
+        $category->lang_id = $request->language;
+        $category->parent_id = $parent;
+        $category->save();
+
+        Session::flash('success' , 'New Category was added successfuly');
+
+        return back();
     }
 
     /**

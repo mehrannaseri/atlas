@@ -94,6 +94,9 @@
     </div>
 
 @stop
+@section('css')
+    <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
+@stop
 @section('js')
     <script>
         $(document).ready(function(){

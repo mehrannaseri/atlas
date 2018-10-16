@@ -14,4 +14,6 @@
 Route::prefix('panel/post')->group(function() {
     Route::get('/add', 'PostController@create');
     Route::get('/category' , 'CategoryController@index');
+    Route::post('/category/getByLang' , 'CategoryController@catsBylang');
+    Route::post('category/add' , 'CategoryController@store');
 });
