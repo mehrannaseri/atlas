@@ -104,6 +104,8 @@
                 $("#message_alert").slideUp()
             },3500);
         });
+        var reqUrl = '{{asset('panel')}}';
     </script>
+
     <script src="{{asset('/js/panel/custom.js')}}"></script>
 @stop

@@ -25,13 +25,13 @@ class CategoryController extends Controller
         return view('post::category' , compact('languages','categories'));
     }
 
-
     public function catsBylang(Request $request)
     {
         return Category::where('parent_id' , null)
                         ->where('lang_id' , $request->lang)
                         ->get();
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -54,31 +54,28 @@ class CategoryController extends Controller
         return back();
     }
 
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
+    public function update($id,Request $request)
     {
-        return view('post::show');
-    }
+        $request->validate([
+            'title'    => 'required',
+            'language' => 'required',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('post::edit');
-    }
+        $parent = $request->parent;
+        if($request->parent == ""){
+            $parent = null;
+        }
 
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
+        $cat = Category::find($id);
+        $cat->title = $request->title;
+        $cat->lang_id = $request->language;
+        $cat->parent_id = $parent;
+        $cat->save();
+
+        Session::flash('success' , 'Category was Updated successfuly');
+        return back();
+
+
     }
 
     /**

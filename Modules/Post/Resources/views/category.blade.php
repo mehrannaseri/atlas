@@ -45,7 +45,7 @@
                             <td>{{($cat->parent_id != null ? $cat->parent->title : '-' )}}</td>
                             <td>{{$cat->lang->title}}</td>
                             <td>
-                                <a href="" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
+                                <a href="javascript:void(0)" onclick="editCategory({{$cat}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
                                 <a href="" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
@@ -71,7 +71,7 @@
                         <form id="modal_form" action="{{asset('panel/post/category/add')}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group">
-                                <select onchange="parentByLang(this.value)" name="language" id="language" class="form-control">
+                                <select onchange="parentByLang(this.value,'')" name="language" id="language" class="form-control">
                                     <option selected hidden disabled="" value="">Select language</option>
                                     @foreach($languages as $language)
                                         <option value="{{$language->id}}">{{$language->title.' ( '.$language->flag.' )'}}</option>
