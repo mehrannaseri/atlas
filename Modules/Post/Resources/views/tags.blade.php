@@ -30,7 +30,6 @@
                     <tr>
                         <th>#</th>
                         <th>Title</th>
-                        <th>Parent</th>
                         <th>Language</th>
                         <th width="200">Action</th>
                     </tr>
@@ -39,15 +38,14 @@
                     <?php
                         $counter = 1;
                     ?>
-                    @foreach($categories as $cat)
+                    @foreach($tags as $tag)
                         <tr>
                             <td>{{$counter}}</td>
-                            <td>{{$cat->title}}</td>
-                            <td>{{($cat->parent_id != null ? $cat->parent->title : '-' )}}</td>
-                            <td>{{$cat->lang->title}}</td>
+                            <td>{{$tag->title}}</td>
+                            <td>{{$tag->lang->title}}</td>
                             <td>
-                                <a href="javascript:void(0)" onclick="editCategory({{$cat}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
-                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/category/remove/'.$cat->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                <a href="javascript:void(0)" onclick="editCategory({{$tag}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
+                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/category/remove/'.$tag->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                         <?php

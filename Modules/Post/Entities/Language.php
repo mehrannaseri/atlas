@@ -12,4 +12,9 @@ class Language extends Model
     {
         return $this->hasMany(Category::class , 'lang_id');
     }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class , 'lang_id');
+    }
 }

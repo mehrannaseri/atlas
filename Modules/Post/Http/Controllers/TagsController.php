@@ -19,8 +19,8 @@ class TagsController extends Controller
     public function index()
     {
         $languages = Language::all();
-        $categories = Category::all();
-        return view('post::tags' , compact('languages' , 'categories'));
+        $tags = Tag::all();
+        return view('post::tags' , compact('languages' , 'tags'));
     }
 
     public function store(Request $request)

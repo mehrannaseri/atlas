@@ -12,4 +12,9 @@ class Tag extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function lang()
+    {
+        return $this->belongsTo(Language::class);
+    }
 }
