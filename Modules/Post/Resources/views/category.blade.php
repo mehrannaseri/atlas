@@ -80,7 +80,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" name="title" id="title" placeholder="" type="text">
+                                <input class="form-control" name="title" id="title" placeholder="Category title" type="text">
                             </div>
                             <div class="form-group">
                                 <select name="parent" id="parent" class="form-control">

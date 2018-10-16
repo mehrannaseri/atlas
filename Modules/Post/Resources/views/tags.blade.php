@@ -44,8 +44,8 @@
                             <td>{{$tag->title}}</td>
                             <td>{{$tag->lang->title}}</td>
                             <td>
-                                <a href="javascript:void(0)" onclick="editCategory({{$tag}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
-                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/category/remove/'.$tag->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                <a href="javascript:void(0)" onclick="editTag({{$tag}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
+                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/tag/remove/'.$tag->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                         <?php
@@ -78,7 +78,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" name="title" id="title" placeholder="" type="text">
+                                <input class="form-control" name="title" id="title" placeholder="Tag title" type="text">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>

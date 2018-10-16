@@ -40,37 +40,23 @@ class TagsController extends Controller
 
     }
 
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
+    public function update($id,Request $request)
     {
-        return view('post::show');
+        $tag = Tag::find($id);
+
+        $request->validate([
+            'title'    => 'required|unique:tags,title,'.$tag->id,
+            'language' => 'required'
+        ]);
+
+        $tag->title = $request->title;
+        $tag->lang_id = $request->language;
+        $tag->save();
+
+        Session::flash('success' , 'Tag was updated successfuly');
+        return back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('post::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
     public function destroy()
     {
     }
