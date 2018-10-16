@@ -37,7 +37,7 @@ function parentByLang(lang,cat) {
 
 function editCategory(cat) {
     parentByLang(cat.lang_id,cat);
-
+    show_modal();
     document.getElementById("title").value = cat.title;
     document.getElementById("language").value = cat.lang_id;
 
