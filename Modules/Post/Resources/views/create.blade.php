@@ -48,7 +48,7 @@
                             <div class="form-group col-md-3 col-xs-3">
                                 <div class="upload-btn-wrapper">
                                     <button class="btn1">Upload new images</button>
-                                    <input type="file" onchange="CountSelected()" id="file_select" name="files[]" multiple />
+                                    <input type="file" accept="image/jpeg,image/png" onchange="CountSelected()" id="file_select" name="files[]" multiple />
                                 </div>
                             </div>
                             <list style="display: none" class="new_file alert-info" id="count_files"></list>

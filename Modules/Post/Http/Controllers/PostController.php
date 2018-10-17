@@ -47,6 +47,11 @@ class PostController extends Controller
            'language'    => 'required',
            'title'       => 'required',
            'category'    => 'required',
+           'files'       => 'required_if:old_files,|mimes:jpeg,png',
+           'old_files'   => 'required_if:files,',
+        ],[
+            'files.required_if'     => 'Selecting at least one new file or selecting from previous files is essential',
+            'old_files.required_if' => 'Selecting at least one new file or selecting from previous files is essential'
         ]);
 
         $post = $this->AddPost($request);
