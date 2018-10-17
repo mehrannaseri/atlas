@@ -69,3 +69,13 @@
     padding: 7px;
     border-radius: 5px;
 }
+.tumb-img{
+    padding: 20px;
+}
+.checkbox-img{
+    position: relative;
+
+    top: 42px;
+
+    left: 25px;
+}

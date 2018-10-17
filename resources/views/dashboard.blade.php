@@ -20,17 +20,7 @@
                     <h3 class="box-title">Languages management</h3>
                 </div>
                 <!-- /.box-header -->
-                @if(!empty($errors->first()))
-                    <div id="message_alert" class="alert alert-danger" role="alert">
-                        <span>{{ $errors->first() }}</span>
-                    </div>
-                @endif
-                @if (Session::has('success'))
-                    <div id="message_alert" class="alert alert-success">{{ Session::get('success') }}</div>
-                @endif
-                @if (Session::has('delete'))
-                    <div id="message_alert" class="alert alert-warning">{{ Session::get('delete') }}</div>
-                @endif
+                @include('layouts.message')
                 <div class="box-body">
                 <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
                     <ul class="todo-list ui-sortable">

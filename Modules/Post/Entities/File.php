@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class File extends Model
 {
-    protected $fillable = [];
+    protected $fillable = ['file_url' , 'description'];
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(Post::class);
     }
 }

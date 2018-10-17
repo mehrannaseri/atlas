@@ -85,22 +85,26 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">Add new language</h4>
+                        <h4 class="modal-title">Select image</h4>
                     </div>
-                    <div class="modal-body">
-                        <form id="modal_form" action="{{asset('panel/language')}}" method="post">
-                            {{csrf_field()}}
-                            <div class="form-group">
-                                <input class="form-control" name="language" id="language" placeholder="Language Title: English , kurdish" type="text">
+                    <div class="modal-body col-md-12 col-sm-12">
+                        @foreach($files as $file)
+                            <div class="col-md-5 col-sm-5">
+                                <div class="checkbox-img checkbox rounded-6 medium m-b-2">
+                                    <div class="checkbox-overlay">
+                                        <input type="checkbox" class="" />
+                                        <div class="checkbox-container">
+                                            <div class="checkbox-checkmark"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <img class="tumb-img" width="250" height="200" src="{{asset($file->file_url)}}">
                             </div>
-                            <div class="form-group">
-                                <input class="form-control" maxlength="2" name="flag" id="flag" placeholder="Language flag : en , ku" type="text">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
+
+                        @endforeach
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">close</button>
                     </div>
 
                 </div>
@@ -114,12 +118,18 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('/css/panel/bootstrap3-wysihtml5.css') }}">
+    <link rel="stylesheet" href="{{asset('/css/panel/beautiful-checkbox.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
 @stop
 
 @section('js')
     <script src="{{asset('/js/panel/bootstrap3-wysihtml5.all.js')}}"></script>
     <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                $("#message_alert").slideUp()
+            },3500);
+        });
         $(document).ready(function() {
             $('.select2').select2();
         });

@@ -10,12 +10,12 @@ class Post extends Model
 
     public function categories()
     {
-        return $this->hasmany(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function tags()
     {
-        return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
 
     public function comments()
@@ -25,7 +25,7 @@ class Post extends Model
 
     public function files()
     {
-        return $this->hasMany(File::class);
+        return $this->belongsToMany(File::class);
     }
 
     public function rates()
