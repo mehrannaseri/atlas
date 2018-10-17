@@ -71,5 +71,44 @@ function editTag(tag) {
 
 function CountSelected() {
     var files = document.getElementById("file_select").files;
-    alert(files.length);
+    document.getElementById('count_files').style.display = "";
+    document.getElementById('count_files').innerText = files.length+' Files selected';
+}
+
+function setDir(lang,elems) {
+    $.ajax({
+        type: "GET",
+        url: reqUrl+'/setDir',
+        dataType: 'text',
+        data: {'lang': lang , '_token' : token},
+        success: function(res) {
+            res = JSON.parse(res);
+            var result = "";
+            for(var j = 0 ; j < res[0].categories.length ; j++){
+                result += '<option value="'+res[0].categories[j].id+'">'+res[0].categories[j].title+'</option>';
+            }
+            document.getElementById('category').innerHTML = result;
+            result = '';
+            for(var k = 0 ; k < res[0].tags.length ; k++){
+                result += '<option value="'+res[0].tags[k].id+'">'+res[0].tags[k].title+'</option>';
+            }
+            document.getElementById('tag').innerHTML = result;
+            if(res[0].flag === 'ku' || res[0].flag === 'fa' || res[0].flag === 'ar'){
+                for(var i = 0 ; i < elems.length ; i++){
+                    document.getElementById(elems[i]).dir = 'rtl';
+                }
+                var test = document.getElementsByClassName("wysihtml5-sandbox");
+                var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
+                elmnt.dir = 'rtl';
+            }
+            else{
+                for(var i = 0 ; i < elems.length ; i++){
+                    document.getElementById(elems[i]).dir = 'ltr';
+                }
+                var test = document.getElementsByClassName("wysihtml5-sandbox");
+                var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
+                elmnt.dir = 'ltr';
+            }
+        }
+    });
 }

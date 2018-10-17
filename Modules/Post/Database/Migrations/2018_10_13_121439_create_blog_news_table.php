@@ -19,7 +19,6 @@ class CreateBlogNewsTable extends Migration
            $table->string('title',250);
            $table->text('body');
            $table->integer('lang_id')->unsigned()->index();
-           $table->string('image_url');
            $table->integer('user_id');
            $table->timestamps();
         });

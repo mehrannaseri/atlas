@@ -51,4 +51,21 @@
     top: 0;
     opacity: 0;
 }
+.new_file{
+    position: absolute;
 
+    left: 29px;
+
+    top: 50px;
+    padding: 7px;
+    border-radius: 5px;
+}
+.old_file{
+    position: absolute;
+
+    left: 324px;
+
+    top: 50px;
+    padding: 7px;
+    border-radius: 5px;
+}

@@ -16,44 +16,38 @@ class PostController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
+
     public function index()
     {
 
         return view('post::index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
     public function create()
     {
         $languages = Language::all();
 
-        $categories = Category::all();
 
-        $tags = Tag::all();
-
-        return view('post::create' , compact('languages' , 'categories' , 'tags'));
+        return view('post::create' , compact('languages'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
+    public function setDir(Request $request)
+    {
+        return Language::with('tags')->with('categories')->where('id' , $request->lang)->get();
+    }
+
     public function store(Request $request)
     {
+
+        $request->validate([
+           'language'    => 'required',
+           'title'       => 'required',
+           'category'    => 'required',
+        ]);
+
+
     }
 
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
     public function show()
     {
         return view('post::show');

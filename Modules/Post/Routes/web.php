@@ -12,7 +12,6 @@
 */
 
 Route::prefix('panel/post')->group(function() {
-    Route::get('/add', 'PostController@create');
     Route::get('/category' , 'CategoryController@index');
     Route::post('/category/getByLang' , 'CategoryController@catsBylang');
     Route::post('category/add' , 'CategoryController@store');
@@ -23,4 +22,8 @@ Route::prefix('panel/post')->group(function() {
     Route::post('tag/add' , 'TagsController@store');
     Route::post('tag/update/{id}' , 'TagsController@update');
     Route::get('tag/remove/{id}' , 'TagsController@destroy');
+
+    Route::get('/add', 'PostController@create');
+    Route::get('/setDir' , 'PostController@setDir');
+    Route::post('/store' , 'PostController@store');
 });
