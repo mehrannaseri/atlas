@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Post\Entities\Category;
 use Modules\Post\Entities\Language;
+use Modules\Post\Entities\Tag;
 
 class PostController extends Controller
 {
@@ -35,7 +36,9 @@ class PostController extends Controller
 
         $categories = Category::all();
 
-        return view('post::create' , compact('languages' , 'categories'));
+        $tags = Tag::all();
+
+        return view('post::create' , compact('languages' , 'categories' , 'tags'));
     }
 
     /**

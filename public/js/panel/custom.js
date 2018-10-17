@@ -68,3 +68,8 @@ function editTag(tag) {
 
     open_modal();
 }
+
+function CountSelected() {
+    var files = document.getElementById("file_select").files;
+    alert(files.length);
+}
