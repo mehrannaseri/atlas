@@ -15,7 +15,7 @@ class CreateNewsRatingTable extends Migration
     {
         Schema::create('rates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('rate');
+            $table->float('rate');
             $table->integer('post_id');
             $table->integer('user_id');
             $table->timestamps();

@@ -17,4 +17,9 @@ class Language extends Model
     {
         return $this->hasMany(Tag::class , 'lang_id');
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

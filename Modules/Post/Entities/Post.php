@@ -32,4 +32,9 @@ class Post extends Model
     {
         return $this->hasMany(Rate::class);
     }
+
+    public function lang()
+    {
+        return $this->belongsTo(Language::class , 'lang_id');
+    }
 }

@@ -9,6 +9,6 @@
         "Modules\\Post\\Providers\\PostServiceProvider"
     ],
     "aliases": [],
-    "files": [],
+    "files": ["Http/helpers.php"],
     "requires": []
 }

@@ -22,11 +22,10 @@
                         <th>Title</th>
                         <th>Language</th>
                         <th>Categories</th>
-                        <td>Tags</td>
+                        <th>Tags</th>
                         <th>Rate</th>
                         <th>Create Date</th>
                         <th>Images</th>
-                        <th></th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -34,6 +33,39 @@
                     <?php
                         $counter = 1;
                     ?>
+                    @foreach($posts as $post)
+                        <tr>
+                            <td>{{$counter}}</td>
+                            <td>{{$post->title}}</td>
+                            <td>{{$post->lang->title}}</td>
+                            <td>
+                                <ul class="tags1">
+                                    @foreach($post->categories as $category)
+                                        <li><a href="#">{{$category->title}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="tags">
+                                    @foreach($post->tags as $tag)
+                                        <li><a href="#">{{$tag->title}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                            <td>
+                                <a class="tooltips" href="#">
+
+                                    <div class="rating-box">
+                                        {{rate($post->rates)}}
+                                    </div>
+                                    <i>sdsfdf</i>
+                                </a>
+                            </td>
+                            <td>Create Date</td>
+                            <td>Images</td>
+                            <td>Action</td>
+                        </tr>
+                    @endforeach
                     </tbody>
 
                 </table>

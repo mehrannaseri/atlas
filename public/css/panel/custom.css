@@ -79,3 +79,212 @@
 
     left: 35px;
 }
+
+/*-----------------------*/
+* {
+    box-sizing: border-box;
+}
+
+.rating-box {
+    color: #f0f0f0;
+    height: 3rem;
+    position: relative;
+    bottom: 10px;
+}
+
+.rating-star {
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    position: relative;
+    display: block;
+    float: left;
+}
+
+.full-star:before {
+    color: #f2b01e;
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+}
+
+.empty-star:before {
+    content: "\2605";
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+}
+
+.half-star:before {
+    color: #f2b01e;
+    content: "\2605";
+    width: 50%;
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+}
+
+.half-star:after {
+    content: '\2605';
+    position: absolute;
+    left: 1.5rem;
+    width: 50%;
+    text-indent: -1.5rem;
+    overflow: hidden;
+}
+/*-----------------------*/
+a.tooltips {
+    position: relative;
+    display: inline;
+}
+a.tooltips i {
+    position: absolute;
+    width:140px;
+    color: #ffffff;
+    background: #000000;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    visibility: hidden;
+    border-radius: 6px;
+}
+a.tooltips i:after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    width: 0; height: 0;
+    border-top: 8px solid #000000;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+}
+a:hover.tooltips i {
+    visibility: visible;
+    opacity: 0.8;
+    bottom: 25px;
+    left: 90px;
+    margin-left: -76px;
+    z-index: 999;
+}
+
+/*-----------------------*/
+.tags1 {
+    margin-left: -45px;
+    list-style: none;
+}
+
+.tags1:before, .tags:after {
+    content: '';
+    display: table;
+}
+
+.tags1:after {
+    clear: both;
+}
+
+.tags1 li {
+    position: relative;
+    float: left;
+    margin: 0 0 8px 12px;
+}
+
+.tags1 li:active {
+    margin-top: 1px;
+    margin-bottom: 7px;
+}
+
+
+
+.tags1 a, .tags1 span {
+    display: block;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.tags1 a {
+    height: 26px;
+    line-height: 23px;
+    padding: 0 9px 0 8px;
+    font-size: 12px;
+    color: #555;
+    text-decoration: none;
+    text-shadow: 0 1px white;
+    background: #fafafa;
+    background-image: -webkit-linear-gradient(top, #fcfcfc, #f0f0f0);
+    background-image: -moz-linear-gradient(top, #fcfcfc, #f0f0f0);
+    background-image: -o-linear-gradient(top, #fcfcfc, #f0f0f0);
+    background-image: linear-gradient(to bottom, #fcfcfc, #f0f0f0);
+    -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+/*-----------------------*/
+.tags{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+.tags li, .tags a{
+    float:left;
+    height:24px;
+    line-height:24px;
+    position:relative;
+    font-size:11px;
+}
+
+.tags a{
+    font-family: "Open Sans", sans-serif;
+    margin-left:20px;
+    padding:0 10px 0 12px;
+    background:#0089e0;
+    color:#fff;
+    text-decoration:none;
+    -moz-border-radius-bottomright:4px;
+    -webkit-border-bottom-right-radius:4px;
+    border-bottom-right-radius:4px;
+    -moz-border-radius-topright:4px;
+    -webkit-border-top-right-radius:4px;
+    border-top-right-radius:4px;
+}
+
+.tags a:before{
+    content:"";
+    float:left;
+    position:absolute;
+    top:0;
+    left:-12px;
+    width:0;
+    height:0;
+    border-color:transparent #0089e0 transparent transparent;
+    border-style:solid;
+    border-width:12px 12px 12px 0;
+}
+
+.tags a:after{
+    content:"";
+    position:absolute;
+    top:10px;
+    left:0;
+    float:left;
+    width:4px;
+    height:4px;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    background:#fff;
+    -moz-box-shadow:-1px -1px 2px #004977;
+    -webkit-box-shadow:-1px -1px 2px #004977;
+    box-shadow:-1px -1px 2px #004977;
+}
+
+.tags a:hover {
+    background:#555;
+}
+
+.tags a:hover:before {
+    border-color:transparent #555 transparent transparent;
+}
+/*-----------------------*/

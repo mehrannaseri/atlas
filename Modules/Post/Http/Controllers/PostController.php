@@ -23,8 +23,12 @@ class PostController extends Controller
 
     public function index()
     {
-
-        return view('post::index');
+       $posts = Post::with('lang')
+                ->with('categories')
+                ->with('tags')
+                ->with('files')
+                ->get();
+       return view('post::index' , compact('posts'));
     }
 
     public function create()
