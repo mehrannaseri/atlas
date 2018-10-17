@@ -56,6 +56,11 @@ class PostController extends Controller
         if($request->has('tag')){
             $post->tags()->attach($request->tag);
         }
+        if($request->old_files != ""){
+            $files = explode(",",$request->old_files);
+            $this->addFilePost($post->id,$files);
+        }
+
         if($request->hasfile('files'))
         {
 

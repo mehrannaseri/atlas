@@ -112,3 +112,19 @@ function setDir(lang,elems) {
         }
     });
 }
+
+var old_files = [];
+function useImage(elem,file) {
+
+    if(elem.checked == true){
+        old_files.push(file);
+    }
+    else{
+        var index = old_files.indexOf(file);
+        old_files.splice(index, 1);
+    }
+    document.getElementById("counter").innerText = old_files.length;
+    document.getElementById("old_count_files").style.display = "";
+    document.getElementById("old_count_files").innerText = old_files.length+' Files selected';
+    document.getElementById("old_files").value = old_files;
+}

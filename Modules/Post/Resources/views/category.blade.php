@@ -10,17 +10,7 @@
 
     <button data-toggle="modal" onclick="show_modal()" data-target="#modal" class="btn btn-success">Add New Category</button>
 
-    @if(!empty($errors->first()))
-        <div id="message_alert" class="alert alert-danger" role="alert">
-            <span>{{ $errors->first() }}</span>
-        </div>
-    @endif
-    @if (Session::has('success'))
-        <div id="message_alert" class="alert alert-success">{{ Session::get('success') }}</div>
-    @endif
-    @if (Session::has('delete'))
-        <div id="message_alert" class="alert alert-warning">{{ Session::get('delete') }}</div>
-    @endif
+    @include('layouts.message')
     <section class="content container-fluid">
 
         <div class="box box-info">

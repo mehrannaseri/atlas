@@ -12,16 +12,12 @@
 
         <div class="box box-info">
             <div class="box">
-                @if(!empty($errors->first()))
-                    <div id="message_alert" class="alert alert-danger" role="alert">
-                        <span>{{ $errors->first() }}</span>
-                    </div>
-                @endif
+                @include('layouts.message')
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form role="form" action="{{asset('/panel/post/store')}}" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
-                    <input type="hidden" value="" name="old_files[]"/>
+                    <input type="hidden" id="old_files" value="" name="old_files"/>
                     <div class="box-body">
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputPassword1">Post Language</label>
@@ -48,7 +44,7 @@
                                 <option hidden disabled="">Please select language</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-12 col-xs-12">
+                        <div  class="form-group col-md-12 col-xs-12">
                             <div class="form-group col-md-3 col-xs-3">
                                 <div class="upload-btn-wrapper">
                                     <button class="btn1">Upload new images</button>
@@ -58,7 +54,7 @@
                             <list style="display: none" class="new_file alert-info" id="count_files"></list>
                             <div class="form-group col-md-3 col-xs-3">
                                 <div class="upload-btn-wrapper">
-                                    <input type="button" value="Use uploaded images" data-toggle="modal" onclick="show_modal()" data-target="#modal" class="btn1" />
+                                    <input type="button" value="Use uploaded images" data-toggle="modal" data-target="#modal" class="btn1" />
                                 </div>
                             </div>
                             <list style="display: none" class="old_file alert-info" id="old_count_files"></list>
@@ -87,21 +83,26 @@
                             <span aria-hidden="true">×</span></button>
                         <h4 class="modal-title">Select image</h4>
                     </div>
-                    <div class="modal-body col-md-12 col-sm-12">
-                        @foreach($files as $file)
-                            <div class="col-md-5 col-sm-5">
-                                <div class="checkbox-img checkbox rounded-6 medium m-b-2">
-                                    <div class="checkbox-overlay">
-                                        <input type="checkbox" class="" />
-                                        <div class="checkbox-container">
-                                            <div class="checkbox-checkmark"></div>
+                    <br>
+                    <list class="new_file alert-info"><span id="counter">0</span> file selected</list>
+                    <div  class="modal-body col-md-12 col-sm-12">
+                        <div style="max-height: 500px ; overflow: scroll">
+                            @foreach($files as $file)
+                                <div class="col-md-5 col-sm-5">
+                                    <div class=" checkbox rounded-6 medium m-b-2">
+                                        <div class=" checkbox-overlay">
+                                            <input type="checkbox" onchange="useImage(this,{{$file->id}})" id="myCheckbox1" />
+                                            <div class="checkbox-img checkbox-container">
+                                                <div class="checkbox-checkmark"></div>
+                                            </div>
+                                            <label for="myCheckbox1"><img class="tumb-img" width="250" height="200" src="{{asset($file->file_url)}}"></label>
+
                                         </div>
                                     </div>
                                 </div>
-                                <img class="tumb-img" width="250" height="200" src="{{asset($file->file_url)}}">
-                            </div>
 
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">close</button>
@@ -138,7 +139,7 @@
         });
         var reqUrl = '{{asset('panel/post/')}}';
         var token = '{{csrf_token()}}';
-        var old_files = [];
+
     </script>
 
     <script src="{{asset('/js/panel/custom.js')}}"></script>
