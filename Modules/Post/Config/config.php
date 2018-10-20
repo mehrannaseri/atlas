@@ -7,7 +7,7 @@ return [
     'icon'        => 'newspaper-o',
     'label'       => '',
     'label_color' => '',
-    'active'      => ['panel/post' , 'panel/post/add' , 'panel/post/category' , 'panel/post/tags'],
+    'active'      => ['panel/post' , 'panel/post/add' , 'panel/post/category' , 'panel/post/tags','panel/post/edit/*'],
     'submenu'     => [
         [
             'text'  => 'News list',
@@ -19,7 +19,7 @@ return [
             'text'   => 'Add News',
             'icon'   => 'plus',
             'url'    => 'panel/post/add',
-            'active' => ['panel/post/add'],
+            'active' => ['panel/post/add','panel/post/edit/*'],
 
         ],
         [
