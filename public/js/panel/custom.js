@@ -75,7 +75,7 @@ function CountSelected() {
     document.getElementById('count_files').innerText = files.length+' Files selected';
 }
 
-function setDir(lang,elems) {
+function setDir(lang,elems,edit = false) {
     $.ajax({
         type: "GET",
         url: reqUrl+'/setDir',
@@ -84,6 +84,9 @@ function setDir(lang,elems) {
         success: function(res) {
             res = JSON.parse(res);
             var result = "";
+            if(!edit){
+                $('.select2').val('').trigger("change");
+            }
             for(var j = 0 ; j < res[0].categories.length ; j++){
                 result += '<option value="'+res[0].categories[j].id+'">'+res[0].categories[j].title+'</option>';
             }
@@ -114,6 +117,7 @@ function setDir(lang,elems) {
 }
 
 var old_files = [];
+
 function useImage(elem,file) {
 
     if(elem.checked == true){
@@ -123,6 +127,7 @@ function useImage(elem,file) {
         var index = old_files.indexOf(file);
         old_files.splice(index, 1);
     }
+
     document.getElementById("counter").innerText = old_files.length;
     document.getElementById("old_count_files").style.display = "";
     document.getElementById("old_count_files").innerText = old_files.length+' Files selected';

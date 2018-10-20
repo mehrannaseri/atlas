@@ -43,5 +43,5 @@ function rate($rates){
 function rate_info($rates){
     $rating = rate($rates);
 
-    return $rating[1].' / '.sizeof($rates);
+    return round($rating[1],2).' / '.sizeof($rates);
 }

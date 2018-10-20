@@ -139,7 +139,6 @@
         });
         var reqUrl = '{{asset('panel/post/')}}';
         var token = '{{csrf_token()}}';
-
     </script>
 
     <script src="{{asset('/js/panel/custom.js')}}"></script>

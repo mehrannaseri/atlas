@@ -51,7 +51,7 @@ class PostController extends Controller
            'language'    => 'required',
            'title'       => 'required',
            'category'    => 'required',
-           'files'       => 'required_if:old_files,|mimes:jpeg,png',
+           'files.*'       => 'required_if:old_files,|mimes:jpeg,png',
            'old_files'   => 'required_if:files,',
         ],[
             'files.required_if'     => 'Selecting at least one new file or selecting from previous files is essential',
@@ -82,9 +82,11 @@ class PostController extends Controller
         return back();
     }
 
-    protected function AddPost($request)
+    protected function AddPost($request,$post = null)
     {
-        $post = new Post();
+        if($post == null) {
+            $post = new Post();
+        }
         $post->title = $request->title;
         $post->lang_id = $request->language;
         $post->body = $request->body;
@@ -125,16 +127,49 @@ class PostController extends Controller
             ->with('tags')
             ->with('files')
             ->first();
+
         return view('post::edit' , compact('post','languages' , 'files'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
+    public function update($id,Request $request)
     {
+
+        $request->validate([
+            'language'    => 'required',
+            'title'       => 'required',
+            'files.*'       => 'required_if:old_files,|mimes:jpeg,png',
+            'old_files'   => 'required_if:files,',
+        ],[
+            'files.required_if'     => 'Selecting at least one new file or selecting from previous files is essential',
+            'old_files.required_if' => 'Selecting at least one new file or selecting from previous files is essential'
+        ]);
+
+        $post = Post::find($id);
+        $this->AddPost($request,$post);
+
+        if($request->has('category')){
+            $post->categories()->detach();
+            $post->categories()->attach($request->category);
+        }
+        if($request->has('tag')){
+            $post->tags()->detach();
+            $post->tags()->attach($request->tag);
+        }
+
+        $post->files()->detach();
+        if($request->old_files != ""){
+            $files = explode(",",$request->old_files);
+            $this->addFilePost($post->id,$files);
+        }
+        if($request->hasfile('files'))
+        {
+            $data = $this->UploadFilePost($request->file('files'));
+            $this->addFilePost($post->id,$data);
+        }
+
+        Session::flash('success' , 'Post was updated successfuly');
+        return redirect()->route('list');
+
     }
 
     /**
