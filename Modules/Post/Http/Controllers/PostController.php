@@ -171,12 +171,17 @@ class PostController extends Controller
         return redirect()->route('list');
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
+    public function destroy($id)
     {
+        $post = Post::find($id);
+        $post->categories()->detach();
+        $post->files()->detach();
+        $post->tags()->detach();
+        $post->comments()->delete();
+        $post->rates()->delete();
+        $post->delete();
+
+        Session::flash('delete' , 'Post was deleted successfuly');
+        return back();
     }
 }

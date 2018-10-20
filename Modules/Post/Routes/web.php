@@ -29,4 +29,5 @@ Route::prefix('panel/post')->group(function() {
     Route::post('/store' , 'PostController@store');
     Route::get('/edit/{id}' , 'PostController@edit');
     Route::post('/update/{id}' , 'PostController@update');
+    Route::get('/delete/{id}' , 'PostController@destroy');
 });
