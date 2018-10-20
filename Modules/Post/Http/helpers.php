@@ -37,11 +37,10 @@ function rate($rates){
         $star .= '<span class="rating-star empty-star"></span>';
     }
 
-    return array($star,$rating);
+    return $star;
 }
 
 function rate_info($rates){
-    $rating = rate($rates);
 
-    return round($rating[1],2).' / '.sizeof($rates);
+    return sizeof($rates);
 }

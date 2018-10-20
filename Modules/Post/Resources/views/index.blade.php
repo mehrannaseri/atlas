@@ -56,9 +56,9 @@
                                 <a class="tooltips" href="#">
 
                                     <div class="rating-box">
-                                        {!! rate($post->rates)[0]!!}
+                                        {!! rate($post->rates) !!}
                                     </div>
-                                    <i>{!! rate_info($post->rates) !!}</i>
+                                    <i>{!! rate_info($post->rates) !!} <span class="fa fa-user"></span></i>
                                 </a>
                             </td>
                             <td>{{$post->created_at->format('Y-m-d')}}</td>
