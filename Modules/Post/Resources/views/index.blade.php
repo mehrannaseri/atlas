@@ -9,7 +9,8 @@
 @section('content')
 
     <a href="{{route('add')}}" class="btn btn-success">Add New Post</a>
-
+    <p><label for="age">Your age:</label><input id="age" title="We ask for your age only for statistical purposes."></p>
+    <p>Hover the field to see the tooltip.</p>
     @include('layouts.message')
     <section class="content container-fluid">
 
@@ -47,8 +48,17 @@
                             </td>
                             <td>
                                 <ul class="tags">
+                                    <?php
+                                    $showTag = 1;
+                                    ?>
                                     @foreach($post->tags as $tag)
                                         <li><a href="#">{{$tag->title}}</a></li>
+                                        @if($showTag > 3)
+                                            break;
+                                        @endif
+                                        <?php
+                                        $showTag++;
+                                        ?>
                                     @endforeach
                                 </ul>
                             </td>
@@ -113,16 +123,20 @@
 @stop
 
 @section('css')
+    <link rel="stylesheet" href="{{asset('/css/panel/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/alertify.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
 @stop
 
 @section('js')
+    <script src="{{asset('/js/panel/jquery-ui.js')}}"></script>
     <script>
         $(document).ready(function(){
             setTimeout(function(){
                 $("#message_alert").slideUp()
             },3500);
+
+            $( document ).tooltip();
 
             $('[data-toggle="tooltip"]').tooltip();
         });
