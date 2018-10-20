@@ -116,18 +116,16 @@ class PostController extends Controller
         $post->files()->attach($data);
     }
 
-    public function show()
+    public function edit($id)
     {
-        return view('post::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('post::edit');
+        $languages = Language::all();
+        $files = File::all();
+        $post = Post::where('id' , $id)
+            ->with('categories')
+            ->with('tags')
+            ->with('files')
+            ->first();
+        return view('post::edit' , compact('post','languages' , 'files'));
     }
 
     /**

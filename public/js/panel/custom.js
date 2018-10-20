@@ -128,3 +128,19 @@ function useImage(elem,file) {
     document.getElementById("old_count_files").innerText = old_files.length+' Files selected';
     document.getElementById("old_files").value = old_files;
 }
+
+function showGallery(files){
+    var result = '';
+    var files = JSON.parse(files);
+    for (var i = 0 ; i < files.length ; i++){
+
+        result += `<div class="col-md-5 col-sm-5">
+                        <div class=" checkbox rounded-6 medium m-b-2">
+                              <img class="tumb-img" width="250" height="200" src="`+reqUrl+files[i].file_url+`">
+                        </div>
+                    </div>`;
+    }
+
+    document.getElementById('show_img').innerHTML = result;
+    open_modal();
+}
