@@ -76,6 +76,9 @@
                                 </a>
                             </td>
                         </tr>
+                        <?php
+                        $counter++;
+                        ?>
                     @endforeach
                     </tbody>
 

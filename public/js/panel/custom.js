@@ -11,8 +11,9 @@ function open_modal() {
     });
 }
 
-function show_modal(){
+function show_modal(oldAction){
     document.getElementById('modal_form').reset();
+    document.getElementById('modal_form').setAttribute('action' , oldAction);
 }
 
 function parentByLang(lang,cat) {

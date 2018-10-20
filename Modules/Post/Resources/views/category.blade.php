@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <button data-toggle="modal" onclick="show_modal()" data-target="#modal" class="btn btn-success">Add New Category</button>
+    <button data-toggle="modal" onclick="show_modal('{{asset('panel/post/category/add')}}')" data-target="#modal" class="btn btn-success">Add New Category</button>
 
     @include('layouts.message')
     <section class="content container-fluid">

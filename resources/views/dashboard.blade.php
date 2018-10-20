@@ -43,7 +43,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix no-border">
-                    <button type="button" data-toggle="modal" onclick="show_modal()" data-target="#modal" class="btn btn-default pull-left"><i class="fa fa-plus"></i> New</button>
+                    <button type="button" data-toggle="modal" onclick="show_modal('{{asset('panel/language')}}')" data-target="#modal" class="btn btn-default pull-left"><i class="fa fa-plus"></i> New</button>
                 </div>
                 <!------------------  language modal ------------------->
                 <div class="modal fade" id="modal" style="display: none;">
