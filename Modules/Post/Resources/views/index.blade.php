@@ -6,6 +6,7 @@
     <h1>News list</h1>
 @stop
 
+
 @section('content')
 
     <a href="{{route('add')}}" class="btn btn-success">Add New Post</a>
@@ -79,12 +80,16 @@
                                 </ul>
                             </td>
                             <td>
+                                <?php
+                                $rateInfo = rate_info($post->rates);
+                                ?>
                                 <a class="tooltips" href="#">
-
-                                    <div class="rating-box">
-                                        {!! rate($post->rates) !!}
-                                    </div>
-                                    <i>{!! rate_info($post->rates) !!} <span class="fa fa-user"></span></i>
+                                    <div data-rating="{{$rateInfo[0]}}"  id="rateYo{{$counter}}"></div>
+                                    <div class="counter"></div>
+                                    <i>
+                                        {{ $rateInfo[0] }} <span class="fa fa-check-circle"></span>&nbsp; / &nbsp;
+                                        {{ $rateInfo[1] }} <span class="fa fa-user"></span>
+                                    </i>
                                 </a>
                             </td>
                             <td>{{$post->created_at->format('Y-m-d')}}</td>
@@ -140,12 +145,16 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('/css/panel/alertify.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/jquery.rateyo.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
 @stop
 
 @section('js')
     <script src="{{asset('/js/panel/popup.js')}}"></script>
+    <script src="{{asset('/js/jquery.rateyo.js')}}"></script>
     <script>
+        var sizePost = '{{sizeof($posts)}}';
+
         $(document).ready(function(){
             setTimeout(function(){
                 $("#message_alert").slideUp()
@@ -155,6 +164,23 @@
                 html: true
             });
         });
+            $(function () {
+                for(var i = 1; i<= sizePost ; i++) {
+                    var rate = $("#rateYo"+i).attr('data-rating');
+                    $("#rateYo"+i).rateYo({
+                        precision: rate,
+                        rating: rate,
+                        readOnly: true,
+                        maxValue: 5,
+                        numStars: 5,
+                        multiColor: {
+
+                            "startColor": "#FF0000", //RED
+                            "endColor"  : "#f39c12"  //GREEN
+                        }
+                    });
+                }
+            });
         $(function () {
             $('#example2').DataTable({
                 'paging'      : true,

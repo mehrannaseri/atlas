@@ -19,8 +19,8 @@ function rate($rates){
     else {
         $rating = 0;
     }
-
-    $rank = explode('.',$rating);
+    return $rating;
+    /*$rank = explode('.',$rating);
 
     $full = $rank[0];
     $half = (isset($rank[1]) ? ceil($rank[1]) : 0);
@@ -37,33 +37,11 @@ function rate($rates){
         $star .= '<span class="rating-star empty-star"></span>';
     }
 
-    return $star;
+    return $star;*/
 }
 
 function rate_info($rates){
 
-    return sizeof($rates);
+    return array(rate($rates),sizeof($rates));
 }
 
-function showTags($id,$tags){
-    $result = '<ul class="tags">';
-    $extra = '<ul class="tags">';
-    if(sizeof($tags) > 2){
-        for($i = 0 ; $i < 2 ; $i++){
-            $result .= '<li><a href="#">'.$tags[$i]['title'].'</a></li>';
-        }
-        for($j = 2 ; $j < sizeof($tags) ; $j++){
-            $extra .= '<li><a href="#">'.$tags[$j]["title"].'</a></li>';
-        }
-        
-        $showMore = '<li>First <span class="glyphicon glyphicon-question-sign append text-info tip" data-tip="'.$id.'" ></span></li>';
-    }
-    else{
-
-        foreach($tags as $tag){
-            $result .= '<li><a href="#">'.$tag->title.'</a></li>';
-        }
-    }
-    $result .= '</ul>';
-    return $result.($extra !== '' ? $showMore : '');
-}
