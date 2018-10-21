@@ -44,3 +44,26 @@ function rate_info($rates){
 
     return sizeof($rates);
 }
+
+function showTags($id,$tags){
+    $result = '<ul class="tags">';
+    $extra = '<ul class="tags">';
+    if(sizeof($tags) > 2){
+        for($i = 0 ; $i < 2 ; $i++){
+            $result .= '<li><a href="#">'.$tags[$i]['title'].'</a></li>';
+        }
+        for($j = 2 ; $j < sizeof($tags) ; $j++){
+            $extra .= '<li><a href="#">'.$tags[$j]["title"].'</a></li>';
+        }
+        
+        $showMore = '<li>First <span class="glyphicon glyphicon-question-sign append text-info tip" data-tip="'.$id.'" ></span></li>';
+    }
+    else{
+
+        foreach($tags as $tag){
+            $result .= '<li><a href="#">'.$tag->title.'</a></li>';
+        }
+    }
+    $result .= '</ul>';
+    return $result.($extra !== '' ? $showMore : '');
+}

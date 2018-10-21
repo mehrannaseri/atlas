@@ -9,14 +9,13 @@
 @section('content')
 
     <a href="{{route('add')}}" class="btn btn-success">Add New Post</a>
-    <p><label for="age">Your age:</label><input id="age" title="We ask for your age only for statistical purposes."></p>
-    <p>Hover the field to see the tooltip.</p>
+
     @include('layouts.message')
     <section class="content container-fluid">
 
         <div class="box box-info">
             <div class="box">
-                <table id="example2" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover table-responsive">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -47,19 +46,27 @@
                                 </ul>
                             </td>
                             <td>
+                                <?php
+                                $counter = 1; $title = '';
+                                ?>
                                 <ul class="tags">
-                                    <?php
-                                    $showTag = 1;
-                                    ?>
-                                    @foreach($post->tags as $tag)
-                                        <li><a href="#">{{$tag->title}}</a></li>
-                                        @if($showTag > 3)
-                                            break;
-                                        @endif
-                                        <?php
-                                        $showTag++;
-                                        ?>
-                                    @endforeach
+                                    @if(sizeof($post->tags) > 3)
+                                        <div class="popup-window">
+                                            <div class="popup-close x-close">&times;</div>
+                                            @foreach($post->tags as $tag)
+
+                                                <li class="li-pop"><a href="#">{{$tag->title}}</a></li>
+                                            @endforeach
+                                        </div>
+
+                                        <li><a href="#">{{$post->tags[0]['title']}}</a></li>
+                                        <li><a href="#">{{$post->tags[1]['title']}}</a></li>
+                                        <li><a href="#" class="popup-trigger">Pop Me</a></li>
+                                    @else
+                                        @foreach($post->tags as $tag)
+                                            <li><a href="#">{{$tag->title}}</a></li>
+                                        @endforeach
+                                    @endif
                                 </ul>
                             </td>
                             <td>
@@ -123,22 +130,21 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/css/panel/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/alertify.min.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
 @stop
 
 @section('js')
-    <script src="{{asset('/js/panel/jquery-ui.js')}}"></script>
+    <script src="{{asset('/js/panel/popup.js')}}"></script>
     <script>
         $(document).ready(function(){
             setTimeout(function(){
                 $("#message_alert").slideUp()
             },3500);
 
-            $( document ).tooltip();
-
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="tooltip"]').tooltip({
+                html: true
+            });
         });
         $(function () {
             $('#example2').DataTable({

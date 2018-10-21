@@ -288,3 +288,48 @@ a:hover.tooltips i {
     border-color:transparent #555 transparent transparent;
 }
 /*-----------------------*/
+.tooltip_templates { display: none; }
+.tooltip{
+
+    opacity: 1.2 !important;
+    line-height: 2 !important;
+}
+/*-----------------------*/
+.popup-window {
+    position: fixed;
+    display: none;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+
+    width: 530px;
+
+    height: 130px;
+    background: #ddd;
+    border: 1px solid #aaa;
+    box-shadow: 0  3px 15px 5px rgba(50,50,50,0.15)
+}
+.li-pop{
+    padding: 15px;
+}
+.popup-trigger {
+    display: block;
+    width: 100px;
+    text-align: center;
+    background: #aaa;
+    margin: 10px auto;
+    padding: 20px;
+    cursor: pointer;
+}
+.x-close {
+    font-size: 50px;
+    line-height: 1;
+    float: right;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+/*----------------------*/
