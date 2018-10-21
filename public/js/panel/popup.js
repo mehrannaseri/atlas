@@ -21,8 +21,13 @@ $(document).ready(function(){
     /* open #popup-window on click of .popup-trigger */
     /*-----------------------------------------------*/
 
-    $('.popup-trigger').on('click touchend', function(){
+    $('.popup-trigger').on('mouseover touchend', function(){
+        popupWindow = $("#popup-window"+this.id);
         fadein(popupWindow);
+    })
+
+    $('.popup-trigger').on('mouseleave touchend', function(){
+        fadeout(popupWindow);
     })
 
     /* close #popup-window on click of .popup-close */

@@ -46,22 +46,18 @@
                                 </ul>
                             </td>
                             <td>
-                                <?php
-                                $counter = 1; $title = '';
-                                ?>
                                 <ul class="tags">
                                     @if(sizeof($post->tags) > 3)
-                                        <div class="popup-window">
+                                        <div id="popup-window{{$post->id}}" class="popup-window">
                                             <div class="popup-close x-close">&times;</div>
                                             @foreach($post->tags as $tag)
-
                                                 <li class="li-pop"><a href="#">{{$tag->title}}</a></li>
                                             @endforeach
                                         </div>
 
                                         <li><a href="#">{{$post->tags[0]['title']}}</a></li>
                                         <li><a href="#">{{$post->tags[1]['title']}}</a></li>
-                                        <li><a href="#" class="popup-trigger">Pop Me</a></li>
+                                        <li><a href="#" id="{{$post->id}}" class="popup-trigger">&bull;&bull;&bull;</a></li>
                                     @else
                                         @foreach($post->tags as $tag)
                                             <li><a href="#">{{$tag->title}}</a></li>
