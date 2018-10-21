@@ -15,8 +15,8 @@
     <section class="content container-fluid">
 
         <div class="box box-info">
-            <div class="box">
-                <table id="example2" class="table table-bordered table-hover table-responsive">
+            <div class="box table-responsive">
+                <table id="example2" class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -102,7 +102,7 @@
                                 <a href="{{asset('panel/post/edit/'.$post->id)}}" data-toggle="tooltip" title="Edit post info" class="btn-sm btn-success">
                                     <i class="fa fa-edit"></i>
                                 </a>&nbsp;&nbsp;
-                                <a href="{{asset('panel/post/delete/'.$post->id)}}" data-toggle="tooltip" title="Delete post"  class="btn-sm btn-danger">
+                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/delete/'.$post->id)}}')" data-toggle="tooltip" title="Delete post"  class="btn-sm btn-danger">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
