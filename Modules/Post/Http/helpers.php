@@ -19,7 +19,7 @@ function rate($rates){
     else {
         $rating = 0;
     }
-    return $rating;
+    return round($rating,2);
     /*$rank = explode('.',$rating);
 
     $full = $rank[0];
