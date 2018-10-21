@@ -40,9 +40,22 @@
                             <td>{{$post->lang->title}}</td>
                             <td>
                                 <ul class="tags1">
-                                    @foreach($post->categories as $category)
-                                        <li><a href="#">{{$category->title}}</a></li>
-                                    @endforeach
+                                    @if(sizeof($post->categories) > 3)
+                                        <div id="popup-window{{'C'.$post->id}}" class="popup-window">
+                                            <div class="popup-close x-close">&times;</div>
+                                            @foreach($post->categories as $cat)
+                                                <li class="li-pop"><a href="#">{{$cat->title}}</a></li>
+                                            @endforeach
+                                        </div>
+
+                                        <li><a href="#">{{$post->categoris[0]['title']}}</a></li>
+                                        <li><a href="#">{{$post->categories[1]['title']}}</a></li>
+                                        <li><a href="#" id="{{'C'.$post->id}}" class="popup-trigger">&bull;&bull;&bull;</a></li>
+                                    @else
+                                        @foreach($post->categories as $cat)
+                                            <li><a href="#">{{$cat->title}}</a></li>
+                                        @endforeach
+                                    @endif
                                 </ul>
                             </td>
                             <td>
