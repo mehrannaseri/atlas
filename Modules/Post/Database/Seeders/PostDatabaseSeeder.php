@@ -17,5 +17,6 @@ class PostDatabaseSeeder extends Seeder
         Model::unguard();
 
         // $this->call("OthersTableSeeder");
+
     }
 }

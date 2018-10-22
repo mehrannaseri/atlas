@@ -39,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
             foreach ($arr_result as $module){
 
                 $menu = config(strtolower($module));
+
                 if(isset($menu['show']) && $menu['show'] === true) {
                     if(isset($menu['submenu'])) {
                         $item = [
@@ -50,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
                             'label_color' => (isset($menu['label_color']) ? $menu['label_color'] : ''),
                             'target' => (isset($menu['target']) ? $menu['target'] : ''),
                             'active' => (isset($menu['active']) ? $menu['active'] : ''),
-                            'submenu' => (isset($menu['submenu']) ? $menu['submenu'] : array())
+                            'submenu' => (isset($menu['submenu'])  ? $menu['submenu'] : array())
                         ];
                     }
                     else{
