@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Modules\Post\Entities\Language;
 use Nwidart\Modules\Facades\Module;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class DashboardController extends Controller
 {
@@ -34,53 +36,68 @@ class DashboardController extends Controller
 
     public function addLanguage(Request $request)
     {
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create language')) {
+            $this->validate($request, [
+                'language' => 'required',
+                'flag' => 'required|max:2|unique:languages'
+            ], [
+                'language.required' => 'The Title field is required.'
+            ]);
 
-        $this->validate($request , [
-            'language' => 'required',
-            'flag'     => 'required|max:2|unique:languages'
-        ],[
-            'language.required' => 'The Title field is required.'
-        ]);
+            $language = new Language();
 
-        $language = new Language();
+            $language->title = $request->language;
+            $language->flag = $request->flag;
+            $language->save();
 
-        $language->title = $request->language;
-        $language->flag = $request->flag;
-        $language->save();
+            Session::flash('success', 'New language was added to site successfuly');
 
-        Session::flash('success' , 'New language was added to site successfuly');
-
-        return back();
+            return back();
+        }
+        else{
+            return view('layouts.error.403');
+        }
     }
 
     public function update($id,Request $request)
     {
-        $lang = Language::findOrfail($id);
-        $this->validate($request , [
-            'language' => 'required',
-            'flag'     => 'required|max:2|unique:languages,flag,'.$lang->id,
-        ],[
-            'language.required' => 'The Title field is required.'
-        ]);
+        if(auth()->user()->hasRole('admin') ||
+            (auth()->user()->hasRole('staff') && auth()->user()->hasPermissionTo('update language'))) {
+            $lang = Language::findOrfail($id);
+            $this->validate($request, [
+                'language' => 'required',
+                'flag' => 'required|max:2|unique:languages,flag,' . $lang->id,
+            ], [
+                'language.required' => 'The Title field is required.'
+            ]);
 
-        $lang->title = $request->language;
-        $lang->flag = $request->flag;
-        $lang->save();
+            $lang->title = $request->language;
+            $lang->flag = $request->flag;
+            $lang->save();
 
-        Session::flash('success' , 'The language was Updated successfuly');
+            Session::flash('success', 'The language was Updated successfuly');
 
-        return back();
+            return back();
+        }
+        else{
+            return view('layouts.error.403');
+        }
     }
 
     public function delete($id)
     {
-        $lang = Language::findOrfail($id);
+        if(auth()->user()->hasRole('admin') ||
+            (auth()->user()->hasRole('staff') && auth()->user()->hasPermissionTo('update language'))) {
+            $lang = Language::findOrfail($id);
 
-        $lang->delete();
+            $lang->delete();
 
-        Session::flash('delete' , 'The language was removed from list');
+            Session::flash('delete' , 'The language was removed from list');
 
-        return back();
-
+            return back();
+        }
+        else{
+            return view('layouts.error.403');
+        }
     }
 }
