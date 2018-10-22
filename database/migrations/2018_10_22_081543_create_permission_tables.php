@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -29,6 +30,26 @@ class CreatePermissionTables extends Migration
             $table->string('guard_name');
             $table->timestamps();
         });
+        //-------------------------- add atlas roles-------------------------//
+        DB::table($tableNames['roles'])->insert(array(
+            [
+                'name'   => 'admin',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],[
+                'name'   => 'staff',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],[
+                'name'   => 'visitor',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ])
+        );
+        //------------------------------------------------------------------//
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedInteger('permission_id');
