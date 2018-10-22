@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Modules\Post\Entities\Language;
+use Nwidart\Modules\Facades\Module;
 
 class DashboardController extends Controller
 {
@@ -25,6 +26,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+
         $languages = Language::all();
 
         return view('dashboard' , compact('languages'));
