@@ -14,7 +14,32 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
-        $permissions = array([
+        /*$permissions = array([
+            'name'=>'show language',
+            'guard_name'=>'web',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ],[
+            'name'=>'add language',
+            'guard_name'=>'web',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ],[
+            'name'=>'edit language',
+            'guard_name'=>'web',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ],[
+            'name'=>'delete language',
+            'guard_name'=>'web',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ],[
+            'name'=>'show news',
+            'guard_name'=>'web',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ],[
             'name'=>'add news',
             'guard_name'=>'web',
             'created_at'=>now(),
@@ -30,6 +55,11 @@ class DatabaseSeeder extends Seeder
             'created_at'=>now(),
             'updated_at'=>now(),
         ],[
+            'name'=>'show category',
+            'guard_name'=>'web',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ],[
             'name'=>'add category',
             'guard_name'=>'web',
             'created_at'=>now(),
@@ -41,6 +71,11 @@ class DatabaseSeeder extends Seeder
             'updated_at'=>now(),
         ],[
             'name'=>'delete category',
+            'guard_name'=>'web',
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ],[
+            'name'=>'show tag',
             'guard_name'=>'web',
             'created_at'=>now(),
             'updated_at'=>now(),
@@ -69,6 +104,6 @@ class DatabaseSeeder extends Seeder
                 'guard_name' => $permission['guard_name'],
             ]);
 
-        }
+        }*/
     }
 }

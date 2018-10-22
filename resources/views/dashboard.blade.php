@@ -13,6 +13,7 @@
             <!-- TO DO List -->
 
             <!-- Map box -->
+
             <div class="box box-primary" style="position: relative; left: 0px; top: 0px;">
                 <div class="box-header ui-sortable-handle" style="cursor: move;">
                     <i class="ion ion-clipboard"></i>
