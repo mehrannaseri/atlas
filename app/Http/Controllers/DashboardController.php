@@ -28,10 +28,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->hasRole(['admin','staff'])) {
+            $languages = Language::all();
 
-        $languages = Language::all();
-
-        return view('dashboard' , compact('languages'));
+            return view('dashboard', compact('languages'));
+        }
+        else{
+            return view('layouts.error.404');
+        }
     }
 
     public function addLanguage(Request $request)
@@ -87,7 +91,7 @@ class DashboardController extends Controller
     public function delete($id)
     {
         if(auth()->user()->hasRole('admin') ||
-            (auth()->user()->hasRole('staff') && auth()->user()->hasPermissionTo('update language'))) {
+            (auth()->user()->hasRole('staff') && auth()->user()->hasPermissionTo('destroy language'))) {
             $lang = Language::findOrfail($id);
 
             $lang->delete();

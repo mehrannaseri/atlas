@@ -1,4 +1,11 @@
-@extends('layouts.master')
+@extends('adminlte::page')
+
+@section('title', 'Atlas panel')
+
+@section('content_header')
+
+@stop
+
 @section('content')
 <div class="content-wrapper" style="min-height: 1125.9px;">
     <!-- Content Header (Page header) -->
@@ -23,10 +30,10 @@
 
                 <p>
                     We could not find the page you were looking for.
-                    Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+                    Meanwhile, you may <a href="{{asset('/')}}">return to Home</a> or try using the search form.
                 </p>
 
-                <form class="search-form">
+                <!--<form class="search-form">
                     <div class="input-group">
                         <input name="search" class="form-control" placeholder="Search" type="text">
 
@@ -35,8 +42,8 @@
                             </button>
                         </div>
                     </div>
-                    <!-- /.input-group -->
-                </form>
+
+                </form>-->
             </div>
             <!-- /.error-content -->
         </div>
@@ -44,4 +51,19 @@
     </section>
     <!-- /.content -->
 </div>
-@endsection
+@stop
+@section('css')
+    <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
+@stop
+@section('js')
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                $("#message_alert").slideUp()
+            },3500);
+        });
+        var reqUrl = '{{asset('panel')}}';
+    </script>
+
+    <script src="{{asset('/js/panel/custom.js')}}"></script>
+@stop
