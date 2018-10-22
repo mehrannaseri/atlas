@@ -21,6 +21,33 @@ class CreateLanguagesTable extends Migration
             $table->timestamps();
         });
 
+        DB::table('permissions')->insert(array(
+            [
+                'name'          => 'read language',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'create language',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated-at'    => now()
+            ],
+            [
+                'name'          => 'update language',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'destroy language',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+        ));
+
         DB::table('languages')->insert(
             array(
                 'title' => 'english',

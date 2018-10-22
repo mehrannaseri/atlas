@@ -22,6 +22,33 @@ class CreateNewsCommentTable extends Migration
             $table->string('commentator_email' , 60)->nullable();
             $table->timestamps();
         });
+
+        DB::table('permissions')->insert(array(
+            [
+                'name'          => 'read comment',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'create comment',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'update comment',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'destroy comment',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+        ));
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,6 +23,33 @@ class CreateBlogNewsTable extends Migration
            $table->integer('user_id');
            $table->timestamps();
         });
+
+        DB::table('permissions')->insert(array(
+            [
+                'name'          => 'read post',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'create post',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'update post',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'destroy post',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+        ));
     }
 
     /**

@@ -19,6 +19,34 @@ class CreateNewsTagTable extends Migration
             $table->integer('lang_id')->unsigned()->index();
             $table->timestamps();
         });
+
+        DB::table('permissions')->insert(array(
+            [
+                'name'          => 'read tag',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'create tag',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'update tag',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'destroy tag',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+        ));
+
         Schema::create('post_tag',function (Blueprint $table){
             $table->integer('post_id');
             $table->integer('tag_id');

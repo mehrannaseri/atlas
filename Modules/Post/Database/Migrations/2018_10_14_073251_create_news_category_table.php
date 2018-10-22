@@ -21,6 +21,33 @@ class CreateNewsCategoryTable extends Migration
             $table->timestamps();
         });
 
+        DB::table('permissions')->insert(array(
+            [
+                'name'          => 'read category',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'create category',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'update category',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+            [
+                'name'          => 'destroy category',
+                'guard_name'    => 'web',
+                'created_at'    => now(),
+                'updated_at'    => now()
+            ],
+        ));
+
         Schema::create('category_post',function (Blueprint $table){
             $table->integer('post_id');
             $table->integer('category_id');
