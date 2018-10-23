@@ -150,3 +150,80 @@ function showGallery(files){
     document.getElementById('show_img').innerHTML = result;
     open_modal();
 }
+var permissions = [];
+var deletePermissions = [];
+var oldPermissions = [];
+function permission(elem,id){
+    if(elem.checked == true){
+        permissions.push(id);
+    }
+    else{
+        var delIndex = oldPermissions.indexOf(id);
+        if(delIndex != -1){
+            var deleted = oldPermissions[delIndex];
+            deletePermissions.push(deleted);
+        }
+        else{
+            var index = permissions.indexOf(id);
+            permissions.splice(index, 1);
+        }
+
+    }
+}
+
+function permissionUser(user) {
+    var data = document.getElementById(user).getAttribute("data-content");
+    data = JSON.parse(data);
+    permissions = [];
+    deletePermissions = []
+    $(".atlasPermission").prop('checked' , false);
+    if(data.length > 0){
+        for(var i = 0 ; i < data.length ; i++){
+            oldPermissions.push(data[i].id);
+            $("#"+data[i].id).prop('checked' , true);
+        }
+    }
+}
+
+function saveChanges(url){
+    var selected_user = document.getElementById("user");
+    var message_alert = document.getElementById("message_alert");
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "POST");
+    form.setAttribute("action", url);
+    form.setAttribute("target", "_self");
+
+    var user = document.createElement("input");
+    user.setAttribute("type", "hidden");
+    user.setAttribute("name", "user");
+    user.setAttribute("value", selected_user.value);
+
+    var permission = document.createElement("input");
+    permission.setAttribute("type", "hidden");
+    permission.setAttribute("name", "permissions");
+    permission.setAttribute("value", permissions);
+
+    var deletedPermission = document.createElement("input");
+    deletedPermission.setAttribute("type", "hidden");
+    deletedPermission.setAttribute("name", "deletedPermission");
+    deletedPermission.setAttribute("value", deletePermissions);
+    form.appendChild(permission);
+    form.appendChild(deletedPermission);
+    form.appendChild(user);
+
+    if(selected_user.value == ""){
+        message_alert.style.display = "";
+        message_alert.innerText = "Please select user to change permission";
+    }
+    else if(permissions.length == 0){
+        message_alert.style.display = "";
+        message_alert.innerText = "There is no change to save";
+    }
+    else{
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form)
+    }
+
+}

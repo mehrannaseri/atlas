@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
+use Nwidart\Modules\Facades\Module;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -93,10 +95,17 @@ class StaffController extends Controller
         }
     }
 
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
+    public function access_level()
+    {
+        $users = User::all();
+        $permissions = Permission::all();
+
+        $list = Module::all();
+        $result = implode(",",$list);
+        $modules = explode("," , $result);
+
+        return view('staff::access_level' , compact('users','permissions' , 'modules'));
+    }
     public function show()
     {
         return view('staff::show');

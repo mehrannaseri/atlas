@@ -75,13 +75,10 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('/css/panel/alertify.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/jquery.rateyo.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
 @stop
 
 @section('js')
-    <script src="{{asset('/js/panel/popup.js')}}"></script>
-    <script src="{{asset('/js/jquery.rateyo.js')}}"></script>
     <script>
 
         $(document).ready(function(){
