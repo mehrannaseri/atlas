@@ -8,8 +8,9 @@
 
 
 @section('content')
-
-    <a href="{{route('add')}}" class="btn btn-success">Add New Post</a>
+    @if(auth()->user()->hasRole('admin') || auth()->user()->can('create post'))
+        <a href="{{route('add')}}" class="btn btn-success">Add New Post</a>
+    @endif
 
     @include('layouts.message')
     <section class="content container-fluid">
@@ -99,12 +100,16 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{asset('panel/post/edit/'.$post->id)}}" data-toggle="tooltip" title="Edit post info" class="btn-sm btn-success">
-                                    <i class="fa fa-edit"></i>
-                                </a>&nbsp;&nbsp;
-                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/delete/'.$post->id)}}')" data-toggle="tooltip" title="Delete post"  class="btn-sm btn-danger">
-                                    <i class="fa fa-trash"></i>
-                                </a>
+                                @if(auth()->user()->hasRole('admin') || auth()->user()->can('update post'))
+                                    <a href="{{asset('panel/post/edit/'.$post->id)}}" data-toggle="tooltip" title="Edit post info" class="btn-sm btn-success">
+                                        <i class="fa fa-edit"></i>
+                                    </a>&nbsp;
+                                @endif&nbsp;
+                                @if(auth()->user()->hasRole('admin') || auth()->user()->can('destroy post'))
+                                    <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/delete/'.$post->id)}}')" data-toggle="tooltip" title="Delete post"  class="btn-sm btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                         <?php

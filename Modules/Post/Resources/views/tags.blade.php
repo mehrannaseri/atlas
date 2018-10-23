@@ -7,9 +7,9 @@
 @stop
 
 @section('content')
-
-    <button data-toggle="modal" onclick="show_modal('{{asset('panel/post/tag/add')}}')" data-target="#modal" class="btn btn-success">Add New Tag</button>
-
+    @if(auth()->user()->hasRole('admin') || auth()->user()->can('create tag'))
+        <button data-toggle="modal" onclick="show_modal('{{asset('panel/post/tag/add')}}')" data-target="#modal" class="btn btn-success">Add New Tag</button>
+    @endif
     @include('layouts.message')
     <section class="content container-fluid">
 
@@ -34,8 +34,12 @@
                             <td>{{$tag->title}}</td>
                             <td>{{$tag->lang->title}}</td>
                             <td>
-                                <a href="javascript:void(0)" onclick="editTag({{$tag}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
-                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/tag/remove/'.$tag->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                @if(auth()->user()->hasRole('admin') || auth()->user()->can('update tag'))
+                                    <a href="javascript:void(0)" onclick="editTag({{$tag}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
+                                @endif
+                                @if(auth()->user()->hasRole('admin') || auth()->user()->can('destroy tag'))
+                                    <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/tag/remove/'.$tag->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                @endif
                             </td>
                         </tr>
                         <?php

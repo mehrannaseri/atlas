@@ -7,9 +7,9 @@
 @stop
 
 @section('content')
-
-    <button data-toggle="modal" onclick="show_modal('{{asset('panel/post/category/add')}}')" data-target="#modal" class="btn btn-success">Add New Category</button>
-
+    @if(auth()->user()->hasRole('admin') || auth()->user()->can('create category'))
+        <button data-toggle="modal" onclick="show_modal('{{asset('panel/post/category/add')}}')" data-target="#modal" class="btn btn-success">Add New Category</button>
+    @endif
     @include('layouts.message')
     <section class="content container-fluid">
 
@@ -36,8 +36,12 @@
                             <td>{{($cat->parent_id != null ? $cat->parent->title : '-' )}}</td>
                             <td>{{$cat->lang->title}}</td>
                             <td>
-                                <a href="javascript:void(0)" onclick="editCategory({{$cat}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
-                                <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/category/remove/'.$cat->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                @if(auth()->user()->hasRole('admin') || auth()->user()->can('update category'))
+                                    <a href="javascript:void(0)" onclick="editCategory({{$cat}})" class="btn-sm btn-info"><i class="fa fa-edit"></i> Edit</a>
+                                @endif
+                                @if(auth()->user()->hasRole('admin') || auth()->user()->can('destroy category'))
+                                    <a href="javascript:void(0)" onclick="remove('{{asset('panel/post/category/remove/'.$cat->id)}}')" class="btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                                @endif
                             </td>
                         </tr>
                         <?php

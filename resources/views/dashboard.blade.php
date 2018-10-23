@@ -33,19 +33,23 @@
 
                                     <!-- General tools such as edit or delete-->
                                     <div class="tools">
-                                        <a href="javascript:void(0)" onclick="editLanguage({{$language->id}},'{{$language->title}}' , '{{$language->flag}}')"><i class="fa fa-edit"></i></a>
-                                        &nbsp;
-                                        <a href="{{asset('panel/language/remove/'.$language->id)}}"><i class="fa fa-trash-o"></i></a>
-
+                                        @if(auth()->user()->hasRole('admin') || auth()->user()->can('update language'))
+                                            <a href="javascript:void(0)" onclick="editLanguage({{$language->id}},'{{$language->title}}' , '{{$language->flag}}')"><i class="fa fa-edit"></i></a>
+                                        &nbsp;@endif
+                                        @if(auth()->user()->hasRole('admin') || auth()->user()->can('destroy language'))
+                                            <a href="{{asset('panel/language/remove/'.$language->id)}}"><i class="fa fa-trash-o"></i></a>
+                                        @endif
                                     </div>
                                 </li>
                             @endforeach
                         </ul>
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer clearfix no-border">
-                        <button type="button" data-toggle="modal" onclick="show_modal('{{asset('panel/language')}}')" data-target="#modal" class="btn btn-default pull-left"><i class="fa fa-plus"></i> New</button>
-                    </div>
+                    @if(auth()->user()->hasRole('admin') || auth()->user()->can('create language'))
+                        <div class="box-footer clearfix no-border">
+                            <button type="button" data-toggle="modal" onclick="show_modal('{{asset('panel/language')}}')" data-target="#modal" class="btn btn-default pull-left"><i class="fa fa-plus"></i> New</button>
+                        </div>
+                    @endif
                     <!------------------  language modal ------------------->
                     <div class="modal fade" id="modal" style="display: none;">
                         <div class="modal-dialog">
