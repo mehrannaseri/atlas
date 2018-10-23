@@ -28,11 +28,11 @@
                         </div>
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputEmail1">Mobile</label>
-                            <input class="form-control" value="{{old('mobile')}}" name="mobile" id="" placeholder="Enter mobile number" type="text">
+                            <input class="form-control" value="{{old('mobile')}}" name="mobile" id="mobile" onkeypress ="return check_number(event,this.id)" placeholder="Enter mobile number" type="text">
                         </div>
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputEmail1">Email</label>
-                            <input class="form-control" value="{{old('email')}}" name="email" id="" placeholder="Enter email" type="text">
+                            <input class="form-control" value="{{old('email')}}" name="email" id="" placeholder="Enter email" type="email">
                         </div>
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputEmail1">Password</label>
@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputEmail1">Confirm Password</label>
-                            <input class="form-control" value="{{old('conf-pass')}}" name="conf-pass" id="" placeholder="Enter password again" type="password">
+                            <input class="form-control" value="{{old('password_confirmation ')}}" name="password_confirmation" id="" placeholder="Enter password again" type="password">
                         </div>
                         <div  class="form-group col-md-12 col-xs-12">
                             <div class="form-group col-md-3 col-xs-3">
@@ -78,5 +78,6 @@
     </script>
 
     <script src="{{asset('/js/panel/custom.js')}}"></script>
+    <script src="{{asset('/js/panel/validation.js')}}"></script>
 @stop
 
