@@ -11,14 +11,14 @@ return [
 
     'submenu'     => [
         [
-            'permission' => 'create post',
+            'permission' => 'read post',
             'text'  => 'News list',
             'icon'  => 'list',
             'url'   => 'panel/post',
             'active'=> ['panel/post']
         ],
         [
-            'permission' => 'add post',
+            'permission' => 'create post',
             'text'   => 'Add News',
             'icon'   => 'plus',
             'url'    => 'panel/post/add',

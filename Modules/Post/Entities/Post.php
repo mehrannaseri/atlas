@@ -3,9 +3,11 @@
 namespace Modules\Post\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Post extends Model
 {
+    protected $guard_name = 'web';
     protected $fillable = ['title' , 'body' , 'lang_id' , 'image_url' , 'user_id'];
 
     public function categories()

@@ -3,9 +3,13 @@
 namespace Modules\Post\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
 
 class Category extends Model
 {
+    use HasRoles;
+
+    protected  $guard_name = 'web';
     protected $fillable = ['title' , 'lang_id' , 'parent_id'];
 
     public function posts()

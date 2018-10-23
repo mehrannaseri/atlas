@@ -3,10 +3,14 @@
 namespace Modules\Post\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasPermissions;
 
 class Tag extends Model
 {
-    protected $fillable = [];
+    use HasRoles;
+    protected $guard_name = 'web';
+    protected $fillable = ['title' , 'lang_id'];
 
     public function posts()
     {

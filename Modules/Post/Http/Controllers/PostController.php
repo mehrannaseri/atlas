@@ -12,6 +12,8 @@ use Modules\Post\Entities\File;
 use Modules\Post\Entities\Language;
 use Modules\Post\Entities\Post;
 use Modules\Post\Entities\Tag;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class PostController extends Controller
 {
@@ -23,20 +25,30 @@ class PostController extends Controller
 
     public function index()
     {
-       $posts = Post::with('lang')
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('read post')) {
+            $posts = Post::with('lang')
                 ->with('categories')
                 ->with('tags')
                 ->with('files')
                 ->get();
-       return view('post::index' , compact('posts'));
+            return view('post::index', compact('posts'));
+        }
+        else{
+            return view('layouts.error.404');
+        }
     }
 
     public function create()
     {
-        $languages = Language::all();
-        $files = File::all();
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')) {
+            $languages = Language::all();
+            $files = File::all();
 
-        return view('post::create' , compact('languages','files'));
+            return view('post::create', compact('languages', 'files'));
+        }
+        else{
+            return view('layouts.error.404');
+        }
     }
 
     public function setDir(Request $request)
@@ -46,40 +58,43 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')) {
+            $request->validate([
+                'language' => 'required',
+                'title' => 'required',
+                'category' => 'required',
+                'files.*' => 'required_if:old_files,|mimes:jpeg,png',
+                'old_files' => 'required_if:files,',
+            ], [
+                'files.required_if' => 'Selecting at least one new file or selecting from previous files is essential',
+                'old_files.required_if' => 'Selecting at least one new file or selecting from previous files is essential'
+            ]);
 
-        $request->validate([
-           'language'    => 'required',
-           'title'       => 'required',
-           'category'    => 'required',
-           'files.*'       => 'required_if:old_files,|mimes:jpeg,png',
-           'old_files'   => 'required_if:files,',
-        ],[
-            'files.required_if'     => 'Selecting at least one new file or selecting from previous files is essential',
-            'old_files.required_if' => 'Selecting at least one new file or selecting from previous files is essential'
-        ]);
+            $post = $this->AddPost($request);
 
-        $post = $this->AddPost($request);
+            $post->categories()->attach($request->category);
 
-        $post->categories()->attach($request->category);
+            if ($request->has('tag')) {
+                $post->tags()->attach($request->tag);
+            }
+            if ($request->old_files != "") {
+                $files = explode(",", $request->old_files);
+                $this->addFilePost($post->id, $files);
+            }
 
-        if($request->has('tag')){
-            $post->tags()->attach($request->tag);
+            if ($request->hasfile('files')) {
+
+                $data = $this->UploadFilePost($request->file('files'));
+
+                $this->addFilePost($post->id, $data);
+            }
+
+            Session::flash('success', 'New Post added successfuly');
+            return back();
         }
-        if($request->old_files != ""){
-            $files = explode(",",$request->old_files);
-            $this->addFilePost($post->id,$files);
+        else{
+            return view('layouts.error.403');
         }
-
-        if($request->hasfile('files'))
-        {
-
-            $data = $this->UploadFilePost($request->file('files'));
-
-            $this->addFilePost($post->id,$data);
-        }
-
-        Session::flash('success' , 'New Post added successfuly');
-        return back();
     }
 
     protected function AddPost($request,$post = null)
@@ -120,68 +135,81 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        $languages = Language::all();
-        $files = File::all();
-        $post = Post::where('id' , $id)
-            ->with('categories')
-            ->with('tags')
-            ->with('files')
-            ->first();
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('update post')) {
+            $languages = Language::all();
+            $files = File::all();
+            $post = Post::where('id', $id)
+                ->with('categories')
+                ->with('tags')
+                ->with('files')
+                ->first();
 
-        return view('post::edit' , compact('post','languages' , 'files'));
+            return view('post::edit', compact('post', 'languages', 'files'));
+        }
+        else{
+            return view('layouts.error.404');
+        }
     }
 
     public function update($id,Request $request)
     {
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('update post')) {
+            $request->validate([
+                'language' => 'required',
+                'title' => 'required',
+                'files.*' => 'required_if:old_files,|mimes:jpeg,png',
+                'old_files' => 'required_if:files,',
+            ], [
+                'files.required_if' => 'Selecting at least one new file or selecting from previous files is essential',
+                'old_files.required_if' => 'Selecting at least one new file or selecting from previous files is essential'
+            ]);
 
-        $request->validate([
-            'language'    => 'required',
-            'title'       => 'required',
-            'files.*'       => 'required_if:old_files,|mimes:jpeg,png',
-            'old_files'   => 'required_if:files,',
-        ],[
-            'files.required_if'     => 'Selecting at least one new file or selecting from previous files is essential',
-            'old_files.required_if' => 'Selecting at least one new file or selecting from previous files is essential'
-        ]);
+            $post = Post::find($id);
+            $this->AddPost($request, $post);
 
-        $post = Post::find($id);
-        $this->AddPost($request,$post);
+            if ($request->has('category')) {
+                $post->categories()->detach();
+                $post->categories()->attach($request->category);
+            }
+            if ($request->has('tag')) {
+                $post->tags()->detach();
+                $post->tags()->attach($request->tag);
+            }
 
-        if($request->has('category')){
-            $post->categories()->detach();
-            $post->categories()->attach($request->category);
+            $post->files()->detach();
+            if ($request->old_files != "") {
+                $files = explode(",", $request->old_files);
+                $this->addFilePost($post->id, $files);
+            }
+            if ($request->hasfile('files')) {
+                $data = $this->UploadFilePost($request->file('files'));
+                $this->addFilePost($post->id, $data);
+            }
+
+            Session::flash('success', 'Post was updated successfuly');
+            return redirect()->route('list');
         }
-        if($request->has('tag')){
-            $post->tags()->detach();
-            $post->tags()->attach($request->tag);
+        else{
+            return view('layouts.error.403');
         }
-
-        $post->files()->detach();
-        if($request->old_files != ""){
-            $files = explode(",",$request->old_files);
-            $this->addFilePost($post->id,$files);
-        }
-        if($request->hasfile('files'))
-        {
-            $data = $this->UploadFilePost($request->file('files'));
-            $this->addFilePost($post->id,$data);
-        }
-
-        Session::flash('success' , 'Post was updated successfuly');
-        return redirect()->route('list');
 
     }
     public function destroy($id)
     {
-        $post = Post::find($id);
-        $post->categories()->detach();
-        $post->files()->detach();
-        $post->tags()->detach();
-        $post->comments()->delete();
-        $post->rates()->delete();
-        $post->delete();
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('destroy post')) {
+            $post = Post::find($id);
+            $post->categories()->detach();
+            $post->files()->detach();
+            $post->tags()->detach();
+            $post->comments()->delete();
+            $post->rates()->delete();
+            $post->delete();
 
-        Session::flash('delete' , 'Post was deleted successfuly');
-        return back();
+            Session::flash('delete', 'Post was deleted successfuly');
+            return back();
+        }
+        else{
+            return view('layouts.error.403');
+        }
     }
 }
