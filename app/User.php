@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasPermissions;
 
 class User extends Authenticatable
 {
@@ -18,7 +19,7 @@ class User extends Authenticatable
      */
     protected $guard_name = 'web';
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','lname','mobile','avatar'
     ];
 
     /**

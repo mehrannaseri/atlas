@@ -12,32 +12,32 @@ return [
     'submenu'     => [
         [
             'permission' => 'read post',
-            'text'  => 'News list',
-            'icon'  => 'list',
-            'url'   => 'panel/post',
-            'active'=> ['panel/post']
+            'text'       => 'News list',
+            'icon'       => 'list',
+            'url'        => 'panel/post',
+            'active'     => ['panel/post']
         ],
         [
             'permission' => 'create post',
-            'text'   => 'Add News',
-            'icon'   => 'plus',
-            'url'    => 'panel/post/add',
-            'active' => ['panel/post/add','panel/post/edit/*'],
+            'text'       => 'Add News',
+            'icon'       => 'plus',
+            'url'        => 'panel/post/add',
+            'active'     => ['panel/post/add','panel/post/edit/*'],
 
         ],
         [
             'permission' => 'read category',
-            'text'  => 'Categories Management',
-            'icon'  => 'filter',
-            'url'   => 'panel/post/category',
-            'active'=> ['panel/post/category']
+            'text'       => 'Categories Management',
+            'icon'       => 'filter',
+            'url'        => 'panel/post/category',
+            'active'     => ['panel/post/category']
         ],
         [
             'permission' => 'read tag',
-            'text'  => 'Tags Management',
-            'icon'  => 'tags',
-            'url'   => 'panel/post/tags',
-            'active'=> ['panel/post/tags'],
+            'text'       => 'Tags Management',
+            'icon'       => 'tags',
+            'url'        => 'panel/post/tags',
+            'active'     => ['panel/post/tags'],
         ]
     ]
 ];

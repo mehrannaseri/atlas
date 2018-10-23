@@ -63,7 +63,7 @@ class AddInfoToUser extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('fname');
+            $table->dropColumn('lname');
             $table->dropColumn('mobile');
             $table->dropColumn('avatar');
         });

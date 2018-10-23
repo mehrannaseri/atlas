@@ -11,6 +11,8 @@
 |
 */
 
-Route::prefix('staff')->group(function() {
+Route::prefix('panel/staff')->group(function() {
     Route::get('/', 'StaffController@index');
+    Route::get('/add' , 'StaffController@create');
+    Route::post('/add' , 'StaffController@store');
 });

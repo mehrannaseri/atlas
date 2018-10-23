@@ -5,6 +5,7 @@ namespace Modules\Staff\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Spatie\Permission\Traits\HasRoles;
 
 class StaffController extends Controller
 {
@@ -23,7 +24,12 @@ class StaffController extends Controller
      */
     public function create()
     {
-        return view('staff::create');
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create staff')) {
+            return view('staff::create');
+        }
+        else{
+            return view('layouts.error.404');
+        }
     }
 
     /**
