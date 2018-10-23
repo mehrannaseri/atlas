@@ -22,26 +22,34 @@ class AppServiceProvider extends ServiceProvider
 
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
             $event->menu->add('Atlas Panel');
+            if(auth()->user()->hasRole(['admin','staff'])) {
+                $event->menu->add([
+                    'text' => 'Dashboard',
+                    'url' => 'panel',
+                    'icon' => 'dashboard',
+                    'active' => ['panel'],
 
-            $event->menu->add([
-                'text'  => 'Dashboard',
-                'url'   => 'panel',
-                'icon'  => 'dashboard',
-                'active'=> ['panel'],
-
-            ]);
+                ]);
+            }
 
             $list = Module::all();
 
             $result = implode(",",$list);
             $arr_result = explode("," , $result);
 
-            foreach ($arr_result as $module){
+            return $this->createMenu($arr_result,$event);
+        });
 
+    }
+
+    public function createMenu($result_arr,$event)
+    {
+        foreach ($result_arr as $module){
+            if(auth()->user()->hasRole(['admin','staff'])) {
                 $menu = config(strtolower($module));
 
-                if(isset($menu['show']) && $menu['show'] === true) {
-                    if(isset($menu['submenu'])) {
+                if (isset($menu['show']) && $menu['show'] === true) {
+                    if (isset($menu['submenu'])) {
                         $item = [
                             'text' => $menu['name'],
                             'url' => $menu['url'],
@@ -51,10 +59,9 @@ class AppServiceProvider extends ServiceProvider
                             'label_color' => (isset($menu['label_color']) ? $menu['label_color'] : ''),
                             'target' => (isset($menu['target']) ? $menu['target'] : ''),
                             'active' => (isset($menu['active']) ? $menu['active'] : ''),
-                            'submenu' => (isset($menu['submenu'])  ? $menu['submenu'] : array())
+                            'submenu' => (isset($menu['submenu']) ? $menu['submenu'] : array())
                         ];
-                    }
-                    else{
+                    } else {
                         $item = [
                             'text' => $menu['name'],
                             'url' => $menu['url'],
@@ -85,12 +92,10 @@ class AppServiceProvider extends ServiceProvider
                  * submenu_class
                  *
                  */
-
             }
-        });
 
+        }
     }
-
     /**
      * Register any application services.
      *
