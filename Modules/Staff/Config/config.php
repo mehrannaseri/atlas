@@ -31,7 +31,7 @@ return [
         ],
         [
             'permission' => 'organization',
-            'text'       => 'organization management',
+            'text'       => 'Role management',
             'icon'       => 'sitemap',
             'url'        => 'panel/staff/organization',
             'active'     => ['panel/staff/organization']

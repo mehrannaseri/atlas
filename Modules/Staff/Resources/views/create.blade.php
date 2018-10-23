@@ -42,13 +42,21 @@
                             <label for="exampleInputEmail1">Confirm Password</label>
                             <input class="form-control" value="{{old('password_confirmation ')}}" name="password_confirmation" id="" placeholder="Enter password again" type="password">
                         </div>
-                        <div  class="form-group col-md-12 col-xs-12">
-                            <div class="form-group col-md-3 col-xs-3">
+                        <div class="form-group col-md-6 col-xs-6">
+                            <label for="exampleInputEmail1">Role</label>
+                            <select name="role" class="form-control">
+                                <option selected hidden disabled="">Select role</option>
+                                @foreach($roles as $role)
+                                    <option {{($role['name'] == 'admin' ? 'disabled' : '')}} value="{{$role->id}}">{{$role->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div  class="form-group col-md-6 col-xs-6">
+                            <br>
                                 <div class="upload-btn-wrapper">
                                     <button class="btn1">Upload avatar</button>
                                     <input type="file" accept="image/jpeg,image/png" onchange="CountSelected()" id="file_select" name="avatar"  />
                                 </div>
-                            </div>
                             <list style="display: none" class="new_file alert-info" id="count_files"></list>
                         </div>
                     </div>

@@ -43,12 +43,6 @@ class CreatePermissionTables extends Migration
                 'guard_name'    => 'web',
                 'created_at'    => now(),
                 'updated_at'    => now()
-            ],
-            [
-                'name'          => 'visitor',
-                'guard_name'    => 'web',
-                'created_at'    => now(),
-                'updated_at'    => now()
             ]
         ));
 
