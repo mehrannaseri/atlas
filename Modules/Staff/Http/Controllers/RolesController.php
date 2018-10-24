@@ -69,29 +69,25 @@ class RolesController extends Controller
     public function index()
     {
         if(auth()->user()->hasRole('admin')){
-            $roles = Role::all();
+            $roles = Role::orderBy('id' , 'desc')->get();
 
             return view('staff::roles' , compact('roles'));
         }
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('staff::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:roles'
+        ],[
+            'name.required' => 'The Role name field is required.',
+            'name.unique'   => 'The Role name has already been taken.'
+        ]);
+        Role::create(['name' => $request->name]);
+
+        Session::flash('success' , 'The new Role was added successfully');
+        return back();
     }
 
     /**

@@ -15,11 +15,12 @@ Route::prefix('panel/staff')->group(function() {
     Route::get('/', 'StaffController@index')->name('list');
     Route::get('/add' , 'StaffController@create')->name('add');
     Route::post('/add' , 'StaffController@store');
-    Route::get('edit/{id}','StaffController@edit');
-    Route::post('edit/{id}' , 'StaffController@update');
-    Route::get('delete/{id}' , 'StaffController@destroy');
+    Route::get('/edit/{id}','StaffController@edit');
+    Route::post('/edit/{id}' , 'StaffController@update');
+    Route::get('/delete/{id}' , 'StaffController@destroy');
 
     Route::get('/access_level' , 'RolesController@access_level');
     Route::post('/setPermission' , 'RolesController@setPermission');
     Route::get('/organization' , 'RolesController@index');
+    Route::post('/role/add' , 'RolesController@store');
 });

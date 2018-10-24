@@ -8,7 +8,7 @@
 
 @section('content')
     @if(auth()->user()->hasRole('admin'))
-        <button data-toggle="modal" onclick="show_modal('{{asset('panel/post/tag/add')}}')" data-target="#modal" class="btn btn-success">Add New Tag</button>
+        <button data-toggle="modal" onclick="show_modal('{{asset('panel/staff/role/add')}}')" data-target="#modal" class="btn btn-success">Add New Role</button>
     @endif
     @include('layouts.message')
     <section class="content container-fluid">
@@ -21,6 +21,7 @@
                         <th>#</th>
                         <th>Role Name</th>
                         <th>User</th>
+                        <th>Creayed At</th>
                         <th width="200">Action</th>
                     </tr>
                     </thead>
@@ -50,7 +51,19 @@
                                         @endforeach
                                     @endif
                                 </ul>
-
+                            </td>
+                            <td>{{$role->created_at->format('Y-m-d')}}</td>
+                            <td>
+                                @if(auth()->user()->hasRole('admin'))
+                                    <a href="javascript:void(0)" onclick="editTag({{$role}})" data-toggle="tooltip" class="btn-sm btn-success">
+                                        <i class="fa fa-edit"></i>
+                                    </a>&nbsp;
+                                @endif&nbsp;
+                                @if(auth()->user()->hasRole('admin'))
+                                    <a href="javascript:void(0)" onclick="remove('{{asset('panel/staff/role/delete/'.$role->id)}}')" data-toggle="tooltip"  class="btn-sm btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                         <?php
@@ -69,13 +82,13 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title">Add new Tag</h4>
+                        <h4 class="modal-title">Add new Role</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="modal_form" action="{{asset('panel/post/tag/add')}}" method="post">
+                        <form id="modal_form" action="{{asset('panel/staff/role/add')}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group">
-                                <input class="form-control" name="title" id="title" placeholder="Tag title" type="text">
+                                <input class="form-control" name="name" id="name" placeholder="Role name" type="text">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
