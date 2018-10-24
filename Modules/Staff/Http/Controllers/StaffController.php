@@ -205,11 +205,21 @@ class StaffController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
-    public function destroy()
+    public function destroy($id)
     {
+        $user = User::find($id);
+        if($user->avatar !== null){
+            unlink(public_path($user->avatar));
+        }
+
+        foreach($user->permissions as $permission){
+            $user->revokePermissionTo($permission);
+        }
+
+        $user->delete();
+
+        Session::flash('delete' , 'Staff was deleted successfully');
+        return back();
+
     }
 }

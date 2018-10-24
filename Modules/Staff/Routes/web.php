@@ -19,4 +19,5 @@ Route::prefix('panel/staff')->group(function() {
     Route::post('/setPermission' , 'StaffController@setPermission');
     Route::get('edit/{id}','StaffController@edit');
     Route::post('edit/{id}' , 'StaffController@update');
+    Route::get('delete/{id}' , 'StaffController@destroy');
 });
