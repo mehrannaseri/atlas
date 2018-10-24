@@ -230,6 +230,33 @@ function dependencyPermission(id) {
 
 }
 
+function setDependency(id){
+    var dependency = ['update' , 'destroy'];
+    var name = $("#p_"+id).attr('name');
+    var part = name.split(" ");
+    var read = $("input[name*='read "+part[1]+"']").attr("id");
+    var perId = read.split("_");
+    if(dependency.includes(part[0])){
+        if($("#"+read).is(":checked") === false){
+            if(part[0] == dependency[0]){
+                if($("input[name*='"+dependency[1]+" "+part[1]+"']").is(":checked") === false){
+                    permissions.push(perId[1]);
+                }
+            }
+            if(part[0] == dependency[1]){
+                if($("input[name*='"+dependency[0]+" "+part[1]+"']").is(":checked") === false){
+                    permissions.push(perId[1]);
+                }
+            }
+            $("#"+read).prop('checked' , true);
+            $("#"+read).prop('disabled' , true);
+        }
+        else{
+            $("#"+read).prop('disabled' , true);
+        }
+    }
+}
+
 function permissionUser(user) {
     var data = document.getElementById(user).getAttribute("data-content");
     data = JSON.parse(data);
@@ -238,7 +265,7 @@ function permissionUser(user) {
     $(".atlasPermission").prop('checked' , false);
     if(data.length > 0){
         for(var i = 0 ; i < data.length ; i++){
-
+            setDependency(data[i].id);
             $("#p_"+data[i].id).prop('checked' , true);
             oldPermissions.push(data[i].id);
 
