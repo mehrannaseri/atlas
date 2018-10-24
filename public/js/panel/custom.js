@@ -179,8 +179,10 @@ function permissionUser(user) {
     $(".atlasPermission").prop('checked' , false);
     if(data.length > 0){
         for(var i = 0 ; i < data.length ; i++){
+
+            $("#p"+data[i].id).prop('checked' , true);
             oldPermissions.push(data[i].id);
-            $("#"+data[i].id).prop('checked' , true);
+
         }
     }
 }
@@ -199,6 +201,11 @@ function saveChanges(url){
     user.setAttribute("name", "user");
     user.setAttribute("value", selected_user.value);
 
+    var tok = document.createElement("input");
+    tok.setAttribute("type", "hidden");
+    tok.setAttribute("name", "_token");
+    tok.setAttribute("value", token);
+
     var permission = document.createElement("input");
     permission.setAttribute("type", "hidden");
     permission.setAttribute("name", "permissions");
@@ -211,6 +218,7 @@ function saveChanges(url){
     form.appendChild(permission);
     form.appendChild(deletedPermission);
     form.appendChild(user);
+    form.appendChild(tok);
 
     if(selected_user.value == ""){
         message_alert.style.display = "";

@@ -16,4 +16,5 @@ Route::prefix('panel/staff')->group(function() {
     Route::get('/add' , 'StaffController@create')->name('add');
     Route::post('/add' , 'StaffController@store');
     Route::get('/access_level' , 'StaffController@access_level');
+    Route::post('/setPermission' , 'StaffController@setPermission');
 });

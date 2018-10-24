@@ -106,6 +106,25 @@ class StaffController extends Controller
 
         return view('staff::access_level' , compact('users','permissions' , 'modules'));
     }
+
+    public function setPermission(Request $request)
+    {
+        $user = User::find($request->user);
+        $deletedPermission = explode("," , $request->deletedPermission);
+        if(sizeof($deletedPermission) > 0){
+            foreach($deletedPermission as $delPremission){
+                $user->revokePermissionTo($delPremission);
+            }
+        }
+
+        $newPermission = explode("," , $request->permissions);
+        $user->givePermissionTo($newPermission);
+
+        Session::flash('success' , 'Permission changes save successfuly');
+
+        return back();
+    }
+
     public function show()
     {
         return view('staff::show');
