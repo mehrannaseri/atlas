@@ -68,10 +68,7 @@ class StaffController extends Controller
             ]);
             $avatar = null;
             if($request->hasFile('avatar')){
-                $file = $request->file('avatar');
-                $name= time().$file->getClientOriginalName();
-                $file->move(public_path().'/files/staff/', $name);
-                $avatar = '/files/staff/'.$name;
+                $avatar = $this->uploadAvatar($request->file('avatar'));
             }
 
             $user = new User();
@@ -93,6 +90,13 @@ class StaffController extends Controller
         else{
             return view('layouts.error.403');
         }
+    }
+
+    protected function uploadAvatar($file)
+    {
+        $name= time().$file->getClientOriginalName();
+        $file->move(public_path().'/files/staff/', $name);
+        return '/files/staff/'.$name;
     }
 
     public function access_level()
@@ -144,27 +148,61 @@ class StaffController extends Controller
 
     }
 
-    public function show()
+    public function edit($id)
     {
-        return view('staff::show');
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('update staff')){
+            $user = User::find($id);
+            $roles = Role::all();
+            return view('staff::edit' , compact('user' , 'roles'));
+        }
+        else{
+            return view('layouts.error.404');
+        }
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
+    public function update($id,Request $request)
     {
-        return view('staff::edit');
-    }
+        $user = User::find($id);
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('update staff')){
+            $request->validate([
+                'name'     => 'required',
+                'email'    => 'required|email|unique:users,email,'.$user->id,
+                'password' => 'nullable|min:6|confirmed',
+                'mobile'   => 'integer|nullable',
+                'avatar'   => 'mimes:jpeg,png|nullable',
+                'role'     => 'required',
+            ]);
 
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
+            $avatar = $user->avatar;
+            if($request->hasFile('avatar') || $request->file('avatar') != ""){
+                if($user->avatar !== null){
+                    unlink(public_path($user->avatar));
+                }
+                $avatar = $this->uploadAvatar($request->file('avatar'));
+            }
+            $password = $user->password;
+            if($request->password !== null){
+                $password = bcrypt($request->password);
+            }
+            $user->name   = $request->name;
+            $user->lname  = $request->lname;
+            $user->mobile = $request->mobile;
+            $user->avatar = $avatar;
+            $user->email  = $request->email;
+            $user->password = $password;
+            $user->save();
+
+            $role=Role::findById($request->role);
+            $user->assignRole($role->name);
+
+            Session::flash('success' , 'Staff info was updated successfully');
+            return redirect()->route('list');
+
+        }
+        else{
+            return view('layouts.error.403');
+        }
     }
 
     /**
