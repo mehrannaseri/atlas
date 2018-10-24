@@ -24,7 +24,7 @@ Route::prefix('panel/post')->group(function() {
     Route::get('tag/remove/{id}' , 'TagsController@destroy');
 
     Route::get('/' , 'PostController@index')->name('list');
-    Route::get('/add', 'PostController@create')->name('add');
+    Route::get('/add', 'PostController@create')->name('post::add');
     Route::get('/setDir' , 'PostController@setDir');
     Route::post('/store' , 'PostController@store');
     Route::get('/edit/{id}' , 'PostController@edit');

@@ -9,7 +9,7 @@
 
 @section('content')
     @if(auth()->user()->hasRole('admin') || auth()->user()->can('create post'))
-        <a href="{{route('add')}}" class="btn btn-success">Add New Post</a>
+        <a href="{{route('post::add')}}" class="btn btn-success">Add New Post</a>
     @endif
 
     @include('layouts.message')
