@@ -73,54 +73,53 @@ class RolesController extends Controller
 
             return view('staff::roles' , compact('roles'));
         }
+        else{
+            return view('layouts.error.404');
+        }
 
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:roles'
-        ],[
-            'name.required' => 'The Role name field is required.',
-            'name.unique'   => 'The Role name has already been taken.'
-        ]);
-        Role::create(['name' => $request->name]);
+        if(auth()->user()->hasRole('admin')) {
+            $request->validate([
+                'name' => 'required|unique:roles'
+            ], [
+                'name.required' => 'The Role name field is required.',
+                'name.unique' => 'The Role name has already been taken.'
+            ]);
+            Role::create(['name' => $request->name]);
 
-        Session::flash('success' , 'The new Role was added successfully');
-        return back();
+            Session::flash('success', 'The new Role was added successfully');
+            return back();
+        }
+        else{
+            return view('layouts.error.403');
+        }
     }
 
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
+    public function update($id,Request $request)
     {
-        return view('staff::show');
+        if(auth()->user()->hasRole('admin')){
+            $role = Role::findById($id);
+            $request->validate([
+                'name'  => 'required|unique:roles,name,'.$role->id,
+            ],[
+                'name.required' => 'The Role name field is required.',
+                'name.unique' => 'The Role name has already been taken.'
+            ]);
+
+            $role->name = $request->name;
+            $role->save();
+
+            Session::flash('success', 'The Role was updated successfully');
+            return back();
+        }
+        else{
+            return view('layouts.error.403');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @return Response
-     */
-    public function edit()
-    {
-        return view('staff::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @return Response
-     */
     public function destroy()
     {
     }

@@ -23,4 +23,5 @@ Route::prefix('panel/staff')->group(function() {
     Route::post('/setPermission' , 'RolesController@setPermission');
     Route::get('/organization' , 'RolesController@index');
     Route::post('/role/add' , 'RolesController@store');
+    Route::post('/role/update/{id}' , 'RolesController@update');
 });

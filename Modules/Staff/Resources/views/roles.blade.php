@@ -55,7 +55,7 @@
                             <td>{{$role->created_at->format('Y-m-d')}}</td>
                             <td>
                                 @if(auth()->user()->hasRole('admin'))
-                                    <a href="javascript:void(0)" onclick="editTag({{$role}})" data-toggle="tooltip" class="btn-sm btn-success">
+                                    <a href="javascript:void(0)" onclick="editRole({{$role}})" data-toggle="tooltip" class="btn-sm btn-success">
                                         <i class="fa fa-edit"></i>
                                     </a>&nbsp;
                                 @endif&nbsp;
@@ -133,7 +133,7 @@
                 'autoWidth'   : false
             })
         });
-        var reqUrl = '{{asset('panel/post/')}}';
+        var reqUrl = '{{asset('panel/staff/')}}';
         var token = '{{csrf_token()}}';
     </script>
     <script src="{{asset('/js/panel/alertify.min.js')}}"></script>

@@ -321,3 +321,10 @@ function saveChanges(url){
     }
 
 }
+
+function editRole(role) {
+    document.getElementById("name").value = role.name;
+    document.getElementById("modal_form").setAttribute('action',reqUrl+'/role/update/'+role.id);
+
+    open_modal();
+}

@@ -28,14 +28,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->hasRole(['admin','staff'])) {
-            $languages = Language::all();
 
-            return view('dashboard', compact('languages'));
-        }
-        else{
-            return view('layouts.error.404');
-        }
+        $languages = Language::all();
+
+        return view('dashboard', compact('languages'));
     }
 
     public function addLanguage(Request $request)
