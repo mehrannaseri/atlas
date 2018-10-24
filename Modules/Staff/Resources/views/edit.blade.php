@@ -48,7 +48,7 @@
                             <select name="role" class="form-control">
                                 <option selected hidden disabled="">Select role</option>
                                 @foreach($roles as $role)
-                                    <option {{($user->roles[0]->id== $role->id ? 'selected' : '')}} {{($role['name'] == 'admin' ? 'disabled' : '')}} value="{{$role->id}}">{{$role->name}}</option>
+                                    <option {{($user->roles[0]->id== $role->id ? 'selected' : '')}} {{(!auth()->user()->hasRole('admin') && $role['name'] == 'admin' ? 'disabled' : '')}} value="{{$role->id}}">{{$role->name}}</option>
                                 @endforeach
                             </select>
                         </div>
