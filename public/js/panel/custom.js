@@ -224,7 +224,7 @@ function saveChanges(url){
         message_alert.style.display = "";
         message_alert.innerText = "Please select user to change permission";
     }
-    else if(permissions.length == 0){
+    else if(permissions.length == 0 && deletePermissions.length == 0){
         message_alert.style.display = "";
         message_alert.innerText = "There is no change to save";
     }

@@ -97,32 +97,51 @@ class StaffController extends Controller
 
     public function access_level()
     {
-        $users = User::all();
-        $permissions = Permission::all();
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('access level')) {
+            $users = User::all();
+            $permissions = Permission::all();
 
-        $list = Module::all();
-        $result = implode(",",$list);
-        $modules = explode("," , $result);
+            $list = Module::all();
+            $result = implode(",", $list);
+            $modules = explode(",", $result);
 
-        return view('staff::access_level' , compact('users','permissions' , 'modules'));
+            return view('staff::access_level', compact('users', 'permissions', 'modules'));
+        }
+        else{
+            return view('layouts.error.404');
+        }
     }
 
     public function setPermission(Request $request)
     {
-        $user = User::find($request->user);
-        $deletedPermission = explode("," , $request->deletedPermission);
-        if(sizeof($deletedPermission) > 0){
-            foreach($deletedPermission as $delPremission){
-                $user->revokePermissionTo($delPremission);
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('access level')){
+            $user = User::find($request->user);
+            if($user->id != auth()->user()->id){
+                if($request->has('deletedPermission') && $request->deletedPermission != ""){
+                    $deletedPermission = explode("," , $request->deletedPermission);
+                    foreach($deletedPermission as $delPremission){
+                        $user->revokePermissionTo($delPremission);
+                    }
+                }
+
+                if($request->permissions != ""){
+                    $newPermission = explode("," , $request->permissions);
+                    $user->givePermissionTo($newPermission);
+                }
+
+                Session::flash('success' , 'Permission changes save successfuly');
+                return back();
             }
+            else{
+                Session::flash('error' , 'You can not change your access level');
+                return back();
+            }
+
+        }
+        else{
+            return view('layouts.error.403');
         }
 
-        $newPermission = explode("," , $request->permissions);
-        $user->givePermissionTo($newPermission);
-
-        Session::flash('success' , 'Permission changes save successfuly');
-
-        return back();
     }
 
     public function show()

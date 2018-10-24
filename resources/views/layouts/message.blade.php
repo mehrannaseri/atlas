@@ -9,3 +9,6 @@
 @if (Session::has('delete'))
     <div id="message_alert" class="alert alert-warning">{{ Session::get('delete') }}</div>
 @endif
+@if (Session::has('error'))
+    <div id="message_alert" class="alert alert-danger">{{ Session::get('error') }}</div>
+@endif
