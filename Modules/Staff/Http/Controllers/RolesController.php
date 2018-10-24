@@ -119,8 +119,4 @@ class RolesController extends Controller
             return view('layouts.error.403');
         }
     }
-
-    public function destroy()
-    {
-    }
 }

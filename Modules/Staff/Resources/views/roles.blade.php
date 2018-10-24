@@ -30,7 +30,7 @@
                         $counter = 1;
                     ?>
                     @foreach($roles as $role)
-                        <tr>
+                        <tr class="{{($role->name == 'admin' ? 'disabled active' : '')}}">
                             <td>{{$counter}}</td>
                             <td>{{$role->name}}</td>
                             <td>
@@ -54,16 +54,11 @@
                             </td>
                             <td>{{$role->created_at->format('Y-m-d')}}</td>
                             <td>
-                                @if(auth()->user()->hasRole('admin'))
+                                @if(auth()->user()->hasRole('admin') && $role->name !== 'admin')
                                     <a href="javascript:void(0)" onclick="editRole({{$role}})" data-toggle="tooltip" class="btn-sm btn-success">
                                         <i class="fa fa-edit"></i>
                                     </a>&nbsp;
                                 @endif&nbsp;
-                                @if(auth()->user()->hasRole('admin'))
-                                    <a href="javascript:void(0)" onclick="remove('{{asset('panel/staff/role/delete/'.$role->id)}}')" data-toggle="tooltip"  class="btn-sm btn-danger">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                @endif
                             </td>
                         </tr>
                         <?php
