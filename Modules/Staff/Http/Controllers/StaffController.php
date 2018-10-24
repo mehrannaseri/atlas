@@ -19,10 +19,7 @@ class StaffController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
+
     public function index()
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('read staff')){
@@ -35,10 +32,6 @@ class StaffController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
     public function create()
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create staff')) {
@@ -50,11 +43,6 @@ class StaffController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param  Request $request
-     * @return Response
-     */
     public function store(Request $request)
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create staff')){
@@ -92,62 +80,6 @@ class StaffController extends Controller
         }
     }
 
-    protected function uploadAvatar($file)
-    {
-        $name= time().$file->getClientOriginalName();
-        $file->move(public_path().'/files/staff/', $name);
-        return '/files/staff/'.$name;
-    }
-
-    public function access_level()
-    {
-        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('access level')) {
-            $users = User::all();
-            $permissions = Permission::all();
-
-            $list = Module::all();
-            $result = implode(",", $list);
-            $modules = explode(",", $result);
-
-            return view('staff::access_level', compact('users', 'permissions', 'modules'));
-        }
-        else{
-            return view('layouts.error.404');
-        }
-    }
-
-    public function setPermission(Request $request)
-    {
-        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('access level')){
-            $user = User::find($request->user);
-            if($user->id != auth()->user()->id){
-                if($request->has('deletedPermission') && $request->deletedPermission != ""){
-                    $deletedPermission = explode("," , $request->deletedPermission);
-                    foreach($deletedPermission as $delPremission){
-                        $user->revokePermissionTo($delPremission);
-                    }
-                }
-
-                if($request->permissions != ""){
-                    $newPermission = explode("," , $request->permissions);
-                    $user->givePermissionTo($newPermission);
-                }
-
-                Session::flash('success' , 'Permission changes save successfuly');
-                return back();
-            }
-            else{
-                Session::flash('error' , 'You can not change your access level');
-                return back();
-            }
-
-        }
-        else{
-            return view('layouts.error.403');
-        }
-
-    }
-
     public function edit($id)
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('update staff')){
@@ -163,6 +95,7 @@ class StaffController extends Controller
 
     public function update($id,Request $request)
     {
+
         $user = User::find($id);
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('update staff')){
             $request->validate([
@@ -207,19 +140,31 @@ class StaffController extends Controller
 
     public function destroy($id)
     {
-        $user = User::find($id);
-        if($user->avatar !== null){
-            unlink(public_path($user->avatar));
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('destroy staff')) {
+            $user = User::find($id);
+            if ($user->avatar !== null) {
+                unlink(public_path($user->avatar));
+            }
+
+            foreach ($user->permissions as $permission) {
+                $user->revokePermissionTo($permission);
+            }
+
+            $user->delete();
+
+            Session::flash('delete', 'Staff was deleted successfully');
+            return back();
+        }
+        else{
+            return view('layouts.error.403');
         }
 
-        foreach($user->permissions as $permission){
-            $user->revokePermissionTo($permission);
-        }
+    }
 
-        $user->delete();
-
-        Session::flash('delete' , 'Staff was deleted successfully');
-        return back();
-
+    protected function uploadAvatar($file)
+    {
+        $name= time().$file->getClientOriginalName();
+        $file->move(public_path().'/files/staff/', $name);
+        return '/files/staff/'.$name;
     }
 }
