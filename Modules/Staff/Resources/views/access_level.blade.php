@@ -32,7 +32,7 @@
                         <div class="col-md-3 col-sm-3">
                             <div class=" checkbox rounded-6 medium m-b-2">
                                 <div class=" checkbox-overlay">
-                                    <input class="atlasPermission" type="checkbox" onchange="permission(this,{{$permission->id}})" id="p{{$permission->id}}" />
+                                    <input class="atlasPermission" type="checkbox" name="{{$permission->name}}" onchange="permission(this,{{$permission->id}})" id="p_{{$permission->id}}" />
                                     <div class="checkbox-container">
                                         <div class="checkbox-checkmark"></div>
                                     </div>

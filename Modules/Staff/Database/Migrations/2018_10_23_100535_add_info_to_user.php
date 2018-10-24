@@ -44,12 +44,6 @@ class AddInfoToUser extends Migration
                 'guard_name' => 'web',
                 'created_at' => now(),
                 'updated_at' => now()
-            ],
-            [
-                'name'       => 'access level',
-                'guard_name' => 'web',
-                'created_at' => now(),
-                'updated_at' => now()
             ]
         ));
 

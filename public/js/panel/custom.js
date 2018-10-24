@@ -150,10 +150,13 @@ function showGallery(files){
     document.getElementById('show_img').innerHTML = result;
     open_modal();
 }
+
 var permissions = [];
 var deletePermissions = [];
 var oldPermissions = [];
 function permission(elem,id){
+    dependencyPermission(id);
+
     if(elem.checked == true){
         permissions.push(id);
     }
@@ -171,6 +174,62 @@ function permission(elem,id){
     }
 }
 
+function dependencyPermission(id) {
+    var dependency = ['update' , 'destroy'];
+    var name = $("#p_"+id).attr('name');
+    var part = name.split(" ");
+    var read = $("input[name*='read "+part[1]+"']").attr("id");
+    var perId = read.split("_");
+    if($("#p_"+id).is(":checked") === true){
+        if(dependency.includes(part[0])){
+            if($("#"+read).is(":checked") === false){
+                if(part[0] == dependency[0]){
+                    if($("input[name*='"+dependency[1]+" "+part[1]+"']").is(":checked") === false){
+                        permissions.push(perId[1]);
+                    }
+                }
+                if(part[0] == dependency[1]){
+                    if($("input[name*='"+dependency[0]+" "+part[1]+"']").is(":checked") === false){
+                        permissions.push(perId[1]);
+                    }
+                }
+                $("#"+read).prop('checked' , true);
+                $("#"+read).prop('disabled' , true);
+            }
+            else{
+                $("#"+read).prop('disabled' , true);
+            }
+
+
+
+        }
+    }
+    else{
+        if(dependency.includes(part[0])){
+            if(part[0] == dependency[0]){
+                if($("input[name*='"+dependency[1]+" "+part[1]+"']").is(":checked") === false){
+                    $("#"+read).prop('checked' , false);
+                    var index = permissions.indexOf(perId[1]);
+                    permissions.splice(index, 1);
+                }
+            }
+            if(part[0] == dependency[1]){
+                if($("input[name*='"+dependency[0]+" "+part[1]+"']").is(":checked") === false){
+                    $("#"+read).prop('checked' , false);
+                    var index = permissions.indexOf(perId[1]);
+                    permissions.splice(index, 1);
+                }
+            }
+        }
+        if($("#"+read).is(":checked") === false){
+            $("#"+read).prop('checked' , false);
+            $("#"+read).prop('disabled' , false);
+        }
+
+    }
+
+}
+
 function permissionUser(user) {
     var data = document.getElementById(user).getAttribute("data-content");
     data = JSON.parse(data);
@@ -180,7 +239,7 @@ function permissionUser(user) {
     if(data.length > 0){
         for(var i = 0 ; i < data.length ; i++){
 
-            $("#p"+data[i].id).prop('checked' , true);
+            $("#p_"+data[i].id).prop('checked' , true);
             oldPermissions.push(data[i].id);
 
         }
