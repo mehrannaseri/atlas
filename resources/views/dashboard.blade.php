@@ -13,7 +13,7 @@
             <!-- TO DO List -->
 
             <!-- Map box -->
-            @if(auth()->user()->hasRole('admin') || (auth()->user()->hasRole('staff') && auth()->user()->can('read language')))
+            @if(auth()->user()->hasRole('admin') || auth()->user()->can('read language'))
                 <div class="box box-primary" style="position: relative; left: 0px; top: 0px;">
                     <div class="box-header ui-sortable-handle" style="cursor: move;">
                         <i class="ion ion-clipboard"></i>

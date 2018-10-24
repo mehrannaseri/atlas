@@ -61,8 +61,7 @@ class DashboardController extends Controller
 
     public function update($id,Request $request)
     {
-        if(auth()->user()->hasRole('admin') ||
-            (auth()->user()->hasRole('staff') && auth()->user()->hasPermissionTo('update language'))) {
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('update language')) {
             $lang = Language::findOrfail($id);
             $this->validate($request, [
                 'language' => 'required',
@@ -86,8 +85,7 @@ class DashboardController extends Controller
 
     public function delete($id)
     {
-        if(auth()->user()->hasRole('admin') ||
-            (auth()->user()->hasRole('staff') && auth()->user()->hasPermissionTo('destroy language'))) {
+        if(auth()->user()->hasRole('admin') ||auth()->user()->hasPermissionTo('destroy language')) {
             $lang = Language::findOrfail($id);
 
             $lang->delete();
