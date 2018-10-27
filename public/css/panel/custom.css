@@ -344,7 +344,7 @@ a:hover.tooltips i {
     background-color: gainsboro;
 
     padding: 12px;
-    max-height: 850px;
+    max-height: 650px;
     overflow: scroll;
     overflow-scrolling: touch;
     overflow-x: hidden;
@@ -374,4 +374,24 @@ a:hover.tooltips i {
     margin-bottom: 10px;
 
     margin-right: 10px;
+}
+.fileDismis{
+    position: absolute;
+
+    top: 8px;
+    font-size: 22px;
+    left: 15px;
+    color: #bd1116;
+}
+.none{
+    position: relative;
+    display: inline-table;
+}
+.videoDismis{
+    position: absolute;
+
+    top: 65px;
+    font-size: 22px;
+    left: 15px;
+    color: #bd1116;
 }

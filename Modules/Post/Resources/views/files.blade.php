@@ -46,7 +46,11 @@
                         <div class="active tab-pane" id="activity">
                             <div class="fileManager">
                                 @foreach($images as $image)
-                                    <img class="fileArea" src="{{asset($image->file_url)}}" >
+                                    <div class="none">
+                                        <a class="fileDismis" href="javascript:void(0)" onclick="remove('{{asset('panel/post/files/remove/'.$image->id)}}')"><i class="fa fa-remove"></i></a>
+                                        <img class="fileArea" src="{{asset($image->file_url)}}" >
+                                    </div>
+
                                 @endforeach
                             </div>
                         </div>
@@ -54,11 +58,14 @@
                         <div class="tab-pane" id="timeline">
                             <div class="fileManager">
                                 @foreach($videos as $video)
-                                    <video class="videoArea" width="320" height="240" controls>
-                                        <source src="{{asset($video->file_url)}}" type="video/mp4">
-                                        <source src="{{asset($video->file_url)}}" type="video/ogg">
-                                        Your browser does not support the video .
-                                    </video>
+                                    <div class="none">
+                                        <a class="videoDismis" href="javascript:void(0)" onclick="remove('{{asset('panel/post/files/remove/'.$video->id)}}')"><i class="fa fa-remove"></i></a>
+                                        <video class="videoArea" width="320" height="240" controls>
+                                            <source src="{{asset($video->file_url)}}" type="video/mp4">
+                                            <source src="{{asset($video->file_url)}}" type="video/ogg">
+                                            Your browser does not support the video .
+                                        </video>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -67,16 +74,19 @@
                         <div class="tab-pane" id="settings">
                             <div class="fileManager">
                                 @foreach($files as $file)
-                                    <li class="extra">
-                                        <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+                                    <div class="none">
+                                        <a class="fileDismis" href="javascript:void(0)" onclick="remove('{{asset('panel/post/files/remove/'.$file->id)}}')"><i class="fa fa-remove"></i></a>
+                                        <li class="extra">
+                                            <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
 
-                                        <div class="mailbox-attachment-info">
-                                            <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i>{{fileName($file->file_url)}}</a>
-                                            <span class="mailbox-attachment-size">
-                                              {{file_size($file->file_url)}} KB
-                                            </span>
-                                        </div>
-                                    </li>
+                                            <div class="mailbox-attachment-info">
+                                                <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i>{{fileName($file->file_url)}}</a>
+                                                <span class="mailbox-attachment-size">
+                                                  {{file_size($file->file_url)}} KB
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>

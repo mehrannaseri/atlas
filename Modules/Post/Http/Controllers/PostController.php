@@ -280,6 +280,14 @@ class PostController extends Controller
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')){
             $file = File::find($id);
 
+            unlink(public_path().'/'.$file->file_url);
+            $file->posts()->detach();
+            $file->delete();
+
+            Session::flash('delete' , 'The selected file was deleted successfully');
+            return back();
+
+
         }
         else{
             return view('layouts.error.403');
