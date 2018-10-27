@@ -42,7 +42,7 @@ class PostController extends Controller
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')) {
             $languages = Language::all();
-            $files = File::all();
+            $files = File::where('type' , 'jpg')->get();
 
             return view('post::create', compact('languages', 'files'));
         }
@@ -63,7 +63,7 @@ class PostController extends Controller
                 'language' => 'required',
                 'title' => 'required',
                 'category' => 'required',
-                'files.*' => 'required_if:old_files,|mimes:jpeg,png',
+                'files.*' => 'required_if:old_files,|mimes:jpeg,png,bmp,mp4,mkv,wmv,avi,mov,mp3,ogg,3gp,m4a,wav,pdf,doc,docx,ppt,pptx,txt',
                 'old_files' => 'required_if:files,',
             ], [
                 'files.required_if' => 'Selecting at least one new file or selecting from previous files is essential',
@@ -115,16 +115,58 @@ class PostController extends Controller
     {
         foreach($files as $file)
         {
+            $file_ext = $file->getClientOriginalExtension();
+            $ext = $this->EXTFile($file_ext);
+
             $name= time().$file->getClientOriginalName();
             $file->move(public_path().'/files/posts/', $name);
             $path = '/files/posts/'.$name;
 
             $file = new File();
             $file->file_url = $path;
+            $file->type = $ext;
             $file->save();
             $data[] = $file->id;
         }
         return $data;
+    }
+
+    protected function EXTFile($ext)
+    {
+        $type = "";
+        switch($ext){
+            case "jpg":
+            case "png":
+            case "bmp":
+                $type = 'jpg';
+            break;
+
+            case "mp4" :
+            case "mkv":
+            case "wmv":
+            case "avi":
+            case "mov":
+                $type = "mp4";
+            break;
+
+            case "mp3" :
+            case "ogg":
+            case "3gp":
+            case "m4a":
+            case "wav":
+                $type = "mp3";
+            break;
+
+            case "pdf":
+            case "doc":
+            case "docx":
+            case "ppt":
+            case "pptx":
+            case "txt":
+                $type = "pdf";
+            break;
+        }
+        return $type;
     }
 
     protected function addFilePost($id,$data)
@@ -211,5 +253,18 @@ class PostController extends Controller
         else{
             return view('layouts.error.403');
         }
+    }
+
+    public function postFiles()
+    {
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')){
+            $files = File::all();
+
+            return view('post::files' , compact('files'));
+        }
+        else{
+            return view('layouts.error.404');
+        }
+
     }
 }

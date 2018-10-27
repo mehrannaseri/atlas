@@ -30,4 +30,5 @@ Route::prefix('panel/post')->group(function() {
     Route::get('/edit/{id}' , 'PostController@edit');
     Route::post('/update/{id}' , 'PostController@update');
     Route::get('/delete/{id}' , 'PostController@destroy');
+    Route::get('/files' , 'PostController@postFiles');
 });

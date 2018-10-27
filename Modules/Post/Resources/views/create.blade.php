@@ -24,7 +24,7 @@
                             <select onchange="setDir(this.value,['body','title'])" class="form-control" name="language" >
                                 <option value="0" selected hidden disabled="">Select language</option>
                                 @foreach($languages as $language)
-                                    <option value="{{$language->id}}">{{$language->title.' ( '.$language->flag.' )'}}</option>
+                                    <option {{(old('language') == $language->id ? 'selected' : '')}} value="{{$language->id}}">{{$language->title.' ( '.$language->flag.' )'}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -45,13 +45,7 @@
                             </select>
                         </div>
                         <div  class="form-group col-md-12 col-xs-12">
-                            <div class="form-group col-md-3 col-xs-3">
-                                <div class="upload-btn-wrapper">
-                                    <button class="btn1">Upload new images</button>
-                                    <input type="file" accept="image/jpeg,image/png" onchange="CountSelected()" id="file_select" name="files[]" multiple />
-                                </div>
-                            </div>
-                            <list style="display: none" class="new_file alert-info" id="count_files"></list>
+
                             <div class="form-group col-md-3 col-xs-3">
                                 <div class="upload-btn-wrapper">
                                     <input type="button" value="Use uploaded images" data-toggle="modal" data-target="#modal" class="btn1" />
@@ -61,6 +55,11 @@
                         </div>
                         <div class="form-group col-md-12 col-xs-12">
                             <label for="exampleInputFile">Post body</label>
+                            <a class="btn  btn-default myinsertFile" title="Insert file" data-toggle="modal" data-target="#myModal"  href="javascript:void(0);" >
+
+                                <span class="glyphicon glyphicon-picture"></span>
+
+                            </a>
                             <textarea dir="ltr" id="body" class="textarea" name="body" placeholder="Place some text here"
                                       style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                 {{old('body')}}
@@ -113,6 +112,47 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
+
+        <!-- Modal file in text-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Select file</h4>
+
+                    </div>
+                    <div class="modal-body">
+                        <div role="tabpanel">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#uploadTab" aria-controls="uploadTab" role="tab" data-toggle="tab">Image</a>
+
+                                </li>
+                                <li role="presentation"><a href="#browseTab" aria-controls="browseTab" role="tab" data-toggle="tab">Video</a>
+
+                                </li>
+                                <li role="presentation"><a href="#uploadNew" aria-controls="uploadNew" role="tab" data-toggle="tab">Upload New</a>
+
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="uploadTab">upload Tab</div>
+                                <div role="tabpanel" class="tab-pane" id="browseTab">browseTab</div>
+                                <div role="tabpanel" class="tab-pane" id="uploadNew">Upload new</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary save">Insert File</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!---------------------- /  modal----------------------->
     </section>
 @stop
@@ -142,5 +182,10 @@
     </script>
 
     <script src="{{asset('/js/panel/custom.js')}}"></script>
+    <script>
+        @if(old('language') !== null)
+            setDir('{{old('language')}}',['body','title'])
+        @endif
+    </script>
 @stop
 

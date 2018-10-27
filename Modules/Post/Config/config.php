@@ -7,7 +7,7 @@ return [
     'icon'        => 'newspaper-o',
     'label'       => '',
     'label_color' => '',
-    'active'      => ['panel/post' , 'panel/post/add' , 'panel/post/category' , 'panel/post/tags','panel/post/edit/*'],
+    'active'      => ['panel/post' , 'panel/post/add' , 'panel/post/category' , 'panel/post/tags','panel/post/edit/*','panel/post/files'],
 
     'submenu'     => [
         [
@@ -23,6 +23,14 @@ return [
             'icon'       => 'plus',
             'url'        => 'panel/post/add',
             'active'     => ['panel/post/add','panel/post/edit/*'],
+
+        ],
+        [
+            'permission' => 'create post',
+            'text'       => 'Files management',
+            'icon'       => 'image',
+            'url'        => 'panel/post/files',
+            'active'     => ['panel/post/files'],
 
         ],
         [

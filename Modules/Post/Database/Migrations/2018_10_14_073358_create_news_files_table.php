@@ -16,6 +16,7 @@ class CreateNewsFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->increments('id');
             $table->string('file_url');
+            $table->string('type',5);
             $table->string('description')->nullable();
             $table->timestamps();
         });

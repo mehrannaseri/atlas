@@ -331,3 +331,10 @@ a:hover.tooltips i {
 }
 
 /*----------------------*/
+.myinsertFile{
+    position: relative;
+    left: 565px;
+
+    top: 34px;
+    z-index: 999;
+}
