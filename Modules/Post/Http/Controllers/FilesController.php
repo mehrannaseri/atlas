@@ -137,6 +137,9 @@ class FilesController extends Controller
                 $end = \Carbon\Carbon::today()->subYear(1);
                 $files = File::whereBetween('created_at', array($end, $tom))->where('type' , 'jpg')->get();
             break;
+            default :
+                $files = File::where('type' , 'jpg')->get();
+                break;
         }
 
         return view('post::layouts.filterFile' , compact('files'));

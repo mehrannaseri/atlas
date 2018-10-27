@@ -330,12 +330,15 @@ function editRole(role) {
 }
 
 function Filter(elem , fil){
+    document.getElementById("loader").style.display = "";
+    document.getElementById("result").innerHTML = "";
     $.ajax({
         type:'POST',
         url:reqUrl+'/files/filter',
         dataType: 'text',
         data: { '_token' : token , 'fil' : fil },
         success:function(data) {
+            document.getElementById("loader").style.display = "none";
             document.getElementById("result").innerHTML = data;
         }
     });

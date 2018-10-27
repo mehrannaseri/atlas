@@ -91,8 +91,15 @@
                         <button onclick="Filter(this,'month')" class="filter btn btn-sm btn-primary">Last Month</button>
                         <button onclick="Filter(this,'year')" class="filter btn btn-sm btn-primary">Last Year</button>
                         <button onclick="Filter(this,'')" class="filter btn btn-sm btn-success">Reset</button>
-
-                        <div id="result" style="max-height: 500px ; overflow: scroll">
+                        <div id="loader" style="display: none" class="Loader">
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                        </div>
+                        <div id="result" style="min-height:500px; max-height: 500px ; overflow: scroll">
                             @foreach($files as $file)
                                 <div class="col-md-5 col-sm-5">
                                     <div class=" checkbox rounded-6 medium m-b-2">
