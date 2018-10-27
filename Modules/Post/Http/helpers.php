@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\File;
+
 /**
  * Created by PhpStorm.
  * User: Kubak
@@ -43,5 +46,13 @@ function rate($rates){
 function rate_info($rates){
 
     return array(rate($rates),sizeof($rates));
+}
+
+function fileName($path){
+    $file = explode('/',$path);
+    return $file[3];
+}
+function file_size($path){
+    return round((File::size(public_path($path)))/1024,2);
 }
 

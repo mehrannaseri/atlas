@@ -338,3 +338,40 @@ a:hover.tooltips i {
     top: 34px;
     z-index: 999;
 }
+
+/*------------------------*/
+.fileManager{
+    background-color: gainsboro;
+
+    padding: 12px;
+    max-height: 850px;
+    overflow: scroll;
+    overflow-scrolling: touch;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.fileArea{
+    width: 120px;
+    box-shadow: #5a6268;
+    height: 85px;
+    margin: 10px;
+    border-radius: 6px;
+
+}
+.videoArea{
+    width: 240px;
+    box-shadow: #5a6268;
+    height: 240px;
+    margin: 10px;
+    border-radius: 6px;
+}
+.extra{
+    float: left;
+    list-style: none;
+    border-radius: 6px;
+    border: 1px solid #eee;
+
+    margin-bottom: 10px;
+
+    margin-right: 10px;
+}

@@ -63,11 +63,9 @@ class PostController extends Controller
                 'language' => 'required',
                 'title' => 'required',
                 'category' => 'required',
-                'files.*' => 'required_if:old_files,|mimes:jpeg,png,bmp,mp4,mkv,wmv,avi,mov,mp3,ogg,3gp,m4a,wav,pdf,doc,docx,ppt,pptx,txt',
-                'old_files' => 'required_if:files,',
+                'old_files' => 'required',
             ], [
-                'files.required_if' => 'Selecting at least one new file or selecting from previous files is essential',
-                'old_files.required_if' => 'Selecting at least one new file or selecting from previous files is essential'
+                'old_files.required' => 'Selecting at least one new file or selecting from previous files is essential'
             ]);
 
             $post = $this->AddPost($request);
@@ -82,12 +80,12 @@ class PostController extends Controller
                 $this->addFilePost($post->id, $files);
             }
 
-            if ($request->hasfile('files')) {
+            /*if ($request->hasfile('files')) {
 
                 $data = $this->UploadFilePost($request->file('files'));
 
                 $this->addFilePost($post->id, $data);
-            }
+            }*/
 
             Session::flash('success', 'New Post added successfuly');
             return back();
@@ -111,26 +109,6 @@ class PostController extends Controller
         return $post;
     }
 
-    protected function UploadFilePost($files)
-    {
-        foreach($files as $file)
-        {
-            $file_ext = $file->getClientOriginalExtension();
-            $ext = $this->EXTFile($file_ext);
-
-            $name= time().$file->getClientOriginalName();
-            $file->move(public_path().'/files/posts/', $name);
-            $path = '/files/posts/'.$name;
-
-            $file = new File();
-            $file->file_url = $path;
-            $file->type = $ext;
-            $file->save();
-            $data[] = $file->id;
-        }
-        return $data;
-    }
-
     protected function EXTFile($ext)
     {
         $type = "";
@@ -147,14 +125,6 @@ class PostController extends Controller
             case "avi":
             case "mov":
                 $type = "mp4";
-            break;
-
-            case "mp3" :
-            case "ogg":
-            case "3gp":
-            case "m4a":
-            case "wav":
-                $type = "mp3";
             break;
 
             case "pdf":
@@ -258,12 +228,61 @@ class PostController extends Controller
     public function postFiles()
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')){
-            $files = File::all();
+            $images = File::where('type' , 'jpg')->orderBy('created_at','desc')->get();
+            $videos = File::where('type' , 'mp4')->orderBy('created_at','desc')->get();
+            $files = File::where('type' , 'pdf')->orderBy('created_at','desc')->get();
 
-            return view('post::files' , compact('files'));
+            return view('post::files' , compact('files','images','videos'));
         }
         else{
             return view('layouts.error.404');
+        }
+
+    }
+
+    public function UploadFilePost(Request $request)
+    {
+
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')){
+            $request->validate([
+                'files.*' => 'mimes:jpeg,png,bmp,mp4,mkv,wmv,avi,mov,pdf,doc,docx,ppt,pptx,txt',
+                'files'   => 'required'
+
+            ]);
+
+            $files = $request->file('files');
+            foreach($files as $file)
+            {
+                $file_ext = $file->getClientOriginalExtension();
+                $ext = $this->EXTFile($file_ext);
+
+                $name= time().$file->getClientOriginalName();
+                $file->move(public_path().'/files/posts/', $name);
+                $path = '/files/posts/'.$name;
+
+                $file = new File();
+                $file->file_url = $path;
+                $file->type = $ext;
+                $file->save();
+                // $data[] = $file->id;
+            }
+            Session::flash('success' , 'New files was added successfuly!');
+            return back();
+        }
+        else{
+            return view('layouts.error.403');
+        }
+
+    }
+
+    public function deleteFile($id)
+    {
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')){
+            $file = File::find($id);
+
+        }
+        else{
+            return view('layouts.error.403');
         }
 
     }
