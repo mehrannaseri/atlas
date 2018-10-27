@@ -115,4 +115,30 @@ class FilesController extends Controller
         }
         return $type;
     }
+
+    public function filterFile(Request $request)
+    {
+        $filter_date = $request->fil;
+        $date = \Carbon\Carbon::today();
+        $tom = \Carbon\Carbon::tomorrow();
+        switch($filter_date){
+            case "today" :
+                $files = File::where('created_at', ">=", $date)->where('type' , 'jpg')->get();
+            break;
+            case "week" :
+                $end = \Carbon\Carbon::today()->subDays(7);
+                $files = File::whereBetween('created_at', array($end, $tom))->where('type' , 'jpg')->get();
+            break;
+            case "month" :
+                $end = \Carbon\Carbon::tomorrow()->subDays(30);
+                $files = File::whereBetween('created_at', array($end, $tom))->where('type' , 'jpg')->get();
+            break;
+            case "year" :
+                $end = \Carbon\Carbon::today()->subYear(1);
+                $files = File::whereBetween('created_at', array($end, $tom))->where('type' , 'jpg')->get();
+            break;
+        }
+
+        return view('post::layouts.filterFile' , compact('files'));
+    }
 }

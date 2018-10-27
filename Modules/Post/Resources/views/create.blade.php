@@ -92,7 +92,7 @@
                         <button onclick="Filter(this,'year')" class="filter btn btn-sm btn-primary">Last Year</button>
                         <button onclick="Filter(this,'')" class="filter btn btn-sm btn-success">Reset</button>
 
-                        <div style="max-height: 500px ; overflow: scroll">
+                        <div id="result" style="max-height: 500px ; overflow: scroll">
                             @foreach($files as $file)
                                 <div class="col-md-5 col-sm-5">
                                     <div class=" checkbox rounded-6 medium m-b-2">

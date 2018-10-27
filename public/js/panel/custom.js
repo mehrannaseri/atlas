@@ -333,11 +333,10 @@ function Filter(elem , fil){
     $.ajax({
         type:'POST',
         url:reqUrl+'/files/filter',
-        dataType: 'JSON',
+        dataType: 'text',
         data: { '_token' : token , 'fil' : fil },
         success:function(data) {
-
-            alert(data);
+            document.getElementById("result").innerHTML = data;
         }
     });
 }
