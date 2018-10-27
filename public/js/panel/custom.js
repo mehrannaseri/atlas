@@ -328,3 +328,16 @@ function editRole(role) {
 
     open_modal();
 }
+
+function Filter(elem , fil){
+    $.ajax({
+        type:'POST',
+        url:reqUrl+'/files/filter',
+        dataType: 'JSON',
+        data: { '_token' : token , 'fil' : fil },
+        success:function(data) {
+
+            alert(data);
+        }
+    });
+}

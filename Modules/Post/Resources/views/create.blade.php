@@ -85,6 +85,13 @@
                     <br>
                     <list class="new_file alert-info"><span id="counter">0</span> file selected</list>
                     <div  class="modal-body col-md-12 col-sm-12">
+                        Filter Uploaded Files in : <br><br>
+                        <button onclick="Filter(this,'today')" class="filter btn btn-sm btn-primary">Today</button>
+                        <button onclick="Filter(this,'week')" class="filter btn btn-sm btn-primary">Last week</button>
+                        <button onclick="Filter(this,'month')" class="filter btn btn-sm btn-primary">Last Month</button>
+                        <button onclick="Filter(this,'year')" class="filter btn btn-sm btn-primary">Last Year</button>
+                        <button onclick="Filter(this,'')" class="filter btn btn-sm btn-success">Reset</button>
+
                         <div style="max-height: 500px ; overflow: scroll">
                             @foreach($files as $file)
                                 <div class="col-md-5 col-sm-5">

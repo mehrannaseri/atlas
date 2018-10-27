@@ -31,7 +31,8 @@ Route::prefix('panel/post')->group(function() {
     Route::post('/update/{id}' , 'PostController@update');
     Route::get('/delete/{id}' , 'PostController@destroy');
 
-    Route::get('/files' , 'PostController@postFiles');
-    Route::post('/files/add' , 'PostController@UploadFilePost');
-    Route::get('/files/remove/{id}' , 'PostController@deleteFile');
+    Route::get('/files' , 'FilesController@postFiles');
+    Route::post('/files/add' , 'FilesController@UploadFilePost');
+    Route::get('/files/remove/{id}' , 'FilesController@deleteFile');
+    Route::post('/files/filter' , 'FilesController@filterFile');
 });
