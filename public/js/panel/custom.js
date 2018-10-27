@@ -330,8 +330,10 @@ function editRole(role) {
 }
 
 function Filter(elem , fil){
+    old_files = [];
     document.getElementById("loader").style.display = "";
     document.getElementById("result").innerHTML = "";
+    document.getElementById("counter").innerText = 0;
     $.ajax({
         type:'POST',
         url:reqUrl+'/files/filter',

@@ -30,6 +30,7 @@ class PostController extends Controller
                 ->with('categories')
                 ->with('tags')
                 ->with('files')
+                ->orderBy('created_at' , 'desc')
                 ->get();
             return view('post::index', compact('posts'));
         }

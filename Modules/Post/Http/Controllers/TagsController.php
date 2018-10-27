@@ -22,7 +22,7 @@ class TagsController extends Controller
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('read tag')){
             $languages = Language::all();
-            $tags = Tag::all();
+            $tags = Tag::orderBy('created_at' , 'desc')->get();
             return view('post::tags' , compact('languages' , 'tags'));
         }
         else{

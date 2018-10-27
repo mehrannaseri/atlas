@@ -23,7 +23,7 @@ class CategoryController extends Controller
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('read category')) {
             $languages = Language::all();
-            $categories = Category::with('lang')->with('parent')->get();
+            $categories = Category::with('lang')->with('parent')->orderBy('created_at','desc')->get();
 
             return view('post::category', compact('languages', 'categories'));
         }
@@ -34,8 +34,7 @@ class CategoryController extends Controller
 
     public function catsBylang(Request $request)
     {
-        return Category::where('parent_id' , null)
-                        ->where('lang_id' , $request->lang)
+        return Category::where('lang_id' , $request->lang)
                         ->get();
     }
 
