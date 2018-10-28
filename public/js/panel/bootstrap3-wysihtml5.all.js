@@ -6934,6 +6934,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
       var that   = this,
           iframe = doc.createElement("iframe");
       iframe.className = "wysihtml5-sandbox";
+        iframe.id = "editor";
       wysihtml5.dom.setAttributes({
         "security":           "restricted",
         "allowtransparency":  "true",
@@ -14850,6 +14851,21 @@ function program17(depth0,data) {
               'alt': 'alt',
               'src': 'url',
               'height': 'numbers'
+            }
+          },
+          'video': {
+            'check_attributes': {
+                'width': 'numbers',
+                'height': 'numbers',
+            },
+            'set_attributes': {
+              'controls': ''
+            }
+          },
+          'source': {
+            'check_attributes': {
+                'src': 'url',
+                'type' : 'video/mp4'
             }
           },
           'a':  {

@@ -44,8 +44,9 @@ class PostController extends Controller
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')) {
             $languages = Language::all();
             $files = File::where('type' , 'jpg')->get();
+            $videos = File::where('type' , 'mp4')->get();
 
-            return view('post::create', compact('languages', 'files'));
+            return view('post::create', compact('languages', 'files' , 'videos'));
         }
         else{
             return view('layouts.error.404');
@@ -59,6 +60,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+       // return $request->all();
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')) {
             $request->validate([
                 'language' => 'required',
@@ -170,11 +172,9 @@ class PostController extends Controller
             $request->validate([
                 'language' => 'required',
                 'title' => 'required',
-                'files.*' => 'required_if:old_files,|mimes:jpeg,png',
-                'old_files' => 'required_if:files,',
+                'old_files' => 'required',
             ], [
-                'files.required_if' => 'Selecting at least one new file or selecting from previous files is essential',
-                'old_files.required_if' => 'Selecting at least one new file or selecting from previous files is essential'
+                'old_files.required' => 'Selecting at least one new file or selecting from previous files is essential'
             ]);
 
             $post = Post::find($id);
@@ -194,13 +194,13 @@ class PostController extends Controller
                 $files = explode(",", $request->old_files);
                 $this->addFilePost($post->id, $files);
             }
-            if ($request->hasfile('files')) {
+            /*if ($request->hasfile('files')) {
                 $data = $this->UploadFilePost($request->file('files'));
                 $this->addFilePost($post->id, $data);
-            }
+            }*/
 
             Session::flash('success', 'Post was updated successfuly');
-            return redirect()->route('list');
+            return redirect()->route('post_list');
         }
         else{
             return view('layouts.error.403');

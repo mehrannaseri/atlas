@@ -18,6 +18,7 @@
                 <form role="form" action="{{asset('/panel/post/store')}}" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <input type="hidden" id="old_files" value="" name="old_files"/>
+
                     <div class="box-body">
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputPassword1">Post Language</label>
@@ -60,7 +61,8 @@
                                 <span class="glyphicon glyphicon-picture"></span>
 
                             </a>
-                            <textarea dir="ltr" id="body" class="textarea" name="body" placeholder="Place some text here"
+                            <!--<input type="hidden" id="textBody" name="body" value="{{old('body')}}">-->
+                            <textarea dir="ltr" id="body" name="body" class="textarea" placeholder="Place some text here"
                                       style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                 {{old('body')}}
                                 </textarea>
@@ -154,8 +156,50 @@
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="uploadTab">upload Tab</div>
-                                <div role="tabpanel" class="tab-pane" id="browseTab">browseTab</div>
+                                <div role="tabpanel" class="tab-pane active" id="uploadTab">
+                                    <div id="" style="min-height:500px; max-height: 500px ; overflow: scroll">
+                                        @foreach($files as $file)
+                                            <div class="col-md-5 col-sm-5">
+                                                <div class=" checkbox rounded-6 medium m-b-2">
+                                                    <div class=" checkbox-overlay">
+                                                        <input type="checkbox" onchange="useFileInText(this,'{{asset($file->file_url)}}','img')" id="myCheckbox1" />
+                                                        <div class="checkbox-img checkbox-container">
+                                                            <div class="checkbox-checkmark"></div>
+                                                        </div>
+                                                        <label for="myCheckbox1"><img class="tumb-img" width="250" height="200" src="{{asset($file->file_url)}}"></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="browseTab">
+                                    <div id="" style="min-height:500px; max-height: 500px ; overflow: scroll">
+                                        @foreach($videos as $video)
+                                            <div class="col-md-5 col-sm-5">
+                                                <div class=" checkbox rounded-6 medium m-b-2">
+                                                    <div class=" checkbox-overlay">
+                                                        <input type="checkbox" onchange="useFileInText(this,'{{asset($video->file_url)}}','mov')" id="myCheckbox1" />
+                                                        <div class="checkbox-img checkbox-container">
+                                                            <div class="checkbox-checkmark"></div>
+                                                        </div>
+                                                        <label for="myCheckbox1">
+                                                            <video class="videoArea" width="320" height="240">
+                                                                <source src="{{asset($video->file_url)}}" type="video/mp4">
+                                                                <source src="{{asset($video->file_url)}}" type="video/ogg">
+                                                                Your browser does not support the video .
+                                                            </video>
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        @endforeach
+                                    </div>
+                                </div>
                                 <div role="tabpanel" class="tab-pane" id="uploadNew">Upload new</div>
                             </div>
                         </div>
@@ -201,5 +245,6 @@
             setDir('{{old('language')}}',['body','title'])
         @endif
     </script>
+
 @stop
 

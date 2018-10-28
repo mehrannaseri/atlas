@@ -51,13 +51,6 @@
                         <div  class="form-group col-md-12 col-xs-12">
                             <div class="form-group col-md-3 col-xs-3">
                                 <div class="upload-btn-wrapper">
-                                    <button class="btn1">Upload new images</button>
-                                    <input type="file" accept="image/jpeg,image/png" onchange="CountSelected()" id="file_select" name="files[]" multiple />
-                                </div>
-                            </div>
-                            <list style="display: none" class="new_file alert-info" id="count_files"></list>
-                            <div class="form-group col-md-3 col-xs-3">
-                                <div class="upload-btn-wrapper">
                                     <input type="button" value="Use uploaded images" data-toggle="modal" data-target="#modal" class="btn1" />
                                 </div>
                             </div>

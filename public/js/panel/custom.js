@@ -99,11 +99,13 @@ function setDir(lang,elems,edit = false) {
             document.getElementById('tag').innerHTML = result;
             if(res[0].flag === 'ku' || res[0].flag === 'fa' || res[0].flag === 'ar'){
                 for(var i = 0 ; i < elems.length ; i++){
+
                     document.getElementById(elems[i]).dir = 'rtl';
                 }
                 var test = document.getElementsByClassName("wysihtml5-sandbox");
                 var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
                 elmnt.dir = 'rtl';
+
             }
             else{
                 for(var i = 0 ; i < elems.length ; i++){
@@ -345,3 +347,33 @@ function Filter(elem , fil){
         }
     });
 }
+
+function useFileInText(elem , pathFile , type){
+    var body = document.getElementById("body");
+    var tag = '';
+    var test = document.getElementsByClassName("wysihtml5-sandbox");
+    var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
+
+    if(elem.checked == true){
+        if(type === "img"){
+            tag = '<img src="'+pathFile+'">';
+        }
+        if(type === "mov"){
+            tag = '<video class="videoArea" width="320" height="240" controls><source src="'+pathFile+'" type="video/mp4"><source src="'+pathFile+'" type="video/ogg"></video><br>';
+
+        }
+
+        var newBody = body.value+tag+'<br>';
+        elmnt.innerHTML = newBody;
+        alert($('.textarea').val());
+        body.value = $('.textarea').val();
+        //document.getElementById("textBody").value = elmnt.innerHTML;
+
+
+    }
+
+}
+
+
+
+
