@@ -51,17 +51,17 @@
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputPassword1">Date of holding the exhibition</label>
                             <div class="input-daterange input-group">
-                                <input type="text" class="input-sm form-control" name="start_holding" />
+                                <input type="text" class="input-sm form-control" value="{{old('start_holding')}}" name="start_holding" />
                                 <span class="input-group-addon">to</span>
-                                <input type="text" class="input-sm form-control" name="end_holding" />
+                                <input type="text" class="input-sm form-control" value="{{old('end_holding')}}" name="end_holding" />
                             </div>
                         </div>
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputPassword1">Registration time at the exhibition</label>
                             <div class="input-daterange input-group">
-                                <input type="text" class="input-sm form-control" name="start_reg" />
+                                <input type="text" class="input-sm form-control" value="{{old('start_reg')}}" name="start_reg" />
                                 <span class="input-group-addon">to</span>
-                                <input type="text" class="input-sm form-control" name="end_reg" />
+                                <input type="text" class="input-sm form-control" value="{{old('end_reg')}}" name="end_reg" />
                             </div>
                         </div>
                         <div class="form-group col-md-6 col-xs-6">
@@ -105,7 +105,6 @@
         $('.input-daterange').datepicker({
             autoclose: true,
             format : "yyyy-mm-dd",
-            startDate: '-d',
         });
 
         var reqUrl = '{{asset('panel/exhibition/')}}';
@@ -116,7 +115,10 @@
     <script src="{{asset('/js/panel/custom.js')}}"></script>
     <script>
         @if(old('language') !== null)
-            setDir('{{old('language')}}',['exhibition','title'])
+            setDir('{{old('language')}}',['exhibition','title','address'])
+        @endif
+        @if(old('state') !== null)
+        CityOfState('{{old('state')}}','{{old('city')}}')
         @endif
     </script>
 

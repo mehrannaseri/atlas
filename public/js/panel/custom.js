@@ -149,10 +149,11 @@ function setPostDependency(res,edit = false) {
     document.getElementById('tag').innerHTML = createOption(res[0].tags);
 }
 
-function createOption(data){
-    var result = '<option value="0" selected hidden disabled="">Select...</option>';
+function createOption(data,selData = ''){
+
+    var result = '<option value="0" '+(selData === '' ? 'selected' : '')+' hidden disabled="">Select...</option>';
     for(var j = 0 ; j < data.length ; j++){
-        result += '<option value="'+data[j].id+'">'+data[j].title+'</option>';
+        result += '<option '+(selData == data[j].id ? 'selected' : '')+' value="'+data[j].id+'">'+data[j].title+'</option>';
     }
     return result;
 }
@@ -416,7 +417,7 @@ function AddFileToBody(pathFile , type) {
     $('#myModal').modal('toggle');
 }
 
-function CityOfState(state) {
+function CityOfState(state,city = '') {
     $.ajax({
         type: "GET",
         url: reqUrl+'/cityList',
@@ -425,7 +426,7 @@ function CityOfState(state) {
         success: function(res) {
             res = JSON.parse(res);
 
-            document.getElementById("city").innerHTML = createOption(res);
+            document.getElementById("city").innerHTML = createOption(res,city);
         }
     });
 }

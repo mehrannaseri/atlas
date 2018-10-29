@@ -1,3 +1,4 @@
+
 @if(!empty($errors->first()))
     <div id="message_alert" class="alert alert-danger" role="alert">
         <span>{{ $errors->first() }}</span>

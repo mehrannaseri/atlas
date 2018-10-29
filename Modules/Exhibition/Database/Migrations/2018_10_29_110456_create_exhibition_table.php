@@ -14,7 +14,7 @@ class CreateExhibitionTable extends Migration
      */
     public function up()
     {
-        Schema::create('exhibition', function (Blueprint $table) {
+        Schema::create('exhibitions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('lang_id')->index()->unsigned();
             $table->integer('state_id')->index()->unsigned();
@@ -65,6 +65,6 @@ class CreateExhibitionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exhibition');
+        Schema::dropIfExists('exhibitions');
     }
 }

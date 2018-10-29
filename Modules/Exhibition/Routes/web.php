@@ -15,4 +15,5 @@ Route::prefix('panel/exhibition')->group(function() {
     Route::get('/', 'ExhibitionController@index');
     Route::get('/add' , 'ExhibitionController@create');
     Route::get('/cityList' , 'ExhibitionController@cityList');
+    Route::post('/store' , 'ExhibitionController@store');
 });
