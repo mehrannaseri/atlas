@@ -18,12 +18,18 @@ class ExhibitionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new exhibition.
      * @return Response
      */
     public function create()
     {
-        return view('exhibition::create');
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create exhibition')){
+            return view('exhibition::create');
+        }
+        else{
+            return view('layouts.error.404');
+        }
+
     }
 
     /**
