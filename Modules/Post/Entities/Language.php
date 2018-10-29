@@ -3,6 +3,7 @@
 namespace Modules\Post\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Exhibition\Entities\Exhibition;
 
 class Language extends Model
 {
@@ -21,5 +22,10 @@ class Language extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function exhibitions()
+    {
+        return $this->hasMany(Exhibition::class);
     }
 }
