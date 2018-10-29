@@ -98,4 +98,15 @@ class DashboardController extends Controller
             return view('layouts.error.403');
         }
     }
+
+    public function setDir(Request $request)
+    {
+        if($request->from == 'post'){
+            return Language::with('tags')->with('categories')->where('id' , $request->lang)->get();
+        }
+        else if($request->from == 'exhibition'){
+            return Language::where('id' , $request->lang)->get();
+        }
+
+    }
 }

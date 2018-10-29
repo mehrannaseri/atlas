@@ -22,7 +22,7 @@
                     <div class="box-body">
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputPassword1">Post Language</label>
-                            <select onchange="setDir(this.value,['body','title'])" class="form-control" name="language" >
+                            <select onchange="setDir(this.value,['post','body','title'])" class="form-control" name="language" >
                                 <option value="0" selected hidden disabled="">Select language</option>
                                 @foreach($languages as $language)
                                     <option {{(old('language') == $language->id ? 'selected' : '')}} value="{{$language->id}}">{{$language->title.' ( '.$language->flag.' )'}}</option>
@@ -247,13 +247,14 @@
             $('.textarea').wysihtml5()
         });
         var reqUrl = '{{asset('panel/post/')}}';
+        var publicUrl = '{{asset('panel/language')}}';
         var token = '{{csrf_token()}}';
     </script>
 
     <script src="{{asset('/js/panel/custom.js')}}"></script>
     <script>
         @if(old('language') !== null)
-            setDir('{{old('language')}}',['body','title'])
+            setDir('{{old('language')}}',['post','body','title'])
         @endif
     </script>
 

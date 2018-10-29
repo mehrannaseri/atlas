@@ -7,22 +7,22 @@ return [
     'icon'        => 'eye',
     'label'       => '',
     'label_color' => '',
-    'active'      => ['panel/fair' , 'panel/fair/add' , 'panel/fair/edit/*'],
+    'active'      => ['panel/exhibition' , 'panel/exhibition/add' , 'panel/exhibition/edit/*'],
 
     'submenu'     => [
         [
             'permission' => 'read exhibition',
             'text'       => 'Exhibition list',
             'icon'       => 'list',
-            'url'        => 'panel/fair',
-            'active'     => ['panel/fair']
+            'url'        => 'panel/exhibition',
+            'active'     => ['panel/exhibition']
         ],
         [
             'permission' => 'create exhibition',
             'text'       => 'Add Exhibition',
             'icon'       => 'plus',
-            'url'        => 'panel/fair/add',
-            'active'     => ['panel/fair/add','panel/fair/edit/*'],
+            'url'        => 'panel/exhibition/add',
+            'active'     => ['panel/exhibition/add','panel/exhibition/edit/*'],
 
         ]
     ]

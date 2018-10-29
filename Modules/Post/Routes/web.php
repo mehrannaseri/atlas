@@ -25,7 +25,6 @@ Route::prefix('panel/post')->group(function() {
 
     Route::get('/' , 'PostController@index')->name('post_list');
     Route::get('/add', 'PostController@create')->name('post::add');
-    Route::get('/setDir' , 'PostController@setDir');
     Route::post('/store' , 'PostController@store');
     Route::get('/edit/{id}' , 'PostController@edit');
     Route::post('/update/{id}' , 'PostController@update');

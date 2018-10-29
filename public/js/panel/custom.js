@@ -102,46 +102,58 @@ function CountSelected(action) {
 function setDir(lang,elems,edit = false) {
     $.ajax({
         type: "GET",
-        url: reqUrl+'/setDir',
+        url: publicUrl+'/setDir',
         dataType: 'text',
-        data: {'lang': lang , '_token' : token},
+        data: {'lang': lang , '_token' : token , 'from' : elems[0]},
         success: function(res) {
             res = JSON.parse(res);
-            var result = "";
-            if(!edit){
-                $('.select2').val('').trigger("change");
-            }
-            for(var j = 0 ; j < res[0].categories.length ; j++){
-                result += '<option value="'+res[0].categories[j].id+'">'+res[0].categories[j].title+'</option>';
-            }
-            document.getElementById('category').innerHTML = result;
-            result = '';
-            for(var k = 0 ; k < res[0].tags.length ; k++){
-                result += '<option value="'+res[0].tags[k].id+'">'+res[0].tags[k].title+'</option>';
-            }
-            document.getElementById('tag').innerHTML = result;
+
             if(res[0].flag === 'ku' || res[0].flag === 'fa' || res[0].flag === 'ar'){
-                for(var i = 0 ; i < elems.length ; i++){
+                for(var i = 1 ; i < elems.length ; i++){
 
                     document.getElementById(elems[i]).dir = 'rtl';
                 }
-                var test = document.getElementsByClassName("wysihtml5-sandbox");
-                var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
-                elmnt.dir = 'rtl';
+                if(elems.includes('body')){
+                    var test = document.getElementsByClassName("wysihtml5-sandbox");
+                    var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
+                    elmnt.dir = 'rtl';
+                }
+
 
             }
             else{
-                for(var i = 0 ; i < elems.length ; i++){
+                for(var i = 1 ; i < elems.length ; i++){
                     document.getElementById(elems[i]).dir = 'ltr';
                 }
-                var test = document.getElementsByClassName("wysihtml5-sandbox");
-                var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
-                elmnt.dir = 'ltr';
+                if(elems.includes('body')) {
+                    var test = document.getElementsByClassName("wysihtml5-sandbox");
+                    var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
+                    elmnt.dir = 'ltr';
+                }
             }
+
+            if(elems[0] === 'post'){
+                setPostDependency();
+            }
+
         }
     });
 }
-
+function setPostDependency() {
+    var result = "";
+    if(!edit){
+        $('.select2').val('').trigger("change");
+    }
+    for(var j = 0 ; j < res[0].categories.length ; j++){
+        result += '<option value="'+res[0].categories[j].id+'">'+res[0].categories[j].title+'</option>';
+    }
+    document.getElementById('category').innerHTML = result;
+    result = '';
+    for(var k = 0 ; k < res[0].tags.length ; k++){
+        result += '<option value="'+res[0].tags[k].id+'">'+res[0].tags[k].title+'</option>';
+    }
+    document.getElementById('tag').innerHTML = result;
+}
 var old_files = [];
 
 function useImage(elem,file) {

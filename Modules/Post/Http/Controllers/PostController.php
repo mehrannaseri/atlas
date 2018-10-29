@@ -53,11 +53,6 @@ class PostController extends Controller
         }
     }
 
-    public function setDir(Request $request)
-    {
-        return Language::with('tags')->with('categories')->where('id' , $request->lang)->get();
-    }
-
     public function store(Request $request)
     {
 

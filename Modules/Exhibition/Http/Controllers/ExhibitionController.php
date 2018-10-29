@@ -5,6 +5,8 @@ namespace Modules\Exhibition\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Exhibition\Entities\State;
+use Modules\Post\Entities\Language;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasPermissions;
 
@@ -21,6 +23,7 @@ class ExhibitionController extends Controller
      */
     public function index()
     {
+
         return view('exhibition::index');
     }
 
@@ -31,7 +34,9 @@ class ExhibitionController extends Controller
     public function create()
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create exhibition')){
-            return view('exhibition::create');
+            $languages = Language::all();
+            $states = State::all();
+            return view('exhibition::create' , compact('languages' , 'states'));
         }
         else{
             return view('layouts.error.404');
