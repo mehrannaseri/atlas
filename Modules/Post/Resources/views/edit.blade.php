@@ -211,7 +211,7 @@
                                         {{csrf_field()}}
                                         <div class="form-group">
                                             <div class="upload-btn-wrapper">
-                                                <button class="btn1">Upload new files</button>
+                                                <button class="btn1">Upload new file</button>
                                                 <input type="file"  onchange="CountSelected('send')" id="file_select" name="files[]" />
                                             </div>
                                         </div>

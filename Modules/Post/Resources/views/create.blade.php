@@ -205,7 +205,7 @@
                                         <input type="hidden" name="output" value="path" />
                                         <div class="form-group">
                                             <div class="upload-btn-wrapper">
-                                                <button class="btn1">Upload new files</button>
+                                                <button class="btn1">Upload new file</button>
                                                 <input type="file" id="file_select" name="files[]" onchange="CountSelected('send')" />
                                             </div>
                                         </div>
