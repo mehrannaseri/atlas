@@ -11,14 +11,14 @@ return [
 
     'submenu'     => [
         [
-            'permission' => 'read fair',
+            'permission' => 'read exhibition',
             'text'       => 'Exhibition list',
             'icon'       => 'list',
             'url'        => 'panel/fair',
             'active'     => ['panel/fair']
         ],
         [
-            'permission' => 'create fair',
+            'permission' => 'create exhibition',
             'text'       => 'Add Exhibition',
             'icon'       => 'plus',
             'url'        => 'panel/fair/add',

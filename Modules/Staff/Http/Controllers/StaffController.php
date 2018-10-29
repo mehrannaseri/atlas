@@ -50,7 +50,7 @@ class StaffController extends Controller
                 'name'     => 'required',
                 'email'    => 'required|unique:users|email',
                 'password' => 'required|min:6|confirmed',
-                'mobile'   => 'integer|nullable',
+                'mobile'   => 'nullable|regex:/(09)[0-9]{7}/',
                 'avatar'   => 'mimes:jpeg,png|nullable',
                 'role'     => 'required',
             ]);
@@ -102,7 +102,7 @@ class StaffController extends Controller
                 'name'     => 'required',
                 'email'    => 'required|email|unique:users,email,'.$user->id,
                 'password' => 'nullable|min:6|confirmed',
-                'mobile'   => 'integer|nullable',
+                'mobile'   => 'nullable|regex:/(09)[0-9]{7}/',
                 'avatar'   => 'mimes:jpeg,png|nullable',
                 'role'     => 'required',
             ]);
