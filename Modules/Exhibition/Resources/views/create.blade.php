@@ -15,14 +15,13 @@
                 @include('layouts.message')
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form" action="{{asset('/panel/post/store')}}" method="post" enctype="multipart/form-data">
+                <form role="form" action="{{asset('/panel/exhibition/store')}}" method="post">
                     {{csrf_field()}}
-                    <input type="hidden" id="old_files" value="" name="old_files"/>
 
                     <div class="box-body">
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputPassword1">Language</label>
-                            <select onchange="setDir(this.value,['exhibition','title'])" class="form-control" name="language" >
+                            <select onchange="setDir(this.value,['exhibition','title','address'])" class="form-control" name="language" >
                                 <option value="0" selected hidden disabled="">Select language</option>
                                 @foreach($languages as $language)
                                     <option {{(old('language') == $language->id ? 'selected' : '')}} value="{{$language->id}}">{{$language->title.' ( '.$language->flag.' )'}}</option>
@@ -35,12 +34,47 @@
                         </div>
                         <div class="form-group col-md-6 col-xs-6">
                             <label for="exampleInputPassword1">Province of the venue</label>
-                            <select onchange="" class="form-control" name="state" >
+                            <select onchange="CityOfState(this.value)" class="form-control" name="state" >
                                 <option value="0" selected hidden disabled="">Select State</option>
                                 @foreach($states as $state)
                                     <option {{(old('state') == $state->id ? 'selected' : '')}} value="{{$state->id}}">{{$state->title}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-6">
+                            <label for="exampleInputPassword1">Exhibition venue city</label>
+                            <select id="city" class="form-control" name="city" >
+                                <option value="0" selected hidden disabled="">Select City</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-6">
+                            <label for="exampleInputPassword1">Date of holding the exhibition</label>
+                            <div class="input-daterange input-group">
+                                <input type="text" class="input-sm form-control" name="start_holding" />
+                                <span class="input-group-addon">to</span>
+                                <input type="text" class="input-sm form-control" name="end_holding" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-6">
+                            <label for="exampleInputPassword1">Registration time at the exhibition</label>
+                            <div class="input-daterange input-group">
+                                <input type="text" class="input-sm form-control" name="start_reg" />
+                                <span class="input-group-addon">to</span>
+                                <input type="text" class="input-sm form-control" name="end_reg" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-6">
+                            <label for="exampleInputEmail1">The number of exhibition booths</label>
+                            <input class="form-control" onkeypress ="return check_number(event,this.id)" value="{{old('pavilion_num')}}" name="pavilion_num" id="pavilion_num" placeholder="Enter Number" type="text">
+                        </div>
+                        <div class="form-group col-md-6 col-xs-6">
+                            <label for="exampleInputEmail1">Cost per meter exhibit booth</label>
+                            <input class="form-control" oninput="money_format(this)" onkeypress ="return check_number(event,this.id)" value="{{old('cpm')}}" name="cpm" id="cpm" placeholder="Enter Cost" type="text">
+                        </div>
+                        <div class="form-group col-md-12 col-xs-12">
+                            <label for="exampleInputEmail1">Exhibition Address</label>
+                            <input class="form-control" value="{{old('address')}}" name="address" id="address" placeholder="Enter Address" type="text">
                         </div>
                     </div>
 
@@ -54,26 +88,27 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="{{asset('/css/panel/bootstrap3-wysihtml5.css') }}">
-    <link rel="stylesheet" href="{{asset('/css/panel/beautiful-checkbox.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/datePicker.css')}}">
     <link rel="stylesheet" href="{{asset('/css/panel/custom.css')}}">
 @stop
 
 @section('js')
-    <script src="{{asset('/js/panel/bootstrap3-wysihtml5.all.js')}}"></script>
+    <script src="{{asset('/js/datePicker.js')}}"></script>
+    <script src="{{asset('/js/panel/validation.js')}}"></script>
     <script>
         $(document).ready(function(){
             setTimeout(function(){
                 $("#message_alert").slideUp()
             },3500);
         });
-        $(document).ready(function() {
-            $('.select2').select2();
+
+        $('.input-daterange').datepicker({
+            autoclose: true,
+            format : "yyyy-mm-dd",
+            startDate: '-d',
         });
-        $(function () {
-            $('.textarea').wysihtml5()
-        });
-        var reqUrl = '{{asset('panel/post/')}}';
+
+        var reqUrl = '{{asset('panel/exhibition/')}}';
         var publicUrl = '{{asset('panel/language')}}';
         var token = '{{csrf_token()}}';
     </script>

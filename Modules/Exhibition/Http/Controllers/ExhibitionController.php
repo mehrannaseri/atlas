@@ -87,4 +87,13 @@ class ExhibitionController extends Controller
     public function destroy()
     {
     }
+    
+    /**
+     * Get City list of State
+     */
+    public function cityList(Request $request)
+    {
+        $state = State::find($request->id);
+        return $state->cities()->get();
+    }
 }

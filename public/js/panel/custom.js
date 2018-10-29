@@ -133,26 +133,28 @@ function setDir(lang,elems,edit = false) {
             }
 
             if(elems[0] === 'post'){
-                setPostDependency();
+                setPostDependency(res,edit);
             }
 
         }
     });
 }
-function setPostDependency() {
-    var result = "";
+function setPostDependency(res,edit = false) {
     if(!edit){
         $('.select2').val('').trigger("change");
     }
-    for(var j = 0 ; j < res[0].categories.length ; j++){
-        result += '<option value="'+res[0].categories[j].id+'">'+res[0].categories[j].title+'</option>';
+
+    document.getElementById('category').innerHTML = createOption(res[0].categories);
+
+    document.getElementById('tag').innerHTML = createOption(res[0].tags);
+}
+
+function createOption(data){
+    var result = '<option value="0" selected hidden disabled="">Select...</option>';
+    for(var j = 0 ; j < data.length ; j++){
+        result += '<option value="'+data[j].id+'">'+data[j].title+'</option>';
     }
-    document.getElementById('category').innerHTML = result;
-    result = '';
-    for(var k = 0 ; k < res[0].tags.length ; k++){
-        result += '<option value="'+res[0].tags[k].id+'">'+res[0].tags[k].title+'</option>';
-    }
-    document.getElementById('tag').innerHTML = result;
+    return result;
 }
 var old_files = [];
 
@@ -412,6 +414,20 @@ function AddFileToBody(pathFile , type) {
 
 
     $('#myModal').modal('toggle');
+}
+
+function CityOfState(state) {
+    $.ajax({
+        type: "GET",
+        url: reqUrl+'/cityList',
+        dataType: 'text',
+        data: {'id': state , '_token' : token},
+        success: function(res) {
+            res = JSON.parse(res);
+
+            document.getElementById("city").innerHTML = createOption(res);
+        }
+    });
 }
 
 
