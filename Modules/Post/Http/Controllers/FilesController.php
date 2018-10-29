@@ -55,10 +55,16 @@ class FilesController extends Controller
                 $file->file_url = $path;
                 $file->type = $ext;
                 $file->save();
-                // $data[] = $file->id;
+                $data[] = $file->type."_".asset($file->file_url);
             }
-            Session::flash('success' , 'New files was added successfuly!');
-            return back();
+            if($request->has('output')){
+                return $data;
+            }
+            else{
+                Session::flash('success' , 'New files was added successfuly!');
+                return back();
+            }
+
         }
         else{
             return view('layouts.error.403');

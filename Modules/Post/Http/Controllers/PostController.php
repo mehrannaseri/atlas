@@ -60,7 +60,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-       // return $request->all();
+
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('create post')) {
             $request->validate([
                 'language' => 'required',
@@ -152,14 +152,15 @@ class PostController extends Controller
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('update post')) {
             $languages = Language::all();
-            $files = File::all();
+            $files = File::where('type' , 'jpg')->get();
+            $videos = File::where('type' , 'mp4')->get();
             $post = Post::where('id', $id)
                 ->with('categories')
                 ->with('tags')
                 ->with('files')
                 ->first();
 
-            return view('post::edit', compact('post', 'languages', 'files'));
+            return view('post::edit', compact('post', 'languages', 'files','videos'));
         }
         else{
             return view('layouts.error.404');

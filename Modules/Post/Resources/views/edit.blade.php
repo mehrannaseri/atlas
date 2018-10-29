@@ -58,6 +58,9 @@
                         </div>
                         <div class="form-group col-md-12 col-xs-12">
                             <label for="exampleInputFile">Post body</label>
+                            <a class="btn  btn-default myinsertFile" title="Insert file" data-toggle="modal" data-target="#myModal"  href="javascript:void(0);" >
+                                <span class="glyphicon glyphicon-picture"></span>
+                            </a>
                             <textarea dir="ltr" id="body" class="textarea" name="body" placeholder="Place some text here"
                                       style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                 {{$post->body}}
@@ -84,7 +87,21 @@
                     <br>
                     <list class="new_file alert-info"><span id="counter">{{sizeof($post->files)}}</span> file selected</list>
                     <div  class="modal-body col-md-12 col-sm-12">
-                        <div style="max-height: 500px ; overflow: scroll">
+                        Filter Uploaded Files in : <br><br>
+                        <button onclick="Filter(this,'today')" class="filter btn btn-sm btn-primary">Today</button>
+                        <button onclick="Filter(this,'week')" class="filter btn btn-sm btn-primary">Last week</button>
+                        <button onclick="Filter(this,'month')" class="filter btn btn-sm btn-primary">Last Month</button>
+                        <button onclick="Filter(this,'year')" class="filter btn btn-sm btn-primary">Last Year</button>
+                        <button onclick="Filter(this,'')" class="filter btn btn-sm btn-success">Reset</button>
+                        <div id="loader" style="display: none" class="Loader">
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                            <div class="Bar"></div>
+                        </div>
+                        <div id="result" style="max-height: 500px ; overflow: scroll">
                             @foreach($files as $file)
                                 <div class="col-md-5 col-sm-5">
                                     <div class=" checkbox rounded-6 medium m-b-2">
@@ -116,6 +133,100 @@
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
+        </div>
+        <!-- Modal file in text-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Select file</h4>
+
+                    </div>
+                    <div class="modal-body">
+                        <div role="tabpanel">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#uploadTab" aria-controls="uploadTab" role="tab" data-toggle="tab">Image</a>
+
+                                </li>
+                                <li role="presentation"><a href="#browseTab" aria-controls="browseTab" role="tab" data-toggle="tab">Video</a>
+
+                                </li>
+                                <li role="presentation"><a href="#uploadNew" aria-controls="uploadNew" role="tab" data-toggle="tab">Upload New</a>
+
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="uploadTab">
+                                    <div id="" style="min-height:500px; max-height: 500px ; overflow: scroll">
+                                        @foreach($files as $file)
+                                            <div class="col-md-5 col-sm-5">
+                                                <div class=" checkbox rounded-6 medium m-b-2">
+                                                    <div class=" checkbox-overlay">
+                                                        <input type="checkbox" onchange="useFileInText(this,'{{asset($file->file_url)}}','img')" id="myCheckbox1" />
+                                                        <div class="checkbox-img checkbox-container">
+                                                            <div class="checkbox-checkmark"></div>
+                                                        </div>
+                                                        <label for="myCheckbox1"><img class="tumb-img" width="250" height="200" src="{{asset($file->file_url)}}"></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="browseTab">
+                                    <div id="" style="min-height:500px; max-height: 500px ; overflow: scroll">
+                                        @foreach($videos as $video)
+                                            <div class="col-md-5 col-sm-5">
+                                                <div class=" checkbox rounded-6 medium m-b-2">
+                                                    <div class=" checkbox-overlay">
+                                                        <input type="checkbox" onchange="useFileInText(this,'{{asset($video->file_url)}}','mov')" id="myCheckbox1" />
+                                                        <div class="checkbox-img checkbox-container">
+                                                            <div class="checkbox-checkmark"></div>
+                                                        </div>
+                                                        <label for="myCheckbox1">
+                                                            <video class="videoArea" width="320" height="240">
+                                                                <source src="{{asset($video->file_url)}}" type="video/mp4">
+                                                                <source src="{{asset($video->file_url)}}" type="video/ogg">
+                                                                Your browser does not support the video .
+                                                            </video>
+                                                        </label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="uploadNew">
+                                    <br>
+                                    <form id="modal_form" action="{{asset('panel/post/files/add')}}" method="post" enctype="multipart/form-data">
+                                        {{csrf_field()}}
+                                        <div class="form-group">
+                                            <div class="upload-btn-wrapper">
+                                                <button class="btn1">Upload new files</button>
+                                                <input type="file"  onchange="CountSelected('send')" id="file_select" name="files[]" />
+                                            </div>
+                                        </div>
+                                        <list style="display: none" class="new_file alert-info" id="count_files"></list>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <!---------------------- /  modal----------------------->
     </section>

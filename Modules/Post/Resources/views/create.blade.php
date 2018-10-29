@@ -57,9 +57,7 @@
                         <div class="form-group col-md-12 col-xs-12">
                             <label for="exampleInputFile">Post body</label>
                             <a class="btn  btn-default myinsertFile" title="Insert file" data-toggle="modal" data-target="#myModal"  href="javascript:void(0);" >
-
                                 <span class="glyphicon glyphicon-picture"></span>
-
                             </a>
                             <!--<input type="hidden" id="textBody" name="body" value="{{old('body')}}">-->
                             <textarea dir="ltr" id="body" name="body" class="textarea" placeholder="Place some text here"
@@ -200,13 +198,26 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="uploadNew">Upload new</div>
+                                <div role="tabpanel" class="tab-pane" id="uploadNew">
+                                    <br>
+                                    <form id="modal_form" action="{{asset('panel/post/files/add')}}" method="post" enctype="multipart/form-data">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="output" value="path" />
+                                        <div class="form-group">
+                                            <div class="upload-btn-wrapper">
+                                                <button class="btn1">Upload new files</button>
+                                                <input type="file" id="file_select" name="files[]" onchange="CountSelected('send')" />
+                                            </div>
+                                        </div>
+                                        <list style="display: none" class="new_file alert-info" id="count_files"></list>
+
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary save">Insert File</button>
                     </div>
                 </div>
             </div>

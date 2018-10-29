@@ -70,10 +70,33 @@ function editTag(tag) {
     open_modal();
 }
 
-function CountSelected() {
+function CountSelected(action) {
     var files = document.getElementById("file_select").files;
     document.getElementById('count_files').style.display = "";
     document.getElementById('count_files').innerText = files.length+' Files selected';
+    if(action === 'send'){
+        var url = document.getElementById("modal_form").action;
+        var formdata = new FormData();
+        formdata.append('output' , 'path');
+        formdata.append('_token' , token);
+        for(var i = 0 ; i < files.length ; i++){
+            formdata.append('files[]' , files[i]);
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var data = JSON.parse(xhr.responseText);
+
+                for(var j = 0 ; j < data.length ; j++){
+                    var sub = data[j].split("_");
+                    AddFileToBody(sub[1] , sub[0]);
+                }
+            }
+        };
+        xhr.open("POST", url);
+        xhr.send(formdata);
+    }
 }
 
 function setDir(lang,elems,edit = false) {
@@ -349,29 +372,34 @@ function Filter(elem , fil){
 }
 
 function useFileInText(elem , pathFile , type){
+
+    if(elem.checked == true){
+
+        AddFileToBody(pathFile,type);
+
+    }
+}
+
+function AddFileToBody(pathFile , type) {
     var body = document.getElementById("body");
     var tag = '';
     var test = document.getElementsByClassName("wysihtml5-sandbox");
     var elmnt = test[0].contentWindow.document.getElementsByClassName("wysihtml5-editor")[0];
-
-    if(elem.checked == true){
-        if(type === "img"){
-            tag = '<img src="'+pathFile+'">';
-        }
-        if(type === "mov"){
-            tag = '<video class="videoArea" width="320" height="240" controls><source src="'+pathFile+'" type="video/mp4"><source src="'+pathFile+'" type="video/ogg"></video><br>';
-
-        }
-
-        var newBody = body.value+tag+'<br>';
-        elmnt.innerHTML = newBody;
-        alert($('.textarea').val());
-        body.value = $('.textarea').val();
-        //document.getElementById("textBody").value = elmnt.innerHTML;
-
+    if(type === "img" || type === "jpg"){
+        tag = '<img src="'+pathFile+'">';
+    }
+    if(type === "mov" || type === "mp4"){
+        tag = '<video class="videoArea" width="320" height="240" controls><source src="'+pathFile+'" type="video/mp4"><source src="'+pathFile+'" type="video/ogg"></video><br>';
 
     }
 
+    var newBody = body.value+tag+'<br>';
+
+    elmnt.innerHTML = newBody;
+    body.value = $('.textarea').val();
+
+
+    $('#myModal').modal('toggle');
 }
 
 
