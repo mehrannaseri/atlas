@@ -14,7 +14,7 @@ function ExibStatus($start_holding , $end_holding , $start_reg , $end_reg){
     $Sreg = date_diff($date,date_create($start_reg));
     $Ereg = date_diff($date,date_create($end_reg));
 
-    if($main_date < $start_holding && $start_holding < $start_reg){
+    if($main_date < $start_holding && $main_date >= $end_reg){
         $day = $start->format("%R%a");
         $result = '<span class="label-kubak-info">'.$day.' day left to start holding</span>';
     }
@@ -26,7 +26,7 @@ function ExibStatus($start_holding , $end_holding , $start_reg , $end_reg){
         $day = $Sreg->format("%R%a");
         $result = '<span class="label-kubak-info">'.$day.' day to start registration</span>';
     }
-    else if($main_date >= $start_reg && $main_date <= $end_reg){
+    else if($main_date >= $start_reg && $main_date < $end_reg){
         $day = $Ereg->format("%R%a");
         $result = '<span class="label-kubak-danger">'.$day.' day to end registration</span>';
     }
