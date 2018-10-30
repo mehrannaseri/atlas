@@ -9,6 +9,8 @@
         "Modules\\Exhibition\\Providers\\ExhibitionServiceProvider"
     ],
     "aliases": {},
-    "files": [],
+    "files": [
+        "Http\/Exibhelpers.php"
+    ],
     "requires": []
 }

@@ -20,13 +20,21 @@ class ExhibitionController extends Controller
         $this->middleware('auth');
     }
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Exhibition.
      * @return Response
      */
     public function index()
     {
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasPermissionTo('read exhibition')){
 
-        return view('exhibition::index');
+            $exhibitions = Exhibition::with('state')->with('city')->with('lang')->orderBy('start_holding' , 'desc')->get();
+
+            return view('exhibition::index' , compact('exhibitions'));
+        }
+        else{
+            return view('layouts.error.404');
+        }
+
     }
 
     /**

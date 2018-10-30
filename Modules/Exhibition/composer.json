@@ -20,6 +20,9 @@
     "autoload": {
         "psr-4": {
             "Modules\\Exhibition\\": ""
-        }
+        },
+        "files": [
+            "Exibhelpers.php"
+        ]
     }
 }

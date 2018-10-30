@@ -1,0 +1,49 @@
+.label-kubak-success{
+    border: solid 1px;
+    color: #3be272;
+    border-radius: 8px;
+    font-size: smaller;
+    padding: 2px 17px;
+}
+.label-kubak-primary{
+    border: solid 1px;
+    color: #9a9ca3;
+    border-radius: 8px;
+    font-size: smaller;
+    padding: 2px 17px;
+}
+.label-kubak-warning{
+    border: solid 1px;
+    color: #eeb017;
+    border-radius: 8px;
+    font-size: smaller;
+    padding: 2px 17px;
+}
+.label-kubak-danger{
+    border: solid 1px;
+    color: #f25330;
+    border-radius: 8px;
+    font-size: smaller;
+    padding: 2px 17px;
+}
+.label-kubak-info{
+    border: solid 1px;
+    color: #2f8df1;
+    border-radius: 8px;
+    font-size: smaller;
+    padding: 2px 17px;
+}
+.label-kubak-error{
+    border: solid 1px;
+    color: #f91d1d;
+    border-radius: 8px;
+    font-size: smaller;
+    padding: 2px 17px;
+}
+.label-kubak-default{
+    border: solid 1px;
+    color: #302e2e;
+    border-radius: 8px;
+    font-size: smaller;
+    padding: 2px 17px;
+}
