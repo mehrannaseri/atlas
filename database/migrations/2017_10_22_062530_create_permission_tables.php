@@ -45,6 +45,12 @@ class CreatePermissionTables extends Migration
                 'updated_at'    => now()
             ]
         ));
+        DB::table($tableNames['model_has_roles'])->insert(
+            [
+                'role_id'          => 1,
+                'model_type'       => 'App\User',
+                'model_id'         => 1,
+            ]);
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedInteger('permission_id');
