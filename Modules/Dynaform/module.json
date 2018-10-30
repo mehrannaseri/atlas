@@ -1,0 +1,14 @@
+{
+    "name": "Dynaform",
+    "alias": "dynaform",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Dynaform\\Providers\\DynaformServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
