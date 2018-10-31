@@ -12,6 +12,8 @@ use Modules\Dynaform\Entities\Element;
 use Modules\Dynaform\Entities\Form;
 use Modules\Dynaform\Entities\Value;
 
+
+
 class DynaformController extends Controller
 {
 
@@ -40,6 +42,7 @@ class DynaformController extends Controller
 
     public function index(Request $request)
     {
+
         $user_per_page=10;
         //$user=User::all();
         $forms=Form::orderBy('created_at')->paginate($user_per_page);

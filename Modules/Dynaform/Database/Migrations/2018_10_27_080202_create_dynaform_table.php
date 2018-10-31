@@ -16,6 +16,7 @@ class CreateDynaformTable extends Migration
         Schema::create('dynaform', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->tinyInteger('type');
             $table->timestamps();
         });
     }

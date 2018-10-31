@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\DB;
 
 class Handler extends ExceptionHandler
 {
@@ -34,7 +35,22 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        parent::report($exception);
+        if($exception->getMessage())
+        {
+            DB::table('exceptions')->insert(
+                [
+                    'message' => $exception->getMessage(),
+                    'url' => url()->current(),
+                    'line' => $exception->getLine(),
+                    'file' => $exception->getFile(),
+                    'code' => $exception->getCode(),
+
+                ]
+            );
+            parent::report($exception);
+        }
+        else
+            parent::report($exception);
     }
 
     /**
